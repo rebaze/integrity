@@ -1,0 +1,10 @@
+/build
+.project
+.classpath
+.gradle
+.settings
+bin
+.DS_Store
+.svn
+/target
+/bin
