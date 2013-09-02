@@ -16,13 +16,11 @@ jar {
 
 repositories { 
 	mavenCentral()
-	maven { url "http://repo.gradle.org/gradle/libs-releases-local" }
 }
 
 dependencies {
 	compile group: 'com.thoughtworks.xstream',name: 'xstream', version: '1.4.4'
 	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.6.1'
-	
 	testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
@@ -32,13 +30,6 @@ test {
 		events "started", "passed", "skipped", "failed", "standardOut", "standardError"
 	}
 }
-
-uploadArchives {
-	repositories {
-		flatDir { dirs 'repos' }
-	}
-}
-
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.7'
