@@ -3,6 +3,7 @@ package dogtooth.tree;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,16 @@ import dogtooth.tree.internal.Collector;
 public class TreeTools {
 			
 	private static final Logger LOG = LoggerFactory.getLogger(TreeTools.class);
+	final private PrintStream m_out;
 
+	public TreeTools() {
+		this(System.out);
+	}
+	
+	public TreeTools(PrintStream ps) {
+		m_out = ps;
+	}
+	
 	public File store(Hash tree) throws IOException {
 		// persist tree
 		File f = File.createTempFile("tree", ".xml");
@@ -119,12 +129,12 @@ public class TreeTools {
 
 	public void displayTree(int depth, Hash dbHash) {
 		if (depth == 0)
-			System.out.println(" ---- TREE ----------");
-		System.out.print("+");
+			m_out.println(" ---- TREE ----------");
+		m_out.print("+");
 		for (int i = 0; i < depth; i++) {
-			System.out.print("--");
+			m_out.print("--");
 		}
-		System.out.println(" " + dbHash.toString());
+		m_out.println(" " + dbHash.toString());
 		depth++;
 		Hash[] elements = dbHash.getElements();
 		int count = (elements.length < 10) ? elements.length : 10;
@@ -135,12 +145,12 @@ public class TreeTools {
 
 	public void prettyPrint(int depth, Hash dbHash) {
 		if (depth == 0)
-			System.out.println(" ---- TREE ----------");
-		System.out.print("+");
+			m_out.println(" ---- TREE ----------");
+		m_out.print("+");
 		for (int i = 0; i < depth; i++) {
-			System.out.print("--");
+			m_out.print("--");
 		}
-		System.out.println(" " + dbHash.getLabel());
+		m_out.println(" " + dbHash.getLabel());
 		depth++;
 		for (Hash sub : dbHash.getElements()) {
 			prettyPrint(depth, sub);
