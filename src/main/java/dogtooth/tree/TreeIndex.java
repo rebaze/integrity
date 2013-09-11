@@ -8,23 +8,23 @@ import java.util.Map;
 public class TreeIndex implements Hash {
 
 	final private Hash m_tree;
-	final private Map<String, TreeIndex> m_selectors;
+	final private Map<String, TreeIndex> m_selectors = new HashMap<String,TreeIndex>();
 	final private TreeIndex[] m_sub;
 
-	
 	public TreeIndex(Hash tree) {
+		if (tree instanceof TreeIndex) {
+			throw new RuntimeException("You should not wrap a TreeIndex.. waaaayyy to expensive..");
+		}
 		m_tree = tree;
 		// build index on selectors
-		m_selectors = new HashMap<String,TreeIndex>();
+		List<TreeIndex> sub = new ArrayList<TreeIndex>();
+		
 		for (Hash h : tree.getElements()) {
 			TreeIndex idx = new TreeIndex(h); 
 			if (h.getSelector() != null) {
 				m_selectors.put(h.getSelector(), idx);
 			}
-		}
-		List<TreeIndex> sub = new ArrayList<TreeIndex>();
-		for (Hash h : tree.getElements()) {
-			sub.add(new TreeIndex(h));
+			sub.add(idx);
 		}
 		m_sub = sub.toArray(new TreeIndex[sub.size()]);
 	}
