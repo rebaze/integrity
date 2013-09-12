@@ -2,8 +2,6 @@ package dogtooth.tree;
 
 public interface Hash {
 	String getHashValue();
-
-	String getLabel();
 	
 	String getSelector();
 

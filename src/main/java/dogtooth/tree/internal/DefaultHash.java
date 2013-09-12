@@ -11,8 +11,7 @@ public class DefaultHash implements Hash {
 	final private String m_selector;
 	final private long m_size;
 
-	public DefaultHash(  String selector, String label, String hashValue,Hash[] subs) {
-		//m_label = label;
+	public DefaultHash(  String selector, String hashValue,Hash[] subs) {
 		m_selector = selector;
 		m_hashValue = hashValue;
 		m_subs = subs;
@@ -27,11 +26,6 @@ public class DefaultHash implements Hash {
 	public String getHashValue() {
 		return m_hashValue;
 	}
-
-	@Override
-	public String getLabel() {
-		return "NOT SET";//m_label;
-	}
 	
 	@Override
 	public String getSelector() {
@@ -44,18 +38,16 @@ public class DefaultHash implements Hash {
 	}
 	
 	public String toString() {
-		return m_hashValue.substring(0,6) + " /Label: " + getLabel() + " /Selector: " + m_selector + " /Children: " + m_subs.length + " /Total: " + m_size; 
+		return m_hashValue.substring(0,6) + " /Selector: " + m_selector + " /Children: " + m_subs.length + " /Total: " + m_size; 
 	}
 	
 	public int hashCode() {
 		return m_hashValue.hashCode();
 	}
 	
-	// implement compares using our own tools
 	public boolean equals(Object other) {
 		if (other instanceof Hash ) {
 			Hash sn2 = (Hash)other;
-			System.out.println("Comparing: " + this + " and " + sn2);
 			return (new TreeTools().compare(this, sn2).getElements().length == 0);
 		}else {
 			throw new RuntimeException("Should not come here..");
@@ -66,7 +58,4 @@ public class DefaultHash implements Hash {
 	public long getEffectiveSize() {
 		return m_size;
 	}
-	
-	
-
 }

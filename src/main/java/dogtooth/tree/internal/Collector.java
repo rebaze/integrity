@@ -13,22 +13,24 @@ import dogtooth.tree.TreeException;
 
 public class Collector {
 	private final static Logger LOG = LoggerFactory.getLogger(Collector.class);
-	private final MessageDigest m_digest;
+	private MessageDigest m_digest;
 	private Hash m_hash;
 	private boolean m_sealed = false;
 	final private List<Collector> m_sub;
-	final private String m_label;
 	private String m_selector;
 	
-	public Collector(String label) {
-		try {
-		m_digest = MessageDigest.getInstance("SHA-1");
-		m_sub = new ArrayList<Collector>();
-		m_label = label;
-		m_selector = null;
-		}catch (Exception e) {
-			throw new TreeException("Problem creating collector for " + label,e);
-		}
+	public Collector( ) {
+        try {
+           m_digest = MessageDigest.getInstance("SHA-1");
+            m_sub = new ArrayList<Collector>();
+        }catch (Exception e) {
+            throw new TreeException("Problem creating collector",e);
+        }
+    }
+	
+	public Collector( final String selector ) {
+		this();
+		m_selector = selector;
 	}
 	
 	synchronized public Collector add(byte[] bytes) {
@@ -40,32 +42,36 @@ public class Collector {
 	synchronized public Hash seal() {
 		if (!m_sealed) {
 			// collect all sub elements..
-			autosetSelector();
+			if (m_selector == null)  throw new TreeException("Sealing not possible due to missing selector.");
 			List<Hash> subHashes = new ArrayList<Hash>(m_sub.size());
 			for (Collector c : m_sub) {
 				Hash subHash = c.seal();
 				subHashes.add(subHash);
 				add(subHash.getHashValue().getBytes());
 			}
-			m_hash = new DefaultHash(m_selector, m_label,convertToHex(m_digest.digest()),subHashes.toArray(new Hash[subHashes.size()]));
+			m_hash = new DefaultHash(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Hash[subHashes.size()]));
 			m_sealed = true;
+			m_sub.clear();
+			m_digest = null;
+			m_selector = null;
+			//System.gc();
 		}
 		return m_hash;
 	}
-	
-	private void autosetSelector() {
-		if (m_selector == null) {
-			//LOG.warn("Autosetting selector to " + m_label);
-			m_selector = m_label;
-		}
-	}
 
-	synchronized public Collector childCollector(String label) {
-		if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
-		Collector c = new Collector(label);
-		m_sub.add(c);
-		return c;
+	synchronized public Collector childCollector() {
+	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+        Collector c = new Collector();
+        m_sub.add(c);
+        return c;
 	}
+	
+	synchronized public Collector childCollector( String selector) {
+        if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+        Collector c = new Collector(selector);
+        m_sub.add(c);
+        return c;
+    }
 	
 	private static String convertToHex(byte[] data) {
 		StringBuffer buf = new StringBuffer();
@@ -84,8 +90,9 @@ public class Collector {
 		return buf.toString();
 	}
 
-	public Collector setSelector(String selector) {
-		m_selector = selector;
+	synchronized public Collector setSelector(String selector) {
+	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+	    m_selector = selector;
 		return this;
 	}
 }

@@ -58,7 +58,7 @@ public class TreeTools {
 	/**
 	 */
 	public Hash compare(TreeIndex left, TreeIndex right) {
-		Collector target = new Collector("Difference [" + left.getLabel() + " ] and [" + right.getLabel() + " ]");
+		Collector target = new Collector("Difference [" + left.getSelector() + " ] and [" + right.getSelector() + " ]-");
 		compare(target, left, right);
 		return target.seal();
 	}
@@ -71,14 +71,14 @@ public class TreeTools {
 		// Unfold "empty" elements.
 		if (left == null) {
 			for (TreeIndex tree : right.getElements()) {
-				Collector mod = collector.childCollector("[ADDED] " + tree.getLabel());
+				Collector mod = collector.childCollector("[ADDED] " + tree.getSelector());
 				compare(mod,null,tree);
 			}
 			return;
 		}
 		if (right == null) {
 			for (TreeIndex tree : left.getElements()) {
-				Collector mod = collector.childCollector("[REMOVED] " + tree.getLabel());
+				Collector mod = collector.childCollector("[REMOVED] " + tree.getSelector());
 				compare(mod,tree,null);
 			}
 			return;
@@ -86,15 +86,14 @@ public class TreeTools {
 		
 		if (!left.getHashValue().equals(right.getHashValue())) {
 			// compare next level:
-			Collector modification = collector.childCollector("[MOD] " + right.getLabel());
-			modification.setSelector(right.getSelector());
+			Collector modification = collector.childCollector("[MOD] " + right.getSelector());
 			for (TreeIndex tree : left.getElements()) {
 				// first check if tree is a selectable node or not:
 				if (tree.selectable()) {
 					TreeIndex origin = right.select(tree.getSelector());
 					if (origin == null) {
 						// Deleted element:
-						Collector removed = modification.childCollector("[REMOVED] " + tree.getLabel()).setSelector(tree.getSelector());
+						Collector removed = modification.childCollector("[REMOVED] " + tree.getSelector());
 						// Not so sure..
 						compare(removed, tree, origin);
 					} else {
@@ -113,7 +112,7 @@ public class TreeTools {
 					TreeIndex origin = left.select(tree.getSelector());
 					if (origin == null) {
 						// New element:
-						Collector added = modification.childCollector("[ADDED] " + tree.getLabel()).setSelector(tree.getSelector());
+						Collector added = modification.childCollector("[ADDED] " + tree.getSelector());
 						compare(added, origin, tree);
 					} else {
 						// already worked on.
@@ -150,7 +149,7 @@ public class TreeTools {
 		for (int i = 0; i < depth; i++) {
 			m_out.print("--");
 		}
-		m_out.println(" " + dbHash.getLabel());
+		m_out.println(" " + dbHash.getSelector());
 		depth++;
 		for (Hash sub : dbHash.getElements()) {
 			prettyPrint(depth, sub);

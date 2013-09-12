@@ -43,11 +43,6 @@ public class TreeIndex implements Hash {
 	}
 
 	@Override
-	public String getLabel() {
-		return m_tree.getLabel();
-	}
-
-	@Override
 	public String getSelector() {
 		return m_tree.getSelector();
 	}

@@ -35,7 +35,7 @@ public class DiffToolTest {
 		Hash sn2 = new Collector("c2").seal();
 		Hash result = TOOLS.compare( sn1, sn2 );
 		assertEquals("Should no elements",1,result.getElements().length);
-		assertEquals("Select what is different","c2",result.getElements()[0].getSelector());
+		assertEquals("Select what is different","[MOD] c2",result.getElements()[0].getSelector());
 	} 
 	
 	@Test
@@ -63,10 +63,10 @@ public class DiffToolTest {
 		TOOLS.displayTree(0, sn2);
 		TOOLS.displayTree(0, result);
 		
-		assertEquals("Detect 3 modifications",3, result.select("db2").getElements().length);
-		assertNotNull("Modification in db2.table2",result.select("db2").select("table2"));
-		assertNotNull("Modification in db2.table2",result.select("db2").select("table3"));
-		
+		assertEquals("Detect 3 modifications",3, result.select("[MOD] db2").getElements().length);
+		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[MOD] table2"));
+		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[REMOVED] table3"));
+		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[ADDED] table4"));
 		
 		//assertEquals("Should have one item",1,result.getElements().length);
 		//assertEquals("Select what is different","c2",result.getElements()[0].getSelector());
