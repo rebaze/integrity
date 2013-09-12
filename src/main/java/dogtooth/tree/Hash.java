@@ -9,4 +9,6 @@ public interface Hash {
 
 	Hash[] getElements();
 	
+	public long getEffectiveSize();
+	
 }

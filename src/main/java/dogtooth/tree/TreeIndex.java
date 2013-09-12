@@ -56,9 +56,14 @@ public class TreeIndex implements Hash {
 	public TreeIndex[] getElements() {
 		return m_sub;
 	}
-	
+		
 	public String toString() {
-		return "INDEX of " + m_tree.toString(); 
+		return "TreeIndex of [" + m_tree.toString() + "] with selectors: " + m_selectors.size();
+	}
+
+	@Override
+	public long getEffectiveSize() {
+		return m_tree.getEffectiveSize();
 	}
 
 }
