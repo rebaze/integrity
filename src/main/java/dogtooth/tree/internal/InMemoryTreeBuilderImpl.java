@@ -7,49 +7,58 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dogtooth.tree.Hash;
+import dogtooth.tree.Tree;
 import dogtooth.tree.TreeAlreadySealedException;
+import dogtooth.tree.TreeBuilder;
 import dogtooth.tree.TreeException;
 
-public class Collector {
-	private final static Logger LOG = LoggerFactory.getLogger(Collector.class);
+public class InMemoryTreeBuilderImpl implements TreeBuilder {
+	private final static Logger LOG = LoggerFactory.getLogger(InMemoryTreeBuilderImpl.class);
 	private MessageDigest m_digest;
-	private Hash m_hash;
+	private Tree m_hash;
 	private boolean m_sealed = false;
-	final private List<Collector> m_sub;
+	final private List<TreeBuilder> m_sub;
 	private String m_selector;
 	
-	public Collector( ) {
+	public InMemoryTreeBuilderImpl( ) {
         try {
            m_digest = MessageDigest.getInstance("SHA-1");
-            m_sub = new ArrayList<Collector>();
+            m_sub = new ArrayList<TreeBuilder>();
         }catch (Exception e) {
             throw new TreeException("Problem creating collector",e);
         }
     }
 	
-	public Collector( final String selector ) {
+	public InMemoryTreeBuilderImpl( final String selector ) {
 		this();
 		m_selector = selector;
 	}
 	
-	synchronized public Collector add(byte[] bytes) {
+	/* (non-Javadoc)
+	 * @see dogtooth.tree.internal.TreeBuilder#add(byte[])
+	 */
+	@Override
+	synchronized public TreeBuilder add(byte[] bytes) {
 		if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
 		m_digest.update(bytes);
 		return this;
 	}
 
-	synchronized public Hash seal() {
+	/* (non-Javadoc)
+	 * @see dogtooth.tree.internal.TreeBuilder#seal()
+	 */
+	@Override
+	synchronized public Tree seal() {
 		if (!m_sealed) {
 			// collect all sub elements..
 			if (m_selector == null)  throw new TreeException("Sealing not possible due to missing selector.");
-			List<Hash> subHashes = new ArrayList<Hash>(m_sub.size());
-			for (Collector c : m_sub) {
-				Hash subHash = c.seal();
+			List<Tree> subHashes = new ArrayList<Tree>(m_sub.size());
+			for (TreeBuilder c : m_sub) {
+				Tree subHash = c.seal();
 				subHashes.add(subHash);
 				add(subHash.getHashValue().getBytes());
 			}
-			m_hash = new DefaultHash(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Hash[subHashes.size()]));
+			m_hash = new InMemoryTreeImpl(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Tree[subHashes.size()]));
 			m_sealed = true;
 			m_sub.clear();
 			m_digest = null;
@@ -59,16 +68,26 @@ public class Collector {
 		return m_hash;
 	}
 
-	synchronized public Collector childCollector() {
+	/* (non-Javadoc)
+	 * @see dogtooth.tree.internal.TreeBuilder#childCollector()
+	 */
+	/**
+	@Override
+	synchronized public TreeBuilder childCollector() {
 	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
-        Collector c = new Collector();
+	    TreeBuilder c = new InMemoryTreeBuilderImpl();
         m_sub.add(c);
         return c;
 	}
+	**/
 	
-	synchronized public Collector childCollector( String selector) {
+	/* (non-Javadoc)
+	 * @see dogtooth.tree.internal.TreeBuilder#childCollector(java.lang.String)
+	 */
+	@Override
+	synchronized public TreeBuilder childCollector( String selector) {
         if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
-        Collector c = new Collector(selector);
+        TreeBuilder c = new InMemoryTreeBuilderImpl(selector);
         m_sub.add(c);
         return c;
     }
@@ -90,7 +109,11 @@ public class Collector {
 		return buf.toString();
 	}
 
-	synchronized public Collector setSelector(String selector) {
+	/* (non-Javadoc)
+	 * @see dogtooth.tree.internal.TreeBuilder#setSelector(java.lang.String)
+	 */
+	@Override
+	synchronized public TreeBuilder setSelector(String selector) {
 	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
 	    m_selector = selector;
 		return this;

@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TreeIndex implements Hash {
+public class TreeIndex implements Tree {
 
-	final private Hash m_tree;
+	final private Tree m_tree;
 	final private Map<String, TreeIndex> m_selectors = new HashMap<String,TreeIndex>();
 	final private TreeIndex[] m_sub;
 
-	public TreeIndex(Hash tree) {
+	public TreeIndex(Tree tree) {
 		if (tree instanceof TreeIndex) {
 			throw new RuntimeException("You should not wrap a TreeIndex.. waaaayyy to expensive..");
 		}
@@ -19,7 +19,7 @@ public class TreeIndex implements Hash {
 		// build index on selectors
 		List<TreeIndex> sub = new ArrayList<TreeIndex>();
 		
-		for (Hash h : tree.getElements()) {
+		for (Tree h : tree.getElements()) {
 			TreeIndex idx = new TreeIndex(h); 
 			if (h.getSelector() != null) {
 				m_selectors.put(h.getSelector(), idx);

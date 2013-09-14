@@ -1,11 +1,12 @@
 package dogtooth.tree;
 
-public interface Hash {
+public interface Tree {
+	
 	String getHashValue();
 	
 	String getSelector();
 
-	Hash[] getElements();
+	Tree[] getElements();
 	
 	public long getEffectiveSize();
 	

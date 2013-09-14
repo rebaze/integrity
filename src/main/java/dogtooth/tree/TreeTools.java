@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
-import dogtooth.tree.internal.Collector;
+import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 
 public class TreeTools {
 			
@@ -25,13 +25,13 @@ public class TreeTools {
 		m_out = ps;
 	}
 	
-	public File store(Hash tree) throws IOException {
+	public File store(Tree tree) throws IOException {
 		// persist tree
 		File f = File.createTempFile("tree", ".xml");
 		return store(tree,f);
 	}
 	
-	public File store(Hash tree, File f) throws IOException {
+	public File store(Tree tree, File f) throws IOException {
 		// persist tree
 		XStream xstream = new XStream();
 	    xstream.toXML(tree,new FileOutputStream(f));
@@ -39,26 +39,26 @@ public class TreeTools {
 		return f;
 	}
 
-	public Hash load(File f) {
+	public Tree load(File f) {
 		XStream xstream = new XStream();
-		return (Hash)xstream.fromXML(f);
+		return (Tree)xstream.fromXML(f);
 	}
 	
-	public Hash load(String locationClasspath) {
+	public Tree load(String locationClasspath) {
 		XStream xstream = new XStream();
-		return (Hash)xstream.fromXML(this.getClass().getResourceAsStream(locationClasspath));
+		return (Tree)xstream.fromXML(this.getClass().getResourceAsStream(locationClasspath));
 	}
 
 	/**
 	 */
-	public Hash compare(Hash left, Hash right) {
+	public Tree compare(Tree left, Tree right) {
 		return compare(new TreeIndex(left),new TreeIndex(right));
 	}
 	
 	/**
 	 */
-	public Hash compare(TreeIndex left, TreeIndex right) {
-		Collector target = new Collector("Difference [" + left.getSelector() + " ] and [" + right.getSelector() + " ]-");
+	public Tree compare(TreeIndex left, TreeIndex right) {
+		TreeBuilder target = new InMemoryTreeBuilderImpl("Difference [" + left.getSelector() + " ] and [" + right.getSelector() + " ]-");
 		compare(target, left, right);
 		return target.seal();
 	}
@@ -67,18 +67,18 @@ public class TreeTools {
 	/**
 	 * 
 	 */
-	private void compare(Collector collector, TreeIndex left, TreeIndex right) {
+	private void compare(TreeBuilder collector, TreeIndex left, TreeIndex right) {
 		// Unfold "empty" elements.
 		if (left == null) {
 			for (TreeIndex tree : right.getElements()) {
-				Collector mod = collector.childCollector("[ADDED] " + tree.getSelector());
+				TreeBuilder mod = collector.childCollector("[ADDED] " + tree.getSelector());
 				compare(mod,null,tree);
 			}
 			return;
 		}
 		if (right == null) {
 			for (TreeIndex tree : left.getElements()) {
-				Collector mod = collector.childCollector("[REMOVED] " + tree.getSelector());
+				TreeBuilder mod = collector.childCollector("[REMOVED] " + tree.getSelector());
 				compare(mod,tree,null);
 			}
 			return;
@@ -86,14 +86,14 @@ public class TreeTools {
 		
 		if (!left.getHashValue().equals(right.getHashValue())) {
 			// compare next level:
-			Collector modification = collector.childCollector("[MOD] " + right.getSelector());
+			TreeBuilder modification = collector.childCollector("[MOD] " + right.getSelector());
 			for (TreeIndex tree : left.getElements()) {
 				// first check if tree is a selectable node or not:
 				if (tree.selectable()) {
 					TreeIndex origin = right.select(tree.getSelector());
 					if (origin == null) {
 						// Deleted element:
-						Collector removed = modification.childCollector("[REMOVED] " + tree.getSelector());
+						TreeBuilder removed = modification.childCollector("[REMOVED] " + tree.getSelector());
 						// Not so sure..
 						compare(removed, tree, origin);
 					} else {
@@ -112,7 +112,7 @@ public class TreeTools {
 					TreeIndex origin = left.select(tree.getSelector());
 					if (origin == null) {
 						// New element:
-						Collector added = modification.childCollector("[ADDED] " + tree.getSelector());
+						TreeBuilder added = modification.childCollector("[ADDED] " + tree.getSelector());
 						compare(added, origin, tree);
 					} else {
 						// already worked on.
@@ -126,7 +126,7 @@ public class TreeTools {
 
 	}
 
-	public void displayTree(int depth, Hash dbHash) {
+	public void displayTree(int depth, Tree dbHash) {
 		if (depth == 0)
 			m_out.println(" ---- TREE ----------");
 		m_out.print("+");
@@ -135,14 +135,14 @@ public class TreeTools {
 		}
 		m_out.println(" " + dbHash.toString());
 		depth++;
-		Hash[] elements = dbHash.getElements();
+		Tree[] elements = dbHash.getElements();
 		int count = (elements.length < 10) ? elements.length : 10;
 		for (int i = 0;i<count;i++) {
 			displayTree(depth, elements[i]);
 		}
 	}
 
-	public void prettyPrint(int depth, Hash dbHash) {
+	public void prettyPrint(int depth, Tree dbHash) {
 		if (depth == 0)
 			m_out.println(" ---- TREE ----------");
 		m_out.print("+");
@@ -151,7 +151,7 @@ public class TreeTools {
 		}
 		m_out.println(" " + dbHash.getSelector());
 		depth++;
-		for (Hash sub : dbHash.getElements()) {
+		for (Tree sub : dbHash.getElements()) {
 			prettyPrint(depth, sub);
 		}
 
