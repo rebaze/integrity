@@ -67,25 +67,12 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 		}
 		return m_hash;
 	}
-
-	/* (non-Javadoc)
-	 * @see dogtooth.tree.internal.TreeBuilder#childCollector()
-	 */
-	/**
-	@Override
-	synchronized public TreeBuilder childCollector() {
-	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
-	    TreeBuilder c = new InMemoryTreeBuilderImpl();
-        m_sub.add(c);
-        return c;
-	}
-	**/
 	
 	/* (non-Javadoc)
 	 * @see dogtooth.tree.internal.TreeBuilder#childCollector(java.lang.String)
 	 */
 	@Override
-	synchronized public TreeBuilder childCollector( String selector) {
+	synchronized public TreeBuilder branch( String selector) {
         if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
         TreeBuilder c = new InMemoryTreeBuilderImpl(selector);
         m_sub.add(c);
@@ -112,10 +99,12 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	/* (non-Javadoc)
 	 * @see dogtooth.tree.internal.TreeBuilder#setSelector(java.lang.String)
 	 */
+	
 	@Override
-	synchronized public TreeBuilder setSelector(String selector) {
+	synchronized public TreeBuilder selector(String selector) {
 	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
 	    m_selector = selector;
-		return this;
+	    return this;
 	}
+	
 }

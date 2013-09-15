@@ -3,8 +3,7 @@
 .classpath
 .gradle
 .settings
-bin
 .DS_Store
 .svn
-/target
+target
 /bin

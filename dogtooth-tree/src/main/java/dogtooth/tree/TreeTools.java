@@ -71,14 +71,14 @@ public class TreeTools {
 		// Unfold "empty" elements.
 		if (left == null) {
 			for (TreeIndex tree : right.getElements()) {
-				TreeBuilder mod = collector.childCollector("[ADDED] " + tree.getSelector());
+				TreeBuilder mod = collector.branch("[ADDED] " + tree.getSelector());
 				compare(mod,null,tree);
 			}
 			return;
 		}
 		if (right == null) {
 			for (TreeIndex tree : left.getElements()) {
-				TreeBuilder mod = collector.childCollector("[REMOVED] " + tree.getSelector());
+				TreeBuilder mod = collector.branch("[REMOVED] " + tree.getSelector());
 				compare(mod,tree,null);
 			}
 			return;
@@ -86,14 +86,14 @@ public class TreeTools {
 		
 		if (!left.getHashValue().equals(right.getHashValue())) {
 			// compare next level:
-			TreeBuilder modification = collector.childCollector("[MOD] " + right.getSelector());
+			TreeBuilder modification = collector.branch("[MOD] " + right.getSelector());
 			for (TreeIndex tree : left.getElements()) {
 				// first check if tree is a selectable node or not:
 				if (tree.selectable()) {
 					TreeIndex origin = right.select(tree.getSelector());
 					if (origin == null) {
 						// Deleted element:
-						TreeBuilder removed = modification.childCollector("[REMOVED] " + tree.getSelector());
+						TreeBuilder removed = modification.branch("[REMOVED] " + tree.getSelector());
 						// Not so sure..
 						compare(removed, tree, origin);
 					} else {
@@ -112,7 +112,7 @@ public class TreeTools {
 					TreeIndex origin = left.select(tree.getSelector());
 					if (origin == null) {
 						// New element:
-						TreeBuilder added = modification.childCollector("[ADDED] " + tree.getSelector());
+						TreeBuilder added = modification.branch("[ADDED] " + tree.getSelector());
 						compare(added, origin, tree);
 					} else {
 						// already worked on.

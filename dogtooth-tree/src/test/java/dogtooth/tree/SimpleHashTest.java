@@ -37,21 +37,21 @@ public class SimpleHashTest {
 	@Test
 	public void simpleTreeTest() throws Exception {	
 		TreeBuilder root = new InMemoryTreeBuilderImpl("Root1");
-		TreeBuilder sub1 = root.childCollector("child1");
+		TreeBuilder sub1 = root.branch("child1");
 		sub1.add("One".getBytes());
 		sub1.add("Two".getBytes());
 		
-		TreeBuilder sub2 = root.childCollector("child2");
+		TreeBuilder sub2 = root.branch("child2");
 		sub2.add("Three".getBytes());
 		sub2.add("Four".getBytes());
 		Tree tree1 = root.seal();
 		
 		TreeBuilder root2 = new InMemoryTreeBuilderImpl("Root2");
-		TreeBuilder sub3 = root2.childCollector("child3");
+		TreeBuilder sub3 = root2.branch("child3");
 		sub3.add("Different".getBytes());
 		sub3.add("Two".getBytes());
 		
-		TreeBuilder sub4 = root2.childCollector("child4");
+		TreeBuilder sub4 = root2.branch("child4");
 		sub4.add("Three".getBytes());
 		sub4.add("Four".getBytes());
 		Tree tree2 = root2.seal();
