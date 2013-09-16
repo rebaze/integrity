@@ -10,6 +10,7 @@
     <relativePath>../dogtooth-master/</relativePath>
   </parent>
 
+  <groupId>dogtooth</groupId>
   <artifactId>dogtooth-tree</artifactId>
 
   <name>Dogtooth - Tree</name>
