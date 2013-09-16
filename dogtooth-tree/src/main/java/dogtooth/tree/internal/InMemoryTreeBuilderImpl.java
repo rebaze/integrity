@@ -47,7 +47,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	 */
 	@Override
 	synchronized public TreeBuilder add(byte[] bytes) {
-		if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+		verifyTreeNotSealed();
 		m_digest.update(bytes);
 		return this;
 	}
@@ -58,7 +58,6 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	@Override
 	synchronized public Tree seal() {
 		if (!m_sealed) {
-			// collect all sub elements..
 			if (m_selector == null)  throw new TreeException("Sealing not possible due to missing selector.");
 			List<Tree> subHashes = new ArrayList<Tree>(m_sub.size());
 			for (TreeBuilder c : m_sub) {
@@ -67,31 +66,38 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 				add(subHash.fingerprint().getBytes());
 			}
 			m_hash = new InMemoryTreeImpl(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Tree[subHashes.size()]));
-			m_sealed = true;
-			m_sub.clear();
-			m_digest = null;
-			m_selector = null;
-			//System.gc();
+	        m_sealed = true;
+			resetMembers();
 		}
 		return m_hash;
 	}
+
+    private void resetMembers() {
+        m_sub.clear();
+        m_digest = null;
+        m_selector = null;
+    }
 	
 	/* (non-Javadoc)
 	 * @see dogtooth.tree.internal.TreeBuilder#childCollector(java.lang.String)
 	 */
 	@Override
 	synchronized public TreeBuilder branch( String selector) {
-        if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+        verifyTreeNotSealed();
         TreeBuilder c = new InMemoryTreeBuilderImpl(selector);
         m_sub.add(c);
         return c;
+    }
+
+    private void verifyTreeNotSealed() {
+        if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
     }
 	
 	private static String convertToHex(byte[] data) {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0; i < data.length; i++) {
 			int halfbyte = (data[i] >>> 4) & 0x0F;
-			int two_halfs = 0;
+			int two_halfs = 0; 
 			do {
 				if ((0 <= halfbyte) && (halfbyte <= 9)) {
 					buf.append((char) ('0' + halfbyte));
@@ -110,7 +116,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	
 	@Override
 	synchronized public TreeBuilder selector(String selector) {
-	    if (m_sealed) throw new TreeAlreadySealedException("No modification on a sealed tree!");
+	    verifyTreeNotSealed();
 	    m_selector = selector;
 	    return this;
 	}
