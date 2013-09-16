@@ -10,9 +10,7 @@
     <relativePath>../dogtooth-master/</relativePath>
   </parent>
 
-  <groupId>com.rebaze.dogtooth</groupId>
   <artifactId>dogtooth-tree</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
 
   <name>Dogtooth - Tree</name>
   
