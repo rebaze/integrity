@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2012-2013 rebaze GmbH
+ * All rights reserved. 
+ * 
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package dogtooth.tree;
 
 import static org.junit.Assert.*;
@@ -18,7 +26,7 @@ public class DiffToolTest {
 		Tree sn1 = new InMemoryTreeBuilderImpl("c1").seal();
 		Tree sn2 = new InMemoryTreeBuilderImpl("c2").seal();
 		Tree result = TOOLS.compare( sn1, sn2 );
-		assertEquals("Should no elements",0,result.getElements().length);
+		assertEquals("Should no elements",0,result.branches().length);
 	} 
 	
 	@Test
@@ -30,7 +38,7 @@ public class DiffToolTest {
 		b2.add("Some".getBytes());
         Tree sn2 = b2.seal();
 		Tree result = TOOLS.compare( sn1, sn2 );
-		assertEquals("Should no elements",0,result.getElements().length);
+		assertEquals("Should no elements",0,result.branches().length);
 	} 
 	
 	@Test
@@ -41,8 +49,8 @@ public class DiffToolTest {
         InMemoryTreeBuilderImpl b2 = new InMemoryTreeBuilderImpl("c2");
         Tree sn2 = b2.seal();
 		Tree result = TOOLS.compare( sn1, sn2 );
-		assertEquals("Should no elements",1,result.getElements().length);
-		assertEquals("Select what is different","[MOD] c2",result.getElements()[0].getSelector());
+		assertEquals("Should no elements",1,result.branches().length);
+		assertEquals("Select what is different","[MOD] c2",result.branches()[0].selector());
 	} 
 	
 	@Test
@@ -70,7 +78,7 @@ public class DiffToolTest {
 		TOOLS.displayTree(0, sn2);
 		TOOLS.displayTree(0, result);
 		
-		assertEquals("Detect 3 modifications",3, result.select("[MOD] db2").getElements().length);
+		assertEquals("Detect 3 modifications",3, result.select("[MOD] db2").branches().length);
 		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[MOD] table2"));
 		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[REMOVED] table3"));
 		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[ADDED] table4"));

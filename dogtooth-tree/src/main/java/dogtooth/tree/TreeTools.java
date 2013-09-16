@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2012-2013 rebaze GmbH
+ * All rights reserved. 
+ * 
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package dogtooth.tree;
 
 import java.io.File;
@@ -58,7 +66,7 @@ public class TreeTools {
 	/**
 	 */
 	public Tree compare(TreeIndex left, TreeIndex right) {
-		TreeBuilder target = new InMemoryTreeBuilderImpl("Difference [" + left.getSelector() + " ] and [" + right.getSelector() + " ]-");
+		TreeBuilder target = new InMemoryTreeBuilderImpl("Difference [" + left.selector() + " ] and [" + right.selector() + " ]-");
 		compare(target, left, right);
 		return target.seal();
 	}
@@ -70,30 +78,30 @@ public class TreeTools {
 	private void compare(TreeBuilder collector, TreeIndex left, TreeIndex right) {
 		// Unfold "empty" elements.
 		if (left == null) {
-			for (TreeIndex tree : right.getElements()) {
-				TreeBuilder mod = collector.branch("[ADDED] " + tree.getSelector());
+			for (TreeIndex tree : right.branches()) {
+				TreeBuilder mod = collector.branch("[ADDED] " + tree.selector());
 				compare(mod,null,tree);
 			}
 			return;
 		}
 		if (right == null) {
-			for (TreeIndex tree : left.getElements()) {
-				TreeBuilder mod = collector.branch("[REMOVED] " + tree.getSelector());
+			for (TreeIndex tree : left.branches()) {
+				TreeBuilder mod = collector.branch("[REMOVED] " + tree.selector());
 				compare(mod,tree,null);
 			}
 			return;
 		}
 		
-		if (!left.getHashValue().equals(right.getHashValue())) {
+		if (!left.fingerprint().equals(right.fingerprint())) {
 			// compare next level:
-			TreeBuilder modification = collector.branch("[MOD] " + right.getSelector());
-			for (TreeIndex tree : left.getElements()) {
+			TreeBuilder modification = collector.branch("[MOD] " + right.selector());
+			for (TreeIndex tree : left.branches()) {
 				// first check if tree is a selectable node or not:
 				if (tree.selectable()) {
-					TreeIndex origin = right.select(tree.getSelector());
+					TreeIndex origin = right.select(tree.selector());
 					if (origin == null) {
 						// Deleted element:
-						TreeBuilder removed = modification.branch("[REMOVED] " + tree.getSelector());
+						TreeBuilder removed = modification.branch("[REMOVED] " + tree.selector());
 						// Not so sure..
 						compare(removed, tree, origin);
 					} else {
@@ -106,13 +114,13 @@ public class TreeTools {
 				}
 			}
 			// find new ones:
-			for (TreeIndex tree : right.getElements()) {
+			for (TreeIndex tree : right.branches()) {
 				// first check if tree is a selectable node or not:
 				if (tree.selectable()) {
-					TreeIndex origin = left.select(tree.getSelector());
+					TreeIndex origin = left.select(tree.selector());
 					if (origin == null) {
 						// New element:
-						TreeBuilder added = modification.branch("[ADDED] " + tree.getSelector());
+						TreeBuilder added = modification.branch("[ADDED] " + tree.selector());
 						compare(added, origin, tree);
 					} else {
 						// already worked on.
@@ -135,7 +143,7 @@ public class TreeTools {
 		}
 		m_out.println(" " + dbHash.toString());
 		depth++;
-		Tree[] elements = dbHash.getElements();
+		Tree[] elements = dbHash.branches();
 		int count = (elements.length < 10) ? elements.length : 10;
 		for (int i = 0;i<count;i++) {
 			displayTree(depth, elements[i]);
@@ -149,9 +157,9 @@ public class TreeTools {
 		for (int i = 0; i < depth; i++) {
 			m_out.print("--");
 		}
-		m_out.println(" " + dbHash.getSelector());
+		m_out.println(" " + dbHash.selector());
 		depth++;
-		for (Tree sub : dbHash.getElements()) {
+		for (Tree sub : dbHash.branches()) {
 			prettyPrint(depth, sub);
 		}
 

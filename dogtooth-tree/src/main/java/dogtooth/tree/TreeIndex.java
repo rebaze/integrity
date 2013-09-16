@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2012-2013 rebaze GmbH
+ * All rights reserved. 
+ * 
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package dogtooth.tree;
 
 import java.util.ArrayList;
@@ -19,10 +27,10 @@ public class TreeIndex implements Tree {
 		// build index on selectors
 		List<TreeIndex> sub = new ArrayList<TreeIndex>();
 		
-		for (Tree h : tree.getElements()) {
+		for (Tree h : tree.branches()) {
 			TreeIndex idx = new TreeIndex(h); 
-			if (h.getSelector() != null) {
-				m_selectors.put(h.getSelector(), idx);
+			if (h.selector() != null) {
+				m_selectors.put(h.selector(), idx);
 			}
 			sub.add(idx);
 		}
@@ -34,21 +42,21 @@ public class TreeIndex implements Tree {
 	}
 	
 	public boolean selectable() {
-		return m_tree.getSelector() != null;
+		return m_tree.selector() != null;
 	}
 
 	@Override
-	public String getHashValue() {
-		return m_tree.getHashValue();
+	public String fingerprint() {
+		return m_tree.fingerprint();
 	}
 
 	@Override
-	public String getSelector() {
-		return m_tree.getSelector();
+	public String selector() {
+		return m_tree.selector();
 	}
 
 	@Override
-	public TreeIndex[] getElements() {
+	public TreeIndex[] branches() {
 		return m_sub;
 	}
 		
@@ -57,8 +65,8 @@ public class TreeIndex implements Tree {
 	}
 
 	@Override
-	public long getEffectiveSize() {
-		return m_tree.getEffectiveSize();
+	public long effectiveSize() {
+		return m_tree.effectiveSize();
 	}
 
 }

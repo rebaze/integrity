@@ -1,13 +1,58 @@
+/*
+ * Copyright (c) 2012-2013 rebaze GmbH
+ * All rights reserved. 
+ * 
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package dogtooth.tree;
 
+/**
+ * The central element for this library. 
+ * Actually you will get many instances of {@link Tree}. 
+ * They are all unmodifiable.
+ * 
+ * Trees are made of a selector which identifies it.
+ * Note: selector does not have to be globally unique but unique for its parent.
+ * 
+ * A tree then has a fingerprint (also call it "hash" which stands for the data of all its sub branches.
+ * 
+ * Subbranches are accessable from here to. They may get initialized lazily.
+ * 
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public interface Tree {
 	
-	String getHashValue();
+    /**
+     * Hash value of all its sub branches. Can also be called a hash. Default implementations may use a SHA-1.
+     * 
+     * @return the hash value of this tree.
+     */
+	String fingerprint();
 	
-	String getSelector();
+	/**
+	 * Identification of this tree for the parent. Selectors are not global.
+	 * Actually used to create indexes.
+	 * 
+	 * @return string version of the selector.
+	 */
+	String selector();
 
-	Tree[] getElements();
+	/**
+	 * Sub branches of this tree. May be empty or a list of sub trees. All sub branches are supposed to have unique selectors.
+	 *
+	 * @return List of sub trees.
+	 */
+	Tree[] branches();
 	
-	public long getEffectiveSize();
+	/**
+	 * More of a statistics method useful for estimating the overall size of this tree in terms of memory cost.
+	 * 
+	 * @return amount of sub elements including the tree itself. (so zero branches trees will have an effective size of 1)
+	 */
+	public long effectiveSize();
 	
 }

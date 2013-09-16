@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2012-2013 rebaze GmbH
+ * All rights reserved. 
+ * 
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package dogtooth.tree.internal;
 
 import dogtooth.tree.Tree;
@@ -16,23 +24,23 @@ public class InMemoryTreeImpl implements Tree {
 		m_subs = subs;
 		long total = 1; // self
 		for (Tree h : subs) {
-			total += h.getEffectiveSize();
+			total += h.effectiveSize();
 		}
 		m_size = total;
 	}
 	
 	@Override
-	public String getHashValue() {
+	public String fingerprint() {
 		return m_hashValue;
 	}
 	
 	@Override
-	public String getSelector() {
+	public String selector() {
 		return m_selector;
 	}
 
 	@Override
-	public Tree[] getElements() {
+	public Tree[] branches() {
 		return m_subs;
 	}
 	
@@ -47,14 +55,14 @@ public class InMemoryTreeImpl implements Tree {
 	public boolean equals(Object other) {
 		if (other instanceof Tree ) {
 			Tree sn2 = (Tree)other;
-			return (new TreeTools().compare(this, sn2).getElements().length == 0);
+			return (new TreeTools().compare(this, sn2).branches().length == 0);
 		}else {
 			throw new RuntimeException("Should not come here..");
 		}
 	}
 
 	@Override
-	public long getEffectiveSize() {
+	public long effectiveSize() {
 		return m_size;
 	}
 }
