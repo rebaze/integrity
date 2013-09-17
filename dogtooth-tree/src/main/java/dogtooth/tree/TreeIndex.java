@@ -24,7 +24,7 @@ import dogtooth.tree.annotated.Tag;
 public class TreeIndex implements Tree {
 
 	final private Tree m_tree;
-	final private Map<String, TreeIndex> m_selectors = new HashMap<String,TreeIndex>();
+	final private Map<Selector, TreeIndex> m_selectors = new HashMap<Selector,TreeIndex>();
 	final private TreeIndex[] m_sub;
 
 	public TreeIndex(Tree tree) {
@@ -45,7 +45,7 @@ public class TreeIndex implements Tree {
 		m_sub = sub.toArray(new TreeIndex[sub.size()]);
 	}
 
-	public TreeIndex select(String selector) {
+	public TreeIndex select(Selector selector) {
 		return m_selectors.get(selector);
 	}
 	
@@ -59,7 +59,7 @@ public class TreeIndex implements Tree {
 	}
 
 	@Override
-	public String selector() {
+	public Selector selector() {
 		return m_tree.selector();
 	}
 

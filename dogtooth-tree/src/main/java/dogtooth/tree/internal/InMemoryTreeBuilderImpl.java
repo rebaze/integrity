@@ -15,6 +15,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import dogtooth.tree.Selector;
+import static dogtooth.tree.Selector.*;
+
 import dogtooth.tree.Tree;
 import dogtooth.tree.TreeAlreadySealedException;
 import dogtooth.tree.TreeBuilder;
@@ -33,7 +36,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	private Tree m_hash;
 	private boolean m_sealed = false;
 	final private List<TreeBuilder> m_sub;
-	private String m_selector;
+	private Selector m_selector;
     private Tag m_tag;
 	
 	public InMemoryTreeBuilderImpl( ) {
@@ -45,10 +48,14 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
         }
     }
 	
-	public InMemoryTreeBuilderImpl( final String selector ) {
+	public InMemoryTreeBuilderImpl( final Selector selector ) {
 		this();
 		m_selector = selector;
 	}
+	
+	public InMemoryTreeBuilderImpl( final String selector ) {
+        this( Selector.selector( (selector)));
+    }
 	
 	/* (non-Javadoc)
 	 * @see dogtooth.tree.internal.TreeBuilder#add(byte[])
@@ -90,7 +97,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	 * @see dogtooth.tree.internal.TreeBuilder#childCollector(java.lang.String)
 	 */
 	@Override
-	synchronized public TreeBuilder branch( String selector) {
+	synchronized public TreeBuilder branch( Selector selector) {
         verifyTreeNotSealed();
         TreeBuilder c = new InMemoryTreeBuilderImpl(selector);
         m_sub.add(c);
@@ -123,7 +130,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	 */
 	
 	@Override
-	synchronized public TreeBuilder selector(String selector) {
+	synchronized public TreeBuilder selector(Selector selector) {
 	    verifyTreeNotSealed();
 	    m_selector = selector;
 	    return this;

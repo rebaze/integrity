@@ -8,6 +8,7 @@
  */
 package dogtooth.tree.internal;
 
+import dogtooth.tree.Selector;
 import dogtooth.tree.Tree;
 import dogtooth.tree.TreeTools;
 import dogtooth.tree.annotated.Tag;
@@ -22,11 +23,11 @@ public class InMemoryTreeImpl implements Tree {
 
 	final private String m_hashValue;
 	final private Tree[] m_subs;
-	final private String m_selector;
+	final private Selector m_selector;
 	final private long m_size;
     final private Tag m_tag;
 
-	public InMemoryTreeImpl(  String selector, String hashValue,Tree[] subs, Tag tag) {
+	public InMemoryTreeImpl( Selector selector, String hashValue,Tree[] subs, Tag tag) {
 		m_selector = selector;
 		m_hashValue = hashValue;
 		m_subs = subs;
@@ -44,7 +45,7 @@ public class InMemoryTreeImpl implements Tree {
 	}
 	
 	@Override
-	public String selector() {
+	public Selector selector() {
 		return m_selector;
 	}
 

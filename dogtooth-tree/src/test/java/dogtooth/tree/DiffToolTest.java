@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
-
+import static dogtooth.tree.Selector.*;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 
 public class DiffToolTest {
@@ -50,7 +50,7 @@ public class DiffToolTest {
         Tree sn2 = b2.seal();
 		Tree result = TOOLS.compare( sn1, sn2 );
 		assertEquals("Should no elements",1,result.branches().length);
-		assertEquals("Select what is different","c2",result.branches()[0].selector());
+		assertEquals("Select what is different",selector("c2"),result.branches()[0].selector());
 		assertEquals("Select what is different",TreeTools.MODIFIED,result.branches()[0].tags());
         
 	} 
@@ -58,18 +58,18 @@ public class DiffToolTest {
 	@Test
 	public void diff() throws IOException {
 		// Setup State 1
-		TreeBuilder c1 = new InMemoryTreeBuilderImpl("db1");
-		c1.branch("table1").add("Data1".getBytes());
-		c1.branch("table2").add("Data2".getBytes());
-		c1.branch("table3").add("Data2".getBytes());
+		TreeBuilder c1 = new InMemoryTreeBuilderImpl( "db1" );
+		c1.branch( selector ("table1" ) ).add("Data1".getBytes());
+		c1.branch( selector( "table2" )).add("Data2".getBytes());
+		c1.branch( selector ("table3")).add("Data2".getBytes());
 		
 		Tree sn1 = c1.seal();
 		
 		// Setup State 2
-		TreeBuilder c2 = new InMemoryTreeBuilderImpl("db2");
-		c2.branch("table1").add("Data1".getBytes());
-		c2.branch("table2").add("Data2Mod".getBytes());
-		c2.branch("table4").add("Data1".getBytes());
+		TreeBuilder c2 = new InMemoryTreeBuilderImpl("db1");
+		c2.branch( selector("table1")).add("Data1".getBytes());
+		c2.branch( selector("table2")).add("Data2Mod".getBytes());
+		c2.branch( selector("table4")).add("Data1".getBytes());
 		Tree sn2 = c2.seal();
 		
 		// Actually compare
@@ -80,18 +80,18 @@ public class DiffToolTest {
 		TOOLS.displayTree(0, sn2);
 		TOOLS.displayTree(0, result);
 		
-		assertEquals("Detect 3 modifications",3, result.select("db2").branches().length);
-		assertEquals("Modification in db2.table2",TreeTools.MODIFIED,result.select("db2").select("table2").tags());
-		assertEquals("Modification in db2.table2",TreeTools.REMOVED,result.select("db2").select("table3").tags());
-		assertEquals("Modification in db2.table2",TreeTools.ADDED,result.select("db2").select("table4").tags());
+		assertEquals("Detect 3 modifications",3, result.select( selector ("db1")).branches().length);
+		assertEquals("Modification in db2.table2",TreeTools.MODIFIED, result.select( selector ("db1")).select( selector ("table2")).tags());
+		assertEquals("Modification in db2.table2",TreeTools.REMOVED,result.select( selector( "db1" )).select( selector ( "table3" )).tags());
+		assertEquals("Modification in db2.table2",TreeTools.ADDED,result.select( selector( "db1" )).select( selector("table4")).tags());
 	} 
 	
 	@Test
 	public void testStoreAndLoad() throws IOException {
 		TreeBuilder c1 = new InMemoryTreeBuilderImpl("db1");
-		c1.branch("table1").add("Data1".getBytes());
-		c1.branch("table2").add("Data2".getBytes());
-		c1.branch("table3").add("Data2".getBytes());
+		c1.branch( selector ("table1")).add("Data1".getBytes());
+		c1.branch(selector("table2")).add("Data2".getBytes());
+		c1.branch(selector("table3")).add("Data2".getBytes());
 		
 		Tree sn1 = c1.seal();
 		

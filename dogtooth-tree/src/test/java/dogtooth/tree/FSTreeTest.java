@@ -1,6 +1,6 @@
 package dogtooth.tree;
 
-import static org.junit.Assert.*;
+import static dogtooth.tree.Selector.selector;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class FSTreeTest {
     private void collect( TreeBuilder tb, File base ) {
         for (File f: base.listFiles() ) {
             if (f.isHidden()) continue;
-            TreeBuilder sub = tb.branch( f.getName() );
+            TreeBuilder sub = tb.branch( selector(f.getName()) );
             if (f.isDirectory()) collect(sub,f);else {
                 TOOLS.addStreams(sub,f);
             }

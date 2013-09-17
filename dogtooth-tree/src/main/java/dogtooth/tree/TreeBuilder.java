@@ -34,7 +34,7 @@ public interface TreeBuilder {
      * @param selector to be used from here on.
      * @return this
      */
-    public TreeBuilder selector( String selector );
+    public TreeBuilder selector( Selector selector );
 
     /**
      * Create a new branch (Tree) with given selector.
@@ -44,7 +44,7 @@ public interface TreeBuilder {
      * @param selector to be used on the newly created branch.
      * @return A new sub tree.
      */
-    public TreeBuilder branch( String selector );
+    public TreeBuilder branch( Selector selector );
 
     
     /**

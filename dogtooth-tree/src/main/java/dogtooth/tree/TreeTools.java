@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
-
+import static dogtooth.tree.Selector.*;
 import dogtooth.tree.annotated.Tag;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 
@@ -82,7 +82,7 @@ public class TreeTools {
     /**
 	 */
     public Tree compare( TreeIndex left, TreeIndex right ) {
-        TreeBuilder target = new InMemoryTreeBuilderImpl( "Difference [" + left.selector() + " ] and [" + right.selector() + " ]-" );
+        TreeBuilder target = new InMemoryTreeBuilderImpl( selector("[" + left.selector() + " ] and [" + right.selector() + " ]" ) );
         target.tag( Tag.tag("DIFF"));
         compare( target, left, right );
         return target.seal();

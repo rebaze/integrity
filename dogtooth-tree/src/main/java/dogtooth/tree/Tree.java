@@ -41,7 +41,7 @@ public interface Tree {
 	 * 
 	 * @return string version of the selector.
 	 */
-	String selector();
+	Selector selector();
 
 	/**
 	 * Sub branches of this tree. May be empty or a list of sub trees. All sub branches are supposed to have unique selectors.
