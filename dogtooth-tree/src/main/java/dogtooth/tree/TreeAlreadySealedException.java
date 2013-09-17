@@ -8,6 +8,12 @@
  */
 package dogtooth.tree;
 
+/**
+ * Thrown when {@link TreeBuilder} has been modified (attempted) when seal() has already been called.
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class TreeAlreadySealedException extends TreeException {
 	/**
 	 * 

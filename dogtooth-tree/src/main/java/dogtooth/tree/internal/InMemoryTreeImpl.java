@@ -12,6 +12,12 @@ import dogtooth.tree.Tree;
 import dogtooth.tree.TreeTools;
 import dogtooth.tree.annotated.Tag;
 
+/**
+ * Default implementation not really suitable for very large trees but fast and simple.
+ *
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class InMemoryTreeImpl implements Tree {
 
 	final private String m_hashValue;

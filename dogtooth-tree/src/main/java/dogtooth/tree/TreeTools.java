@@ -24,6 +24,12 @@ import com.thoughtworks.xstream.XStream;
 import dogtooth.tree.annotated.Tag;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 
+/**
+ * Set of tools for this API.
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class TreeTools {
 
     private static final Logger LOG = LoggerFactory.getLogger( TreeTools.class );

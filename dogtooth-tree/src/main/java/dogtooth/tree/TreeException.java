@@ -8,6 +8,12 @@
  */
 package dogtooth.tree;
 
+/**
+ * General Unchecked exception for the Tree API.
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class TreeException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;

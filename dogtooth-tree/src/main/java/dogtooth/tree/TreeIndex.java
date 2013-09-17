@@ -15,6 +15,12 @@ import java.util.Map;
 
 import dogtooth.tree.annotated.Tag;
 
+/**
+ * Index implementation that augments a given tree with some extra index accessors like find by selector and tag.
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class TreeIndex implements Tree {
 
 	final private Tree m_tree;

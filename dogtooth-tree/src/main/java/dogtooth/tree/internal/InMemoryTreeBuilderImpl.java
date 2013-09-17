@@ -21,6 +21,12 @@ import dogtooth.tree.TreeBuilder;
 import dogtooth.tree.TreeException;
 import dogtooth.tree.annotated.Tag;
 
+/**
+ * Default implementation not really suitable for very large trees but fast and simple.
+ * 
+ * @author Toni Menzel <toni.menzel@rebaze.com>
+ *
+ */
 public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	private final static Logger LOG = LoggerFactory.getLogger(InMemoryTreeBuilderImpl.class);
 	private MessageDigest m_digest;
