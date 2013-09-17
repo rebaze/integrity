@@ -3,6 +3,7 @@ package dogtooth.tree.annotated.internal;
 import dogtooth.tree.Tree;
 import dogtooth.tree.TreeBuilder;
 import dogtooth.tree.annotated.Tag;
+import dogtooth.tree.annotated.TaggedTree;
 import dogtooth.tree.annotated.TaggedTreeBuilder;
 
 public class TaggedTreeBuilderImpl implements TaggedTreeBuilder {
@@ -15,27 +16,31 @@ public class TaggedTreeBuilderImpl implements TaggedTreeBuilder {
     }
     
     @Override
-    public TreeBuilder add( byte[] bytes ) {
-        return m_delegate.add( bytes );
+    public TaggedTreeBuilder add( byte[] bytes ) {
+         m_delegate.add( bytes );
+         return this;
     }
 
     @Override
-    public TreeBuilder selector( String selector ) {
-        return m_delegate.selector( selector );
+    public TaggedTreeBuilder selector( String selector ) {
+         m_delegate.selector( selector );
+         return this;
     }
 
     @Override
-    public TreeBuilder branch( String selector ) {
-        return m_delegate.branch( selector );
+    public TaggedTreeBuilder branch( String selector ) {
+         return new TaggedTreeBuilderImpl(m_delegate.branch( selector) );
+         
     }
 
     @Override
-    public Tree seal() {
-        return m_delegate.seal();
+    public TaggedTree seal() {
+        Tree tree = m_delegate.seal();
+        return new TaggedTreeImpl(tree,m_tag);
     }
 
     @Override
-    public TreeBuilder tag( Tag tag ) {
+    public TaggedTreeBuilder tag( Tag tag ) {
        m_tag = tag;
        return this;
     }
