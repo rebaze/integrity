@@ -10,6 +10,7 @@ package dogtooth.tree.internal;
 
 import dogtooth.tree.Tree;
 import dogtooth.tree.TreeTools;
+import dogtooth.tree.annotated.Tag;
 
 public class InMemoryTreeImpl implements Tree {
 
@@ -17,11 +18,13 @@ public class InMemoryTreeImpl implements Tree {
 	final private Tree[] m_subs;
 	final private String m_selector;
 	final private long m_size;
+    final private Tag m_tag;
 
-	public InMemoryTreeImpl(  String selector, String hashValue,Tree[] subs) {
+	public InMemoryTreeImpl(  String selector, String hashValue,Tree[] subs, Tag tag) {
 		m_selector = selector;
 		m_hashValue = hashValue;
 		m_subs = subs;
+		m_tag = tag;
 		long total = 1; // self
 		for (Tree h : subs) {
 			total += h.effectiveSize();
@@ -55,7 +58,8 @@ public class InMemoryTreeImpl implements Tree {
 	public boolean equals(Object other) {
 		if (other instanceof Tree ) {
 			Tree sn2 = (Tree)other;
-			return (new TreeTools().compare(this, sn2).branches().length == 0);
+			Tree compare = new TreeTools().compare( this, sn2 );
+            return (compare.branches().length == 0);
 		}else {
 			throw new RuntimeException("Should not come here..");
 		}
@@ -65,4 +69,9 @@ public class InMemoryTreeImpl implements Tree {
 	public long effectiveSize() {
 		return m_size;
 	}
+
+    @Override
+    public Tag tags() {
+        return m_tag;
+    }
 }

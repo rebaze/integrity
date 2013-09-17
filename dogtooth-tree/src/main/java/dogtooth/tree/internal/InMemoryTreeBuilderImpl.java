@@ -19,6 +19,7 @@ import dogtooth.tree.Tree;
 import dogtooth.tree.TreeAlreadySealedException;
 import dogtooth.tree.TreeBuilder;
 import dogtooth.tree.TreeException;
+import dogtooth.tree.annotated.Tag;
 
 public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	private final static Logger LOG = LoggerFactory.getLogger(InMemoryTreeBuilderImpl.class);
@@ -27,6 +28,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	private boolean m_sealed = false;
 	final private List<TreeBuilder> m_sub;
 	private String m_selector;
+    private Tag m_tag;
 	
 	public InMemoryTreeBuilderImpl( ) {
         try {
@@ -65,7 +67,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 				subHashes.add(subHash);
 				add(subHash.fingerprint().getBytes());
 			}
-			m_hash = new InMemoryTreeImpl(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Tree[subHashes.size()]));
+			m_hash = new InMemoryTreeImpl(m_selector,convertToHex(m_digest.digest()),subHashes.toArray(new Tree[subHashes.size()]),m_tag);
 	        m_sealed = true;
 			resetMembers();
 		}
@@ -120,5 +122,11 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder {
 	    m_selector = selector;
 	    return this;
 	}
+
+    @Override
+    public TreeBuilder tag( Tag tag ) {
+        m_tag = tag;
+        return this;
+    }
 	
 }

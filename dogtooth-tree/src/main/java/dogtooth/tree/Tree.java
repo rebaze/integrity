@@ -8,6 +8,8 @@
  */
 package dogtooth.tree;
 
+import dogtooth.tree.annotated.Tag;
+
 /**
  * The central element for this library. 
  * Actually you will get many instances of {@link Tree}. 
@@ -54,5 +56,11 @@ public interface Tree {
 	 * @return amount of sub elements including the tree itself. (so zero branches trees will have an effective size of 1)
 	 */
 	public long effectiveSize();
+	
+	 /**
+	 *     
+	 * @return Tags for this tree.
+	 */
+	 Tag tags();
 	
 }

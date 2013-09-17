@@ -12,9 +12,16 @@ public class Tag {
     
     public Tag(String... tag) {
         m_tag = new HashSet<String>();
+        for (String t : tag) {
+            m_tag.add( t );
+        }
     }
     
     public boolean contains(Tag other) {
         return m_tag.contains( other );
+    }
+    
+    public String toString() {
+        return m_tag.toString();
     }
 }

@@ -8,6 +8,8 @@
  */
 package dogtooth.tree;
 
+import dogtooth.tree.annotated.Tag;
+
 /**
  * The way for creating Trees. 
  * 
@@ -44,6 +46,15 @@ public interface TreeBuilder {
      */
     public TreeBuilder branch( String selector );
 
+    
+    /**
+     * Tag this tree. Will overwrite previous tags.
+     * @param tag
+     * @return this
+     */
+    TreeBuilder tag( Tag tag );
+
+    
     /**
      * Close this TreeBuilder and seal the entire subtree. This actually gives you the desired inmodifiable datastructure.
      * 

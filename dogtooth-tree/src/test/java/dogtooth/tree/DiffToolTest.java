@@ -50,7 +50,9 @@ public class DiffToolTest {
         Tree sn2 = b2.seal();
 		Tree result = TOOLS.compare( sn1, sn2 );
 		assertEquals("Should no elements",1,result.branches().length);
-		assertEquals("Select what is different","[MOD] c2",result.branches()[0].selector());
+		assertEquals("Select what is different","c2",result.branches()[0].selector());
+		assertEquals("Select what is different",TreeTools.MODIFIED,result.branches()[0].tags());
+        
 	} 
 	
 	@Test
@@ -78,13 +80,10 @@ public class DiffToolTest {
 		TOOLS.displayTree(0, sn2);
 		TOOLS.displayTree(0, result);
 		
-		assertEquals("Detect 3 modifications",3, result.select("[MOD] db2").branches().length);
-		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[MOD] table2"));
-		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[REMOVED] table3"));
-		assertNotNull("Modification in db2.table2",result.select("[MOD] db2").select("[ADDED] table4"));
-		
-		//assertEquals("Should have one item",1,result.getElements().length);
-		//assertEquals("Select what is different","c2",result.getElements()[0].getSelector());
+		assertEquals("Detect 3 modifications",3, result.select("db2").branches().length);
+		assertEquals("Modification in db2.table2",TreeTools.MODIFIED,result.select("db2").select("table2").tags());
+		assertEquals("Modification in db2.table2",TreeTools.REMOVED,result.select("db2").select("table3").tags());
+		assertEquals("Modification in db2.table2",TreeTools.ADDED,result.select("db2").select("table4").tags());
 	} 
 	
 	@Test

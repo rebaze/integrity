@@ -21,11 +21,17 @@ import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
+import dogtooth.tree.annotated.Tag;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 
 public class TreeTools {
 
     private static final Logger LOG = LoggerFactory.getLogger( TreeTools.class );
+    
+    public static final Tag ADDED = new Tag("ADDED");
+    public static final Tag REMOVED = new Tag("REMOVED");
+    public static final Tag MODIFIED = new Tag("MODIFIED");
+    
     final private PrintStream m_out;
     private long m_dataAmountRead = 0;
 
@@ -71,6 +77,7 @@ public class TreeTools {
 	 */
     public Tree compare( TreeIndex left, TreeIndex right ) {
         TreeBuilder target = new InMemoryTreeBuilderImpl( "Difference [" + left.selector() + " ] and [" + right.selector() + " ]-" );
+        target.tag( Tag.tag("DIFF"));
         compare( target, left, right );
         return target.seal();
     }
@@ -83,14 +90,14 @@ public class TreeTools {
         // Unfold "empty" elements.
         if( left == null ) {
             for( TreeIndex tree : right.branches() ) {
-                TreeBuilder mod = collector.branch( "[ADDED] " + tree.selector() );
+                TreeBuilder mod = collector.branch( tree.selector() ).tag( ADDED );
                 compare( mod, null, tree );
             }
             return;
         }
         if( right == null ) {
             for( TreeIndex tree : left.branches() ) {
-                TreeBuilder mod = collector.branch( "[REMOVED] " + tree.selector() );
+                TreeBuilder mod = collector.branch( tree.selector() ).tag( REMOVED );
                 compare( mod, tree, null );
             }
             return;
@@ -98,14 +105,14 @@ public class TreeTools {
 
         if( !left.fingerprint().equals( right.fingerprint() ) ) {
             // compare next level:
-            TreeBuilder modification = collector.branch( "[MOD] " + right.selector() );
+            TreeBuilder modification = collector.branch( right.selector() ).tag(MODIFIED);
             for( TreeIndex tree : left.branches() ) {
                 // first check if tree is a selectable node or not:
                 if( tree.selectable() ) {
                     TreeIndex origin = right.select( tree.selector() );
                     if( origin == null ) {
                         // Deleted element:
-                        TreeBuilder removed = modification.branch( "[REMOVED] " + tree.selector() );
+                        TreeBuilder removed = modification.branch( tree.selector() ).tag(REMOVED);
                         // Not so sure..
                         compare( removed, tree, origin );
                     } else {
@@ -124,7 +131,7 @@ public class TreeTools {
                     TreeIndex origin = left.select( tree.selector() );
                     if( origin == null ) {
                         // New element:
-                        TreeBuilder added = modification.branch( "[ADDED] " + tree.selector() );
+                        TreeBuilder added = modification.branch( tree.selector() ).tag( ADDED );
                         compare( added, origin, tree );
                     } else {
                         // already worked on.
@@ -161,7 +168,7 @@ public class TreeTools {
         for( int i = 0; i < depth; i++ ) {
             m_out.print( "--" );
         }
-        m_out.println( " " + dbHash.selector() );
+        m_out.println( " " + dbHash.tags() + " "+ dbHash.selector() );
         depth++;
         for( Tree sub : dbHash.branches() ) {
             prettyPrint( depth, sub );

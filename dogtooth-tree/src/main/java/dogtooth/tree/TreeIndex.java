@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dogtooth.tree.annotated.Tag;
+
 public class TreeIndex implements Tree {
 
 	final private Tree m_tree;
@@ -68,5 +70,10 @@ public class TreeIndex implements Tree {
 	public long effectiveSize() {
 		return m_tree.effectiveSize();
 	}
+
+    @Override
+    public Tag tags() {
+        return m_tree.tags();
+    }
 
 }

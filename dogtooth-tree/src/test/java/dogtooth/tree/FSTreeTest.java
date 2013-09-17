@@ -19,7 +19,7 @@ public class FSTreeTest {
     @Test
     public void testLoading() throws IOException {
         TreeBuilder tb = new InMemoryTreeBuilderImpl("FS");
-        File start = new File("/Users/tonit/Downloads");
+        File start = new File(".");
         LOG.info("Indexing " + start.getAbsolutePath() + " ..");
         collect(tb,start);
         Tree result = tb.seal();
@@ -28,7 +28,7 @@ public class FSTreeTest {
             LOG.info("Comparing to existing snapshot @ " + f.getAbsolutePath() + " ..");
             Tree old = TOOLS.load( f );
             Tree diff = TOOLS.compare( old, result );
-            //TOOLS.prettyPrint( 0, diff );
+            TOOLS.prettyPrint( 0, diff );
         }else {
             TOOLS.store( result,f );
             LOG.info("Indexed " + start.getAbsolutePath() + " @ " + f.getAbsolutePath() + " as Tree: " + result + " Datasize: " + TOOLS.prettyDataSize());
