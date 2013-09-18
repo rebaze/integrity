@@ -11,6 +11,8 @@ package dogtooth.tree.annotated;
 import java.util.HashSet;
 import java.util.Set;
 
+import dogtooth.tree.Selector;
+
 public class Tag {
     final private Set<String> m_tag;
     
@@ -31,5 +33,17 @@ public class Tag {
     
     public String toString() {
         return m_tag.toString();
+    }
+    
+    public int hashCode() {
+        return m_tag.hashCode();       
+    }
+    
+    public boolean equals(Object other) {
+        if (other instanceof Tag) {
+            Tag ot = (Tag)other;
+            return ot.toString().equals( toString() );
+        }
+        return false;
     }
 }
