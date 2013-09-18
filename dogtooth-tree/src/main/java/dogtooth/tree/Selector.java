@@ -16,6 +16,14 @@ public class Selector {
         return new Selector( s );
     }
     
+    public static Selector[] selector(String... s) {
+        Selector[] res = new Selector[s.length];
+        for (int i = 0;i<s.length;i++) {
+            res[i] = selector(s[i]);
+        }
+        return res;
+    }
+    
     public Selector(String s) {
         assert (s != null);
         m_name = s;
@@ -35,5 +43,9 @@ public class Selector {
             return m_name.equals( ot.name() );
         }
         return false;
+    }
+    
+    public String toString() {
+        return "[Selector name=" + m_name + "]";
     }
 }

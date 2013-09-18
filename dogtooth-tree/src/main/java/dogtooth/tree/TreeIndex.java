@@ -46,7 +46,15 @@ public class TreeIndex implements Tree {
 	}
 
 	public TreeIndex select(Selector selector) {
-		return m_selectors.get(selector);
+        return m_selectors.get( selector );
+    }
+	
+	public TreeIndex select(Selector... selectors) {
+	    TreeIndex r = this;
+	    for (Selector s : selectors) {
+	        r = r.select( s );
+	    }
+		return r;
 	}
 	
 	public boolean selectable() {
