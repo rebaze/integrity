@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dogtooth.tree.Selector;
-import static dogtooth.tree.Selector.*;
 
 import dogtooth.tree.Tree;
 import dogtooth.tree.TreeAlreadySealedException;
