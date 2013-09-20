@@ -32,7 +32,7 @@ public class InMemoryTreeImpl implements Tree {
 		m_hashValue = hashValue;
 		m_subs = subs;
 		m_tag = tag;
-		long total = 1; // self
+		long total = 0; // don't count itself
 		for (Tree h : subs) {
 			total += h.effectiveSize();
 		}
