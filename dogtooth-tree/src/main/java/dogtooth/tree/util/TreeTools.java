@@ -33,7 +33,6 @@ import dogtooth.tree.TreeException;
 public class TreeTools {
 
     private static final Logger LOG = LoggerFactory.getLogger( TreeTools.class );
-    private long m_dataAmountRead = 0L;
        
     public File store( Tree tree ) throws IOException {
         // persist tree
@@ -59,34 +58,5 @@ public class TreeTools {
         return (Tree) xstream.fromXML( this.getClass().getResourceAsStream( locationClasspath ) );
     }  
 
-    public void addStreams( final TreeBuilder builder, final InputStream is )
-        throws IOException {
-        byte[] bytes = new byte[1024];
-        int numRead = 0;
-        while( (numRead = is.read( bytes )) >= 0 ) {
-            builder.add( Arrays.copyOf( bytes, numRead ) );
-            m_dataAmountRead += numRead;
-        }
-    }
-
-    public void addStreams( final TreeBuilder builder, final File f ) {
-        try {
-            InputStream is = new FileInputStream( f );
-            try {
-                addStreams( builder, is );
-            }
-            finally {
-                if( is != null )
-                    try {
-                        is.close();
-                    }
-                    catch( IOException e ) {
-                        LOG.warn("Problem closing file " + f.getAbsolutePath(),e);
-                    }
-            }
-        }
-        catch( IOException ioE ) {
-            throw new TreeException( "Problem reading file " + f.getAbsolutePath() + " contents.", ioE );
-        }
-    }
+   
 }

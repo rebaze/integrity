@@ -6,13 +6,12 @@ import static dogtooth.tree.util.TreeCompare.*;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.plaf.metal.MetalIconFactory.TreeFolderIcon;
-
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
+import dogtooth.tree.util.StreamTreeBuilder;
 import dogtooth.tree.util.TreeConsoleFormatter;
 import dogtooth.tree.util.TreeTools;
 
@@ -44,12 +43,12 @@ public class FSTreeTest {
         // assertEquals(3,result.branches().length);
     }
 
-    private void collect( TreeBuilder tb, File base ) {
+    private void collect( TreeBuilder builder, File base ) {
         for (File f: base.listFiles() ) {
             if (f.isHidden()) continue;
-            TreeBuilder sub = tb.branch( selector(f.getName()) );
+            TreeBuilder sub = builder.branch( selector(f.getName()) );
             if (f.isDirectory()) collect(sub,f);else {
-                TOOLS.addStreams(sub,f);
+                new StreamTreeBuilder( sub ).add(f);
             }
        }
     }
