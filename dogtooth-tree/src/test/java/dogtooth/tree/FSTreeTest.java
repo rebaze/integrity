@@ -1,20 +1,26 @@
 package dogtooth.tree;
 
 import static dogtooth.tree.Selector.selector;
+import static dogtooth.tree.util.TreeCompare.*;
 
 import java.io.File;
 import java.io.IOException;
+
+import javax.swing.plaf.metal.MetalIconFactory.TreeFolderIcon;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
+import dogtooth.tree.util.TreeConsoleFormatter;
+import dogtooth.tree.util.TreeTools;
 
 public class FSTreeTest {
     private final static Logger LOG = LoggerFactory.getLogger(FSTreeTest.class);
 
     private final TreeTools TOOLS = new TreeTools();
+    private final TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
     
     @Test
     public void testLoading() throws IOException {
@@ -27,11 +33,11 @@ public class FSTreeTest {
         if (f.exists()) {
             LOG.info("Comparing to existing snapshot @ " + f.getAbsolutePath() + " ..");
             Tree old = TOOLS.load( f );
-            Tree diff = TOOLS.compare( old, result );
-            TOOLS.prettyPrint( 0, diff );
+            Tree diff = compare( old, result );
+            FORMAT.prettyPrint( 0, diff );
         }else {
             TOOLS.store( result,f );
-            LOG.info("Indexed " + start.getAbsolutePath() + " @ " + f.getAbsolutePath() + " as Tree: " + result + " Datasize: " + TOOLS.prettyDataSize());
+            LOG.info("Indexed " + start.getAbsolutePath() + " @ " + f.getAbsolutePath() + " as Tree: " + result);
         }
        
         // assertEquals(73,result.effectiveSize());

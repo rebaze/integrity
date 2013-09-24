@@ -10,8 +10,9 @@ package dogtooth.tree.internal;
 
 import dogtooth.tree.Selector;
 import dogtooth.tree.Tree;
-import dogtooth.tree.TreeTools;
 import dogtooth.tree.annotated.Tag;
+import dogtooth.tree.util.TreeTools;
+import static dogtooth.tree.util.TreeCompare.*;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -65,7 +66,7 @@ public class InMemoryTreeImpl implements Tree {
 	public boolean equals(Object other) {
 		if (other instanceof Tree ) {
 			Tree sn2 = (Tree)other;
-			Tree compare = new TreeTools().compare( this, sn2 );
+			Tree compare = compare( this, sn2 );
             return (compare.branches().length == 0);
 		}else {
 			throw new RuntimeException("Should not come here..");

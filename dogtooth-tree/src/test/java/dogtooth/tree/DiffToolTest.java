@@ -14,18 +14,23 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
+
 import static dogtooth.tree.Selector.*;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
+import dogtooth.tree.util.TreeCompare;
+import dogtooth.tree.util.TreeConsoleFormatter;
+import dogtooth.tree.util.TreeTools;
+import static dogtooth.tree.util.TreeCompare.*;
 
 public class DiffToolTest {
 	
-	private static TreeTools TOOLS = new TreeTools();
+	private static TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
 	
 	@Test
 	public void diffIdenticalEmpty() {
 		Tree sn1 = new InMemoryTreeBuilderImpl("c1").seal();
 		Tree sn2 = new InMemoryTreeBuilderImpl("c2").seal();
-		Tree result = TOOLS.compare( sn1, sn2 );
+		Tree result = compare( sn1, sn2 );
 		assertEquals("Should no elements",0,result.branches().length);
 	} 
 	
@@ -37,7 +42,7 @@ public class DiffToolTest {
 		InMemoryTreeBuilderImpl b2 = new InMemoryTreeBuilderImpl("c2");
 		b2.add("Some".getBytes());
         Tree sn2 = b2.seal();
-		Tree result = TOOLS.compare( sn1, sn2 );
+		Tree result = compare( sn1, sn2 );
 		assertEquals("Should no elements",0,result.branches().length);
 	} 
 	
@@ -48,10 +53,10 @@ public class DiffToolTest {
         Tree sn1 = b1.seal();
         InMemoryTreeBuilderImpl b2 = new InMemoryTreeBuilderImpl("c2");
         Tree sn2 = b2.seal();
-		Tree result = TOOLS.compare( sn1, sn2 );
+		Tree result = compare( sn1, sn2 );
 		assertEquals("Should no elements",1,result.branches().length);
 		assertEquals("Select what is different",selector("c2"),result.branches()[0].selector());
-		assertEquals("Select what is different",TreeTools.MODIFIED,result.branches()[0].tags());
+		assertEquals("Select what is different",TreeCompare.MODIFIED,result.branches()[0].tags());
         
 	} 
 	
@@ -73,17 +78,17 @@ public class DiffToolTest {
 		Tree sn2 = c2.seal();
 		
 		// Actually compare
-		TreeIndex result = new TreeIndex(TOOLS.compare( sn1, sn2 ));
+		TreeIndex result = new TreeIndex(compare( sn1, sn2 ));
 		
 		// Display both for visual reference..
-		TOOLS.displayTree(0, sn1);
-		TOOLS.displayTree(0, sn2);
-		TOOLS.displayTree(0, result);
+		FORMAT.displayTree(0, sn1);
+		FORMAT.displayTree(0, sn2);
+		FORMAT.displayTree(0, result);
 		
 		assertEquals("Detect 3 modifications",3, result.select( selector ("db1")).branches().length);
-		assertEquals("Modification in db2.table2",TreeTools.MODIFIED, result.select( selector ("db1")).select( selector ("table2")).tags());
-		assertEquals("Modification in db2.table2",TreeTools.REMOVED,result.select( selector( "db1" )).select( selector ( "table3" )).tags());
-		assertEquals("Modification in db2.table2",TreeTools.ADDED,result.select( selector( "db1" )).select( selector("table4")).tags());
+		assertEquals("Modification in db2.table2",TreeCompare.MODIFIED, result.select( selector ("db1")).select( selector ("table2")).tags());
+		assertEquals("Modification in db2.table2",TreeCompare.REMOVED,result.select( selector( "db1" )).select( selector ( "table3" )).tags());
+		assertEquals("Modification in db2.table2",TreeCompare.ADDED,result.select( selector( "db1" )).select( selector("table4")).tags());
 	} 
 	
 	@Test
@@ -94,9 +99,9 @@ public class DiffToolTest {
 		c1.branch(selector("table3")).add("Data2".getBytes());
 		
 		Tree sn1 = c1.seal();
-		
-		File f = TOOLS.store(sn1);
-		Tree releoaded = TOOLS.load(f);
+		TreeTools tools = new TreeTools();
+		File f = tools.store(sn1);
+		Tree releoaded = tools.load(f);
 		assertEquals(sn1,releoaded);
 	}
 }
