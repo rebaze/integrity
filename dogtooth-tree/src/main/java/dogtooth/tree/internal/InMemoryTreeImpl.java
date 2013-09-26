@@ -25,7 +25,6 @@ public class InMemoryTreeImpl implements Tree {
 	final private String m_hashValue;
 	final private Tree[] m_subs;
 	final private Selector m_selector;
-	final private long m_size;
     final private Tag m_tag;
 
 	public InMemoryTreeImpl( Selector selector, String hashValue,Tree[] subs, Tag tag) {
@@ -33,11 +32,6 @@ public class InMemoryTreeImpl implements Tree {
 		m_hashValue = hashValue;
 		m_subs = subs;
 		m_tag = tag;
-		long total = (subs.length == 0) ? total =1 : 0;
-		for (Tree h : subs) {
-			total += h.effectiveSize();
-		}
-		m_size = total;
 	}
 	
 	@Override
@@ -56,7 +50,7 @@ public class InMemoryTreeImpl implements Tree {
 	}
 	
 	public String toString() {
-		return m_hashValue.substring(0,6) + " /Selector: " + m_selector + " /Children: " + m_subs.length + " /Total: " + m_size; 
+		return m_hashValue.substring(0,6) + " /Selector: " + m_selector + " /Children: " + m_subs.length; 
 	}
 	
 	public int hashCode() {
@@ -71,11 +65,6 @@ public class InMemoryTreeImpl implements Tree {
 		}else {
 			throw new RuntimeException("Should not come here..");
 		}
-	}
-
-	@Override
-	public long effectiveSize() {
-		return m_size;
 	}
 
     @Override

@@ -58,5 +58,13 @@ public class TreeTools {
         return (Tree) xstream.fromXML( this.getClass().getResourceAsStream( locationClasspath ) );
     }  
 
+    public long nodes(Tree tree) {
+    	int total = 1;
+    	for (Tree sub : tree.branches()) {
+    		total += nodes(sub);
+    	}
+    	return total;
+    	
+    }
    
 }

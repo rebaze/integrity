@@ -50,13 +50,6 @@ public interface Tree {
 	 */
 	Tree[] branches();
 	
-	/**
-	 * More of a statistics method useful for estimating the overall size of this tree in terms of memory cost.
-	 * 
-	 * @return amount of sub elements including the tree itself. (so zero branches trees will have an effective size of 1)
-	 */
-	public long effectiveSize();
-	
 	 /**
 	 *     
 	 * @return Tags for this tree.

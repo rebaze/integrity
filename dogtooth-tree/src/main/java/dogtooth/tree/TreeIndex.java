@@ -80,11 +80,6 @@ public class TreeIndex implements Tree {
 		return "TreeIndex of [" + m_tree.toString() + "] with selectors: " + m_selectors.size();
 	}
 
-	@Override
-	public long effectiveSize() {
-		return m_tree.effectiveSize();
-	}
-
     @Override
     public Tag tags() {
         return m_tree.tags();

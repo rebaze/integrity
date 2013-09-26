@@ -35,7 +35,7 @@ public class TreeConsoleFormatter {
 
     public void prettyPrint( int depth, Tree dbHash ) {
         if( depth == 0 )
-            m_out.println( " ---- TREE: Total size: " + dbHash.effectiveSize());
+            m_out.println( " ---- TREE: ");
         m_out.print( "+" );
         for( int i = 0; i < depth; i++ ) {
             m_out.print( "--" );
