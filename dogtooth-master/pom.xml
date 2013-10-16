@@ -6,12 +6,12 @@
   <parent>
     <groupId>com.rebaze.dogtooth</groupId>
     <artifactId>dogtooth-kitchen</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
   </parent>
 
   <groupId>com.rebaze.dogtooth</groupId>
   <artifactId>dogtooth-master</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
 

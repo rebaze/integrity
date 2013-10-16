@@ -5,7 +5,7 @@
 
 	<groupId>com.rebaze.dogtooth</groupId>
 	<artifactId>dogtooth-kitchen</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Dogtooth - Kitchen</name>
@@ -16,7 +16,7 @@
 		<url>http://github.com/rebaze/dogtooth/</url>
 		<connection>scm:git:git://github.com/rebaze/dogtooth.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/rebaze/dogtooth.git</developerConnection>
-		<tag>dogtooth-kitchen-0.1.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<distributionManagement>
