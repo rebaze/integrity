@@ -9,11 +9,8 @@
 package dogtooth.tree.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +18,7 @@ import org.slf4j.LoggerFactory;
 import com.thoughtworks.xstream.XStream;
 
 import dogtooth.tree.Tree;
-import dogtooth.tree.TreeBuilder;
-import dogtooth.tree.TreeException;
+import dogtooth.tree.annotated.Tag;
 
 /**
  * Set of tools for this API.
@@ -39,7 +35,7 @@ public class TreeTools {
         File f = File.createTempFile( "tree", ".xml" );
         return store( tree, f );
     }
-
+    
     public File store( Tree tree, File f ) throws IOException {
         // persist tree
         XStream xstream = new XStream();
@@ -64,7 +60,7 @@ public class TreeTools {
     		total += nodes(sub);
     	}
     	return total;
-    	
+    
     }
    
 }
