@@ -74,6 +74,15 @@ public class TreeTools {
         return new InMemoryTreeBuilderImpl(this);
     }
 
+    public StreamTreeBuilder createStreamTreeBuilder() {
+        return new StreamTreeBuilder(createTreeBuilder());
+    }
+
+    public StreamTreeBuilder createStreamTreeBuilder(TreeBuilder delegate) {
+        return new StreamTreeBuilder(delegate);
+    }
+
+
     public Tree createTree( Selector selector, String hashValue,Tree[] subs, Tag tag) {
         return new InMemoryTreeImpl( this, selector,hashValue,subs,tag);
     }

@@ -26,7 +26,7 @@ public class StreamTreeBuilder implements TreeBuilder {
         m_delegate = delegate;
     }
 
-    public void add( final InputStream is )
+    public StreamTreeBuilder add( final InputStream is )
         throws IOException
     {
         byte[] bytes = new byte[ 1024 ];
@@ -35,9 +35,10 @@ public class StreamTreeBuilder implements TreeBuilder {
             m_delegate.add( Arrays.copyOf( bytes, numRead ) );
             m_dataAmountRead += numRead;
         }
+        return this;
     }
 
-    public void add( final File f )
+    public StreamTreeBuilder add( final File f )
     {
         try {
             InputStream is = new FileInputStream( f );
@@ -55,6 +56,7 @@ public class StreamTreeBuilder implements TreeBuilder {
         } catch( IOException ioE ) {
             throw new TreeException( "Problem reading file " + f.getAbsolutePath() + " contents.", ioE );
         }
+        return this;
     }
 
     public long getDataRead()
@@ -89,14 +91,14 @@ public class StreamTreeBuilder implements TreeBuilder {
     }
 
     @Override
-    public TreeBuilder branch( Tree subtree )
+    public StreamTreeBuilder branch( Tree subtree )
     {
         LOG.warn( "Branching from StreamTreeBuilder is pretty unusually as it means you add raw data to an intermediate tree. " );
         return new StreamTreeBuilder( m_delegate.branch( subtree ) );
     }
 
     @Override
-    public TreeBuilder tag( Tag tag )
+    public StreamTreeBuilder tag( Tag tag )
     {
         m_delegate.tag( tag );
         return this;
