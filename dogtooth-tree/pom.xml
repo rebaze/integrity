@@ -20,6 +20,7 @@
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
       <version>${xstream.version}</version>
+	  <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
