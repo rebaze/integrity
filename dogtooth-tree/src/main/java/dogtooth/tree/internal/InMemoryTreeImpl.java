@@ -26,8 +26,10 @@ public class InMemoryTreeImpl implements Tree {
 	final private Tree[] m_subs;
 	final private Selector m_selector;
     final private Tag m_tag;
+    private final TreeTools m_tools;
 
-	public InMemoryTreeImpl( Selector selector, String hashValue,Tree[] subs, Tag tag) {
+    public InMemoryTreeImpl(TreeTools treeTools, Selector selector, String hashValue, Tree[] subs, Tag tag) {
+        m_tools = treeTools;
 		m_selector = selector;
 		m_hashValue = hashValue;
 		m_subs = subs;
@@ -60,7 +62,7 @@ public class InMemoryTreeImpl implements Tree {
 	public boolean equals(Object other) {
 		if (other instanceof Tree ) {
 			Tree sn2 = (Tree)other;
-			Tree compare = compare( this, sn2 );
+			Tree compare = m_tools.compare( this, sn2 );
             return (compare.branches().length == 0);
 		}else {
 			throw new RuntimeException("Should not come here..");

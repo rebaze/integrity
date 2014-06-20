@@ -8,8 +8,10 @@
  */
 package dogtooth.tree;
 
+import static dogtooth.tree.Selector.selector;
 import static org.junit.Assert.*;
 
+import dogtooth.tree.util.TreeTools;
 import org.junit.Test;
 
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
@@ -17,14 +19,15 @@ import static dogtooth.tree.Selector.*;
 
 
 public class SimpleHashTest {
+    private static final TreeTools m_tools = new TreeTools().setDigestAlgorithm("SHA-1");
 	
 	@Test
 	public void emptyCollector() throws Exception {
 		
-		TreeBuilder root = new InMemoryTreeBuilderImpl("Root");
+		TreeBuilder root = m_tools.createTreeBuilder().selector(selector("Root"));
 		assertEquals("da39a3ee5e6b4b0d3255bfef95601890afd80709",root.seal().fingerprint());
 		
-		TreeBuilder root2 = new InMemoryTreeBuilderImpl("RootOther");
+		TreeBuilder root2 = m_tools.createTreeBuilder().selector(selector("RootOther"));
 		assertEquals(root.seal().fingerprint(),root2.seal().fingerprint());
 		
 	}
@@ -32,13 +35,13 @@ public class SimpleHashTest {
 	@Test
 	public void singleElements() throws Exception {	
 		String[] elements = new String[] { "element1","element2"};
-		TreeBuilder root = new InMemoryTreeBuilderImpl("Root");
+		TreeBuilder root = m_tools.createTreeBuilder().selector(selector("Root"));
 		root.add(elements[0].getBytes());
 		root.add(elements[1].getBytes());
 		assertEquals("2a190d88c7a164f242ea707acf5d57bc990f0ce1",root.seal().fingerprint());
 		
 		String[] elementsOther = new String[] { "foo","element2"};
-		TreeBuilder root2 = new InMemoryTreeBuilderImpl("Root");
+		TreeBuilder root2 = m_tools.createTreeBuilder().selector(selector("Root"));
 		root2.add(elementsOther[0].getBytes());
 		root2.add(elementsOther[1].getBytes());
 		assertEquals("0dc0638a504e1b0415a37340bf57d14b75b14308",root2.seal().fingerprint());
@@ -46,7 +49,7 @@ public class SimpleHashTest {
 	
 	@Test
 	public void simpleTreeTest() throws Exception {	
-		TreeBuilder root = new InMemoryTreeBuilderImpl("Root1");
+		TreeBuilder root = m_tools.createTreeBuilder().selector(selector("Root1"));
 		TreeBuilder sub1 = root.branch( selector("child1"));
 		sub1.add("One".getBytes());
 		sub1.add("Two".getBytes());
@@ -56,7 +59,7 @@ public class SimpleHashTest {
 		sub2.add("Four".getBytes());
 		Tree tree1 = root.seal();
 		
-		TreeBuilder root2 = new InMemoryTreeBuilderImpl("Root2");
+		TreeBuilder root2 = m_tools.createTreeBuilder().selector(selector("Root2"));
 		TreeBuilder sub3 = root2.branch( selector ("child3" ));
 		sub3.add("Different".getBytes());
 		sub3.add("Two".getBytes());

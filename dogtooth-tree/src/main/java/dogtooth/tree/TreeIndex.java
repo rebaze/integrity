@@ -29,7 +29,7 @@ public class TreeIndex implements Tree {
 
 	public TreeIndex(Tree tree) {
 		if (tree instanceof TreeIndex) {
-			throw new RuntimeException("You should not wrap a TreeIndex.. waaaayyy to expensive..");
+			throw new RuntimeException("You should not wrap a TreeIndex.. waaaayyy too expensive..");
 		}
 		m_tree = tree;
 		// build index on selectors

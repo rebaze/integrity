@@ -13,27 +13,13 @@ public class TreeCompare {
     public static final Tag ADDED = new Tag("ADDED");
     public static final Tag REMOVED = new Tag("REMOVED");
     public static final Tag MODIFIED = new Tag("MODIFIED");
-    
-    /**
-     */
-    static public Tree compare( Tree left, Tree right ) {
-        return compare( new TreeIndex( left ), new TreeIndex( right ) );
-    }
-    
-    /**
-     */
-    static public Tree compare( TreeIndex left, TreeIndex right ) {
-        TreeBuilder target = new InMemoryTreeBuilderImpl( selector("[" + left.selector() + " ] and [" + right.selector() + " ]" ) );
-        target.tag( Tag.tag("DIFF"));
-        compare( target, left, right );
-        return target.seal();
-    }
+
 
 
     /**
      * 
      */
-    static private void compare( TreeBuilder collector, TreeIndex left, TreeIndex right ) {
+    static void compare(TreeBuilder collector, TreeIndex left, TreeIndex right) {
         // Unfold "empty" elements.
         if( left == null ) {
             for( TreeIndex tree : right.branches() ) {

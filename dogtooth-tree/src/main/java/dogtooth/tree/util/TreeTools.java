@@ -11,14 +11,20 @@ package dogtooth.tree.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+import dogtooth.tree.*;
+import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
+import dogtooth.tree.internal.InMemoryTreeImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 
-import dogtooth.tree.Tree;
 import dogtooth.tree.annotated.Tag;
+
+import static dogtooth.tree.Selector.selector;
 
 /**
  * Set of tools for this API.
@@ -29,7 +35,9 @@ import dogtooth.tree.annotated.Tag;
 public class TreeTools {
 
     private static final Logger LOG = LoggerFactory.getLogger( TreeTools.class );
-       
+    private static final String DEFAULT_HASH_ALOGO = "SHA-1";
+    private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
+
     public File store( Tree tree ) throws IOException {
         // persist tree
         File f = File.createTempFile( "tree", ".xml" );
@@ -60,7 +68,41 @@ public class TreeTools {
     		total += nodes(sub);
     	}
     	return total;
-    
     }
-   
+
+    public TreeBuilder createTreeBuilder() {
+        return new InMemoryTreeBuilderImpl(this);
+    }
+
+    public Tree createTree( Selector selector, String hashValue,Tree[] subs, Tag tag) {
+        return new InMemoryTreeImpl( this, selector,hashValue,subs,tag);
+    }
+
+    public TreeTools setDigestAlgorithm(String algo) {
+        m_messageDigestAlgorithm = algo;
+        return this;
+    }
+
+    public MessageDigest createMessageDigest() {
+        try {
+            return MessageDigest.getInstance(m_messageDigestAlgorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new TreeException("Problem loading digest with algorthm.");
+        }
+    }
+
+    /**
+     */
+     public Tree compare( Tree left, Tree right ) {
+        return compare( new TreeIndex( left ), new TreeIndex( right ) );
+    }
+
+    /**
+     */
+     public Tree compare( TreeIndex left, TreeIndex right ) {
+        TreeBuilder target = createTreeBuilder().selector( selector("[" + left.selector() + " ] and [" + right.selector() + " ]" ) );
+        target.tag( Tag.tag("DIFF"));
+        TreeCompare.compare(target, left, right);
+        return target.seal();
+    }
 }

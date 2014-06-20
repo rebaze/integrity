@@ -14,22 +14,22 @@ public class InMemoryTreeImplTest {
     @Test
     public void testEmptyTreeSize() {
     	
-        assertEquals( "Trunk only", 1, tools.nodes( new InMemoryTreeBuilderImpl( selector( "foo" ) ).seal()) );
+        assertEquals( "Trunk only", 1, tools.nodes( tools.createTreeBuilder().selector( selector( "foo" ) ).seal()) );
     }
 
     @Test
     public void testAddsOnlyOnSingle() {
-        assertEquals( "Trunk only", 1, tools.nodes(new InMemoryTreeBuilderImpl( selector( "foo" ) ).add( "data".getBytes() ).seal() ));
+        assertEquals( "Trunk only", 1, tools.nodes( tools.createTreeBuilder().selector( selector( "foo" ) ).add( "data".getBytes() ).seal() ));
     }
 
     @Test
     public void testSingleBranch() {
-        assertEquals( 1, tools.nodes(new InMemoryTreeBuilderImpl( selector( "foo" ) ).branch( selector( "branch" ) ).seal()) );
+        assertEquals( 1, tools.nodes( tools.createTreeBuilder().selector( selector( "foo" ) ).branch( selector( "branch" ) ).seal()) );
     }
 
     @Test
     public void testMore() {
-        TreeBuilder tb = new InMemoryTreeBuilderImpl( selector( "trunk" ) );
+        TreeBuilder tb = tools.createTreeBuilder().selector(selector( "trunk" ) );
         tb.branch( selector( "branch2" ) ).add( "data1".getBytes() );
         tb.branch( selector( "branch3" ) ).add( "data1".getBytes() );
         assertEquals( 3,tools.nodes( tb.seal()) );
