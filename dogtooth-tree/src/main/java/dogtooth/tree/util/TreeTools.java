@@ -8,21 +8,15 @@
  */
 package dogtooth.tree.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import dogtooth.tree.*;
+import dogtooth.tree.annotated.Tag;
 import dogtooth.tree.internal.InMemoryTreeBuilderImpl;
 import dogtooth.tree.internal.InMemoryTreeImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thoughtworks.xstream.XStream;
-
-import dogtooth.tree.annotated.Tag;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import static dogtooth.tree.Selector.selector;
 
@@ -37,30 +31,6 @@ public class TreeTools {
     private static final Logger LOG = LoggerFactory.getLogger( TreeTools.class );
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
-
-    public File store( Tree tree ) throws IOException {
-        // persist tree
-        File f = File.createTempFile( "tree", ".xml" );
-        return store( tree, f );
-    }
-    
-    public File store( Tree tree, File f ) throws IOException {
-        // persist tree
-        XStream xstream = new XStream();
-        xstream.toXML( tree, new FileOutputStream( f ) );
-        LOG.debug( "Stored tree to " + f.getAbsolutePath() );
-        return f;
-    }
-
-    public Tree load( File f ) {
-        XStream xstream = new XStream();
-        return (Tree) xstream.fromXML( f );
-    }
-
-    public Tree load( String locationClasspath ) {
-        XStream xstream = new XStream();
-        return (Tree) xstream.fromXML( this.getClass().getResourceAsStream( locationClasspath ) );
-    }  
 
     public long nodes(Tree tree) {
     	int total = 1;

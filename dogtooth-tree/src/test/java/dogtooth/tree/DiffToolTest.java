@@ -60,46 +60,32 @@ public class DiffToolTest {
 	
 	@Test
 	public void diff() throws IOException {
-		// Setup State 1
-		TreeBuilder c1 = TOOLS.createTreeBuilder().selector(selector( "db1" ));
-		c1.branch( selector ("table1" ) ).add("Data1".getBytes());
-		c1.branch( selector( "table2" )).add("Data2".getBytes());
-		c1.branch( selector ("table3")).add("Data2".getBytes());
-		
-		Tree sn1 = c1.seal();
-		
-		// Setup State 2
-		TreeBuilder c2 = TOOLS.createTreeBuilder().selector(selector("db1"));
-		c2.branch( selector("table1")).add("Data1".getBytes());
-		c2.branch( selector("table2")).add("Data2Mod".getBytes());
-		c2.branch( selector("table4")).add("Data1".getBytes());
-		Tree sn2 = c2.seal();
-		
-		// Actually compare
-		TreeIndex result = new TreeIndex(TOOLS.compare(sn1, sn2));
-		
-		// Display both for visual reference..
-		FORMAT.displayTree(0, sn1);
-		FORMAT.displayTree(0, sn2);
-		FORMAT.displayTree(0, result);
-		
-		assertEquals("Detect 3 modifications",3, result.select( selector ("db1")).branches().length);
-		assertEquals("Modification in db2.table2",TreeCompare.MODIFIED, result.select( selector ("db1")).select( selector ("table2")).tags());
-		assertEquals("Modification in db2.table2",TreeCompare.REMOVED,result.select( selector( "db1" )).select( selector ( "table3" )).tags());
-		assertEquals("Modification in db2.table2",TreeCompare.ADDED,result.select( selector( "db1" )).select( selector("table4")).tags());
-	} 
-	
-	@Test
-	public void testStoreAndLoad() throws IOException {
-		TreeBuilder c1 = TOOLS.createTreeBuilder().selector(selector("db1"));
-		c1.branch( selector ("table1")).add("Data1".getBytes());
-		c1.branch(selector("table2")).add("Data2".getBytes());
-		c1.branch(selector("table3")).add("Data2".getBytes());
-		
-		Tree sn1 = c1.seal();
-		TreeTools tools = new TreeTools();
-		File f = tools.store(sn1);
-		Tree releoaded = tools.load(f);
-		assertEquals(sn1,releoaded);
-	}
+        // Setup State 1
+        TreeBuilder c1 = TOOLS.createTreeBuilder().selector(selector("db1"));
+        c1.branch(selector("table1")).add("Data1".getBytes());
+        c1.branch(selector("table2")).add("Data2".getBytes());
+        c1.branch(selector("table3")).add("Data2".getBytes());
+
+        Tree sn1 = c1.seal();
+
+        // Setup State 2
+        TreeBuilder c2 = TOOLS.createTreeBuilder().selector(selector("db1"));
+        c2.branch(selector("table1")).add("Data1".getBytes());
+        c2.branch(selector("table2")).add("Data2Mod".getBytes());
+        c2.branch(selector("table4")).add("Data1".getBytes());
+        Tree sn2 = c2.seal();
+
+        // Actually compare
+        TreeIndex result = new TreeIndex(TOOLS.compare(sn1, sn2));
+
+        // Display both for visual reference..
+        FORMAT.displayTree(0, sn1);
+        FORMAT.displayTree(0, sn2);
+        FORMAT.displayTree(0, result);
+
+        assertEquals("Detect 3 modifications", 3, result.select(selector("db1")).branches().length);
+        assertEquals("Modification in db2.table2", TreeCompare.MODIFIED, result.select(selector("db1")).select(selector("table2")).tags());
+        assertEquals("Modification in db2.table2", TreeCompare.REMOVED, result.select(selector("db1")).select(selector("table3")).tags());
+        assertEquals("Modification in db2.table2", TreeCompare.ADDED, result.select(selector("db1")).select(selector("table4")).tags());
+    }
 }
