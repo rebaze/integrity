@@ -1,7 +1,6 @@
-# Rebaze Utils
+# Auxis Commons Checksum
 
-Collection of Java libraries that might be useful outside core rebaze platform.
-
-Should not have outbound dependencies to other rebaze projects.
+Small Java library that helps created fingerprint-trees out of arbitrary InputStreams.
+Used to do deep-compare operations.
 
 License: ASL 2.0
