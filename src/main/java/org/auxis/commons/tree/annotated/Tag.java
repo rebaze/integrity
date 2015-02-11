@@ -6,42 +6,49 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package dogtooth.tree.annotated;
+package org.auxis.commons.tree.annotated;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import dogtooth.tree.Selector;
-
-public class Tag {
+public class Tag
+{
     final private Set<String> m_tag;
-    
-    public static Tag tag(String...tags) {
-        return new Tag(tags);
+
+    public static Tag tag( String... tags )
+    {
+        return new Tag( tags );
     }
-    
-    public Tag(String... tag) {
+
+    public Tag( String... tag )
+    {
         m_tag = new HashSet<String>();
-        for (String t : tag) {
+        for ( String t : tag )
+        {
             m_tag.add( t );
         }
     }
-    
-    public boolean contains(Tag other) {
+
+    public boolean contains( Tag other )
+    {
         return m_tag.contains( other );
     }
-    
-    public String toString() {
+
+    public String toString()
+    {
         return m_tag.toString();
     }
-    
-    public int hashCode() {
-        return m_tag.hashCode();       
+
+    public int hashCode()
+    {
+        return m_tag.hashCode();
     }
-    
-    public boolean equals(Object other) {
-        if (other instanceof Tag) {
-            Tag ot = (Tag)other;
+
+    public boolean equals( Object other )
+    {
+        if ( other instanceof Tag )
+        {
+            Tag ot = ( Tag ) other;
             return ot.toString().equals( toString() );
         }
         return false;

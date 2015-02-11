@@ -6,46 +6,55 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package dogtooth.tree;
+package org.auxis.commons.tree;
 
-public class Selector {
-    
+public class Selector
+{
     final private String m_name;
-    
-    public static Selector selector(String s) {
+
+    public static Selector selector( String s )
+    {
         return new Selector( s );
     }
-    
-    public static Selector[] selector(String... s) {
+
+    public static Selector[] selector( String... s )
+    {
         Selector[] res = new Selector[s.length];
-        for (int i = 0;i<s.length;i++) {
-            res[i] = selector(s[i]);
+        for ( int i = 0; i < s.length; i++ )
+        {
+            res[i] = selector( s[i] );
         }
         return res;
     }
-    
-    public Selector(String s) {
-        assert (s != null);
+
+    public Selector( String s )
+    {
+        assert ( s != null );
         m_name = s;
     }
-    
-    public String name() {
+
+    public String name()
+    {
         return m_name;
     }
-    
-    public int hashCode() {
-        return m_name.hashCode();       
+
+    public int hashCode()
+    {
+        return m_name.hashCode();
     }
-    
-    public boolean equals(Object other) {
-        if (other instanceof Selector) {
-            Selector ot = (Selector)other;
+
+    public boolean equals( Object other )
+    {
+        if ( other instanceof Selector )
+        {
+            Selector ot = ( Selector ) other;
             return m_name.equals( ot.name() );
         }
         return false;
     }
-    
-    public String toString() {
+
+    public String toString()
+    {
         return "[Selector name=" + m_name + "]";
     }
 }

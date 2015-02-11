@@ -6,13 +6,14 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package dogtooth.tree;
+package org.auxis.commons.tree;
 
-public class CompoundSelector extends Selector {
-
+public class CompoundSelector extends Selector
+{
     private final Selector[] m_selectors;
-    
-    public CompoundSelector( Selector... s ) {
+
+    public CompoundSelector( Selector... s )
+    {
         super( s.toString() );
         m_selectors = s;
     }

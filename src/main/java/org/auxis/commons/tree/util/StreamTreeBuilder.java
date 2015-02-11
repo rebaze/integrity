@@ -1,4 +1,4 @@
-package dogtooth.tree.util;
+package org.auxis.commons.tree.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,16 +6,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import org.auxis.commons.tree.Selector;
+import org.auxis.commons.tree.Tree;
+import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.TreeException;
+import org.auxis.commons.tree.annotated.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dogtooth.tree.Selector;
-import dogtooth.tree.Tree;
-import dogtooth.tree.TreeBuilder;
-import dogtooth.tree.TreeException;
-import dogtooth.tree.annotated.Tag;
-
-public class StreamTreeBuilder implements TreeBuilder {
+public class StreamTreeBuilder implements TreeBuilder
+{
 
     private static final Logger LOG = LoggerFactory.getLogger( StreamTreeBuilder.class );
     private long m_dataAmountRead = 0L;
@@ -29,9 +29,10 @@ public class StreamTreeBuilder implements TreeBuilder {
     public StreamTreeBuilder add( final InputStream is )
         throws IOException
     {
-        byte[] bytes = new byte[ 1024 ];
+        byte[] bytes = new byte[1024];
         int numRead = 0;
-        while( ( numRead = is.read( bytes ) ) >= 0 ) {
+        while ( ( numRead = is.read( bytes ) ) >= 0 )
+        {
             m_delegate.add( Arrays.copyOf( bytes, numRead ) );
             m_dataAmountRead += numRead;
         }
@@ -40,20 +41,30 @@ public class StreamTreeBuilder implements TreeBuilder {
 
     public StreamTreeBuilder add( final File f )
     {
-        try {
+        try
+        {
             InputStream is = new FileInputStream( f );
-            try {
+            try
+            {
                 add( is );
-            } finally {
-                if( is != null ) {
-                    try {
+            }
+            finally
+            {
+                if ( is != null )
+                {
+                    try
+                    {
                         is.close();
-                    } catch( IOException e ) {
+                    }
+                    catch ( IOException e )
+                    {
                         LOG.warn( "Problem closing file " + f.getAbsolutePath(), e );
                     }
                 }
             }
-        } catch( IOException ioE ) {
+        }
+        catch ( IOException ioE )
+        {
             throw new TreeException( "Problem reading file " + f.getAbsolutePath() + " contents.", ioE );
         }
         return this;

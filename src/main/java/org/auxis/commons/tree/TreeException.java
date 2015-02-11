@@ -6,7 +6,7 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package dogtooth.tree;
+package org.auxis.commons.tree;
 
 /**
  * General Unchecked exception for the Tree API.
@@ -14,15 +14,18 @@ package dogtooth.tree;
  * @author Toni Menzel <toni.menzel@rebaze.com>
  *
  */
-public class TreeException extends RuntimeException {
-	
-	private static final long serialVersionUID = 1L;
+public class TreeException extends RuntimeException
+{
 
-	public TreeException(String msg, Exception e) {
-		super(msg, e);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public TreeException(String msg) {
-		super(msg);
-	}
+    public TreeException( String msg, Exception e )
+    {
+        super( msg, e );
+    }
+
+    public TreeException( String msg )
+    {
+        super( msg );
+    }
 }

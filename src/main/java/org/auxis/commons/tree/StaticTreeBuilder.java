@@ -1,17 +1,18 @@
 /*
  * Copyright 2014 rebaze GmbH. All Rights Reserved.
  */
-package dogtooth.tree;
+package org.auxis.commons.tree;
 
-import dogtooth.tree.annotated.Tag;
+import org.auxis.commons.tree.annotated.Tag;
 
 /**
- * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree construction.
+ * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree
+ * construction.
  *
  * @author Toni Menzel <toni.menzel@rebaze.com>
  */
-public class StaticTreeBuilder implements TreeBuilder {
-
+public class StaticTreeBuilder implements TreeBuilder
+{
     private final Tree m_tree;
 
     public StaticTreeBuilder( Tree encapsulatedTree )
