@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.rebaze.dogtooth</groupId>
-	<artifactId>dogtooth-kitchen</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <parent>
+		<groupId>org.auxis</groupId>
+		<artifactId>master</artifactId>
+        <version>0.1.1</version>
+    </parent>
 
-	<name>Dogtooth - Kitchen</name>
-	<description>Set of cool tools and libraries.</description>
-	<url>http://github.com/rebaze/dogtooth/</url>
+	<groupId>org.auxis.commons.tree</groupId>
+	<artifactId>auxis-commons-tree</artifactId>
 
-	<scm>
-		<url>http://github.com/rebaze/dogtooth/</url>
-		<connection>scm:git:git://github.com/rebaze/dogtooth.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/rebaze/dogtooth.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+	<name>Auxis Commons Tree - Library</name>
 
-	<distributionManagement>
-		<repository>
-			<id>rebaze.io</id>
-			<name>rebaze Internal Repository</name>
-			<url>http://repository.rebaze.io/nexus/content/repositories/snapshots/</url>
-		</repository>
-	</distributionManagement>
+    <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.1</version>
-					<configuration>
-						<autoVersionSubmodules>true</autoVersionSubmodules>
-						<releaseProfiles>release</releaseProfiles>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+      <java.version>1.6</java.version>
+      <junit.version>4.11</junit.version>
+      <fest.version>2.0M8</fest.version>
+      <slf4j.version>1.6.1</slf4j.version>
+    </properties>
+	
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<licenses>
-		<license>
-			<name>Apache 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-
-	<organization>
-		<name>rebaze GmbH</name>
-		<url>http://www.rebaze.com</url>
-	</organization>
-
-	<modules>
-		<module>dogtooth-master</module>
-		<module>dogtooth-tree</module>
-	</modules>
-
-	<profiles>
-		<profile>
-			<id>release</id>
-			<distributionManagement>
-				<repository>
-					<id>rebaze.io</id>
-					<name>rebaze Internal Repository</name>
-					<url>http://repository.rebaze.io/nexus/content/repositories/releases/</url>
-				</repository>
-			</distributionManagement>
-		</profile>
-	</profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
