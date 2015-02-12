@@ -12,9 +12,10 @@
 
   <groupId>org.auxis.commons.tree</groupId>
   <artifactId>auxis-commons-tree</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
 
   <name>Auxis Commons Tree - Library</name>
-  
+
   <scm>
     <connection>scm:git:git@github.com:auxisrepos/auxis-commons-tree.git</connection>
     <developerConnection>scm:git:git@github.com:auxisrepos/auxis-commons-tree.git</developerConnection>
