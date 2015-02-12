@@ -20,8 +20,6 @@ import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeException;
 import org.auxis.commons.tree.annotated.Tag;
 import org.auxis.commons.tree.util.TreeTools;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -30,9 +28,6 @@ import org.slf4j.LoggerFactory;
  */
 public class InMemoryTreeBuilderImpl implements TreeBuilder
 {
-    private final static Logger LOG = LoggerFactory.getLogger( InMemoryTreeBuilderImpl.class );
-    public static final String ALGORITHM = "SHA-1";
-
     final private MessageDigest m_digest;
     private Tree m_hash;
     private boolean m_sealed = false;
