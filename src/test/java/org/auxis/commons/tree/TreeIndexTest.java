@@ -1,7 +1,5 @@
 package org.auxis.commons.tree;
 
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.TreeIndex;
 import org.auxis.commons.tree.util.TreeTools;
 import org.junit.Test;
 
@@ -9,12 +7,13 @@ import java.io.IOException;
 
 import static org.auxis.commons.tree.Selector.selector;
 import static org.auxis.commons.tree.annotated.Tag.tag;
+import static org.auxis.commons.tree.util.TreeTools.wrapAsIndex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class TreeIndexTest
 {
-    private static TreeTools TOOLS = new TreeTools();
+    private TreeTools TOOLS = TreeTools.treeTools();
 
     @Test
     public void compoundSelectArrayTest() throws IOException
@@ -23,6 +22,37 @@ public class TreeIndexTest
         assertEquals( tag( "findme" ), sn1.select( selector( "table1", "other" ) ).tags() );
         assertNull( sn1.select( selector( "table1", "wrong" ) ) );
         assertNull( sn1.select( selector( "table2" ) ) );
+    }
+
+    @Test
+    public void testSameSelectorDifferentData() throws IOException
+    {
+        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        c1.branch( selector( "db1" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db2" ) ).add( "dat2".getBytes() );
+        c1.branch( selector( "db1" ) ).add( "data3".getBytes() );
+        assertEquals( 2, wrapAsIndex( c1.seal() ).branches().length );
+    }
+
+    @Test
+    public void testSameDataDifferentSelector() throws IOException
+    {
+        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        c1.branch( selector( "db1" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db2" ) ).add( "dat2".getBytes() );
+        c1.branch( selector( "db3" ) ).add( "data3".getBytes() );
+        assertEquals( 3, wrapAsIndex( c1.seal() ).branches().length );
+    }
+
+
+    @Test
+    public void testSameDataSameSelector() throws IOException
+    {
+        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        c1.branch( selector( "db1" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db1" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db3" ) ).add( "data".getBytes() );
+        assertEquals( 2, wrapAsIndex( c1.seal() ).branches().length );
     }
 
     private TreeIndex sampleTree()

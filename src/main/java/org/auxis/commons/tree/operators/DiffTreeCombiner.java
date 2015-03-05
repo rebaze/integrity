@@ -1,31 +1,45 @@
-package org.auxis.commons.tree.util;
+package org.auxis.commons.tree.operators;
 
 import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
-public class TreeCompare implements TreeCombiner
+import static org.auxis.commons.tree.Selector.selector;
+import static org.auxis.commons.tree.util.TreeTools.wrapAsIndex;
+
+@Singleton
+public class DiffTreeCombiner implements TreeCombiner
 {
     public static final Tag ADDED = new Tag( "ADDED" );
     public static final Tag REMOVED = new Tag( "REMOVED" );
     public static final Tag MODIFIED = new Tag( "MODIFIED" );
 
-    @Inject private TreeTools context;
+    private final Provider<TreeBuilder> treeBuilderProvider;
+
+    @Inject
+    public DiffTreeCombiner( Provider<TreeBuilder> builder )
+    {
+        treeBuilderProvider = builder;
+    }
 
     @Override public Tree combine( Tree left, Tree right )
     {
-        TreeBuilder builder = context.createTreeBuilder();
-        compare(builder,new TreeIndex(left),new TreeIndex(right));
+        TreeBuilder builder = treeBuilderProvider.get();
+        builder.selector( selector("DIFF") );
+
+        compare( builder, wrapAsIndex( left ), wrapAsIndex( right ) );
         return builder.seal();
     }
+
+
 
     /**
      *
      */
-    static void compare( TreeBuilder collector, TreeIndex left, TreeIndex right )
+    private void compare( TreeBuilder collector, TreeIndex left, TreeIndex right )
     {
         // Unfold "empty" elements.
         if ( left == null )
@@ -49,7 +63,7 @@ public class TreeCompare implements TreeCombiner
 
         if ( !left.fingerprint().equals( right.fingerprint() ) )
         {
-            // compare next level:
+            // diff next level:
             TreeBuilder modification = collector.branch( right.selector() ).tag( MODIFIED );
             for ( TreeIndex tree : left.branches() )
             {
@@ -66,7 +80,7 @@ public class TreeCompare implements TreeCombiner
                     }
                     else
                     {
-                        // compare content:
+                        // diff content:
                         compare( modification, tree, origin );
                     }
 
@@ -100,66 +114,6 @@ public class TreeCompare implements TreeCombiner
                     throw new TreeException( "Item " + tree + " is not selectable." );
                 }
             }
-        }
-
-    }
-
-    /**
-     * Structure-aware identity.
-     *
-     * @param collector
-     * @param left
-     * @param right
-     */
-    static void identBySelector( TreeBuilder collector, TreeIndex left, TreeIndex right )
-    {
-
-    }
-
-    /**
-     * Hash based identity.
-     * Copies all trees from left that have an equivalent in right.
-     * <p/>
-     * By doing this from both sides, one could construct a nice "move-" tree.
-     *
-     * @param collector
-     * @param left
-     * @param right
-     */
-    static void identLeftHash( TreeBuilder collector, TreeIndex left, TreeIndex right )
-    {
-        identLeftHash( collector, left, right, buildDeep( right ) );
-    }
-
-    static void identLeftHash( TreeBuilder collector, TreeIndex left, TreeIndex right, Map<String, Tree> index )
-    {
-
-        //if (index.containsKey(left.))
-        if ( !left.fingerprint().equals( right.fingerprint() ) )
-        {
-            // dig deeper
-
-        }
-        else
-        {
-            // fast forward, copy whole branch.
-            collector.branch( left );
-        }
-    }
-
-    private static Map<String, Tree> buildDeep( Tree tree )
-    {
-        Map<String, Tree> index = new HashMap<String, Tree>();
-        buildDeep( tree, index );
-        return index;
-    }
-
-    private static void buildDeep( Tree tree, Map<String, Tree> index )
-    {
-        index.put( tree.fingerprint(), tree );
-        for ( Tree sub : tree.branches() )
-        {
-            buildDeep( sub, index );
         }
     }
 }

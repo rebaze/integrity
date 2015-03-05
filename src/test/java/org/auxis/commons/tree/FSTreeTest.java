@@ -14,7 +14,7 @@ public class FSTreeTest
 {
     private final static Logger LOG = LoggerFactory.getLogger( FSTreeTest.class );
 
-    private final TreeTools TOOLS = new TreeTools();
+    private final TreeTools TOOLS = TreeTools.treeTools();
     private final TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
 
     private void collect( TreeBuilder builder, File base )

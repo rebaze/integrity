@@ -8,32 +8,49 @@
  */
 package org.auxis.commons.tree.util;
 
-import static org.auxis.commons.tree.Selector.selector;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import org.auxis.commons.tree.Selector;
-import org.auxis.commons.tree.Tree;
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.TreeException;
-import org.auxis.commons.tree.TreeIndex;
+import dagger.ObjectGraph;
+import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
 import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
 import org.auxis.commons.tree.internal.InMemoryTreeImpl;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Set of tools for this API.
- * 
- * @author Toni Menzel <toni.menzel@rebaze.com>
  *
+ * @author Toni Menzel <toni.menzel@rebaze.com>
  */
 public class TreeTools
 {
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
 
-    public long nodes( Tree tree )
+    private static ObjectGraph INSTANCE;
+
+    @Inject @Named("diff") TreeCombiner diffCombiner;
+
+    @Inject @Named("intersect") TreeCombiner intersectCombiner;
+
+    TreeTools()
+    {
+
+    }
+
+
+    public static TreeTools treeTools()
+    {
+        if ( INSTANCE == null )
+        {
+            INSTANCE = ObjectGraph.create( new DefaultTreeModule() );
+        }
+        return INSTANCE.get( TreeTools.class );
+    }
+
+    public static long nodes( Tree tree )
     {
         int total = 1;
         for ( Tree sub : tree.branches() )
@@ -60,7 +77,7 @@ public class TreeTools
 
     public Tree createTree( Selector selector, String hashValue, Tree[] subs, Tag tag )
     {
-        return new InMemoryTreeImpl( this, selector, hashValue, subs, tag );
+        return new InMemoryTreeImpl( selector, hashValue, subs, tag );
     }
 
     public TreeTools setDigestAlgorithm( String algo )
@@ -81,20 +98,25 @@ public class TreeTools
         }
     }
 
-    /**
-     */
-    public Tree compare( Tree left, Tree right )
+    public Tree diff( Tree left, Tree right )
     {
-        return compare( new TreeIndex( left ), new TreeIndex( right ) );
+        return diffCombiner.combine( left, right );
     }
 
-    /**
-     */
-    public Tree compare( TreeIndex left, TreeIndex right )
+    public Tree intersection( Tree left, Tree right )
     {
-        TreeBuilder target = createTreeBuilder().selector( selector( "[" + left.selector() + " ] and [" + right.selector() + " ]" ) );
-        target.tag( Tag.tag( "DIFF" ) );
-        TreeCompare.compare( target, left, right );
-        return target.seal();
+        return intersectCombiner.combine( left, right );
+    }
+
+    public static TreeIndex wrapAsIndex( Tree tree )
+    {
+        if ( tree instanceof TreeIndex )
+        {
+            return ( TreeIndex ) tree;
+        }
+        else
+        {
+            return new TreeIndex( tree );
+        }
     }
 }

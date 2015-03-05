@@ -11,7 +11,6 @@ package org.auxis.commons.tree.internal;
 import org.auxis.commons.tree.Selector;
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.annotated.Tag;
-import org.auxis.commons.tree.util.TreeTools;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -25,11 +24,9 @@ public class InMemoryTreeImpl implements Tree
     final private Tree[] m_subs;
     final private Selector m_selector;
     final private Tag m_tag;
-    private final TreeTools m_tools;
 
-    public InMemoryTreeImpl( TreeTools treeTools, Selector selector, String hashValue, Tree[] subs, Tag tag )
+    public InMemoryTreeImpl( Selector selector, String hashValue, Tree[] subs, Tag tag )
     {
-        m_tools = treeTools;
         m_selector = selector;
         m_hashValue = hashValue;
         m_subs = subs;
@@ -68,9 +65,7 @@ public class InMemoryTreeImpl implements Tree
     {
         if ( other instanceof Tree )
         {
-            Tree sn2 = ( Tree ) other;
-            Tree compare = m_tools.compare( this, sn2 );
-            return ( compare.branches().length == 0 );
+            return m_hashValue.equals( ( ( Tree ) other ).fingerprint() );
         }
         else
         {

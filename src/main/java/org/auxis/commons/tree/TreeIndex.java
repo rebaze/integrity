@@ -18,37 +18,53 @@ import org.auxis.commons.tree.annotated.Tag;
 /**
  * Index implementation that augments a given tree with some extra index accessors like find by
  * selector and tag.
- * 
- * @author Toni Menzel <toni.menzel@rebaze.com>
  *
+ * @author Toni Menzel <toni.menzel@rebaze.com>
  */
-public class TreeIndex implements Tree
+public class TreeIndex extends AbstractDelegateTree
 {
-
-    final private Tree m_tree;
     final private Map<Selector, TreeIndex> m_selectors = new HashMap<Selector, TreeIndex>();
     final private TreeIndex[] m_sub;
 
     public TreeIndex( Tree tree )
     {
-        if ( tree instanceof TreeIndex )
-        {
-            throw new RuntimeException( "You should not wrap a TreeIndex.. waaaayyy too expensive.." );
-        }
-        m_tree = tree;
-        // build index on selectors
+        super( tree );
+        guardIlegalWrappedTreeIndex( tree );
+        m_sub = createDeepIndex( tree );
+    }
+
+    private TreeIndex[] createDeepIndex( Tree tree )
+    {
         List<TreeIndex> sub = new ArrayList<TreeIndex>();
 
         for ( Tree h : tree.branches() )
         {
             TreeIndex idx = new TreeIndex( h );
-            if ( h.selector() != null )
+            TreeIndex previous = m_selectors.get( h.selector() );
+            if ( previous != null )
             {
-                m_selectors.put( h.selector(), idx );
+                if ( !h.fingerprint().equals( previous.fingerprint() ) )
+                {
+                    throw new IllegalArgumentException( "Tree contains selector on same level with identical selector but different hashes: " + idx + " and " + previous );
+                }
+
             }
-            sub.add( idx );
+            else
+            {
+                sub.add( idx );
+                m_selectors.put( h.selector(), idx );
+
+            }
         }
-        m_sub = sub.toArray( new TreeIndex[sub.size()] );
+        return sub.toArray( new TreeIndex[sub.size()] );
+    }
+
+    private void guardIlegalWrappedTreeIndex( Tree tree )
+    {
+        if ( tree instanceof TreeIndex )
+        {
+            throw new RuntimeException( "You should not wrap a TreeIndex.. waaaayyy too expensive.." );
+        }
     }
 
     public TreeIndex select( Selector selector )
@@ -66,23 +82,6 @@ public class TreeIndex implements Tree
         return r;
     }
 
-    public boolean selectable()
-    {
-        return m_tree.selector() != null;
-    }
-
-    @Override
-    public String fingerprint()
-    {
-        return m_tree.fingerprint();
-    }
-
-    @Override
-    public Selector selector()
-    {
-        return m_tree.selector();
-    }
-
     @Override
     public TreeIndex[] branches()
     {
@@ -91,13 +90,7 @@ public class TreeIndex implements Tree
 
     public String toString()
     {
-        return "TreeIndex of [" + m_tree.toString() + "] with selectors: " + m_selectors.size();
-    }
-
-    @Override
-    public Tag tags()
-    {
-        return m_tree.tags();
+        return "TreeIndex of [" + super.toString() + "] with selectors: " + m_selectors.size();
     }
 
 }

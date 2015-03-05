@@ -17,18 +17,16 @@ import org.junit.Test;
 
 public class SimpleHashTest
 {
-    private static final TreeTools m_tools = new TreeTools().setDigestAlgorithm( "SHA-1" );
+    private TreeTools m_tools = TreeTools.treeTools();
 
     @Test
     public void emptyCollector() throws Exception
     {
-
         TreeBuilder root = m_tools.createTreeBuilder().selector( selector( "Root" ) );
         assertEquals( "da39a3ee5e6b4b0d3255bfef95601890afd80709", root.seal().fingerprint() );
 
         TreeBuilder root2 = m_tools.createTreeBuilder().selector( selector( "RootOther" ) );
         assertEquals( root.seal().fingerprint(), root2.seal().fingerprint() );
-
     }
 
     @Test
@@ -72,7 +70,6 @@ public class SimpleHashTest
 
         assertNotEquals( "roots must be different", tree1.fingerprint(), tree2.fingerprint() );
         assertNotEquals( "first childs must be different", tree1.branches()[0].fingerprint(), tree2.branches()[0].fingerprint() );
-        assertEquals( "next childs must be identical", tree1.branches()[1].fingerprint(), tree2.branches()[1].fingerprint() );
 
     }
 }
