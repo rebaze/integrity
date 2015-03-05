@@ -9,6 +9,7 @@
 package org.auxis.commons.tree;
 
 import static org.auxis.commons.tree.Selector.selector;
+import static org.auxis.commons.tree.util.TreeTools.wrapAsIndex;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -80,12 +81,12 @@ public class DiffToolTest
         Tree sn2 = c2.seal();
 
         // Actually diff
-        TreeIndex result = new TreeIndex( TOOLS.diff( sn1, sn2 ) );
+        TreeIndex result = wrapAsIndex( TOOLS.diff( sn1, sn2 ) );
 
         // Display both for visual reference..
-        FORMAT.displayTree( 0, sn1 );
-        FORMAT.displayTree( 0, sn2 );
-        FORMAT.displayTree( 0, result );
+        FORMAT.prettyPrint( sn1 );
+        FORMAT.prettyPrint( sn2 );
+        FORMAT.prettyPrint( result );
 
         assertEquals( "Detect 3 modifications", 3, result.select( selector( "db1" ) ).branches().length );
         assertEquals( "Modification in db2.table2", DiffTreeCombiner.MODIFIED, result.select( selector( "db1" ) ).select( selector( "table2" ) ).tags() );

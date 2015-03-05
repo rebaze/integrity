@@ -47,11 +47,16 @@ public class TreeConsoleFormatter
         {
             m_out.print( "--" );
         }
-        m_out.println( " " + dbHash.tags() + " " + dbHash.selector() );
+        m_out.println( " " + (dbHash.tags() != null ? dbHash.tags() : "") + " " + dbHash.selector() );
         depth++;
         for ( Tree sub : dbHash.branches() )
         {
             prettyPrint( depth, sub );
         }
+    }
+
+    public void prettyPrint(  Tree dbHash )
+    {
+        prettyPrint( 0,dbHash );
     }
 }
