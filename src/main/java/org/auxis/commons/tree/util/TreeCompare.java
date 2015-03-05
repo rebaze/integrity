@@ -1,19 +1,29 @@
 package org.auxis.commons.tree.util;
 
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.TreeException;
-import org.auxis.commons.tree.TreeIndex;
+import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
 
-public class TreeCompare
-{
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
+public class TreeCompare implements TreeCombiner
+{
     public static final Tag ADDED = new Tag( "ADDED" );
     public static final Tag REMOVED = new Tag( "REMOVED" );
     public static final Tag MODIFIED = new Tag( "MODIFIED" );
 
+    @Inject private TreeTools context;
+
+    @Override public Tree combine( Tree left, Tree right )
+    {
+        TreeBuilder builder = context.createTreeBuilder();
+        compare(builder,new TreeIndex(left),new TreeIndex(right));
+        return builder.seal();
+    }
+
     /**
-     * 
+     *
      */
     static void compare( TreeBuilder collector, TreeIndex left, TreeIndex right )
     {
@@ -92,5 +102,64 @@ public class TreeCompare
             }
         }
 
+    }
+
+    /**
+     * Structure-aware identity.
+     *
+     * @param collector
+     * @param left
+     * @param right
+     */
+    static void identBySelector( TreeBuilder collector, TreeIndex left, TreeIndex right )
+    {
+
+    }
+
+    /**
+     * Hash based identity.
+     * Copies all trees from left that have an equivalent in right.
+     * <p/>
+     * By doing this from both sides, one could construct a nice "move-" tree.
+     *
+     * @param collector
+     * @param left
+     * @param right
+     */
+    static void identLeftHash( TreeBuilder collector, TreeIndex left, TreeIndex right )
+    {
+        identLeftHash( collector, left, right, buildDeep( right ) );
+    }
+
+    static void identLeftHash( TreeBuilder collector, TreeIndex left, TreeIndex right, Map<String, Tree> index )
+    {
+
+        //if (index.containsKey(left.))
+        if ( !left.fingerprint().equals( right.fingerprint() ) )
+        {
+            // dig deeper
+
+        }
+        else
+        {
+            // fast forward, copy whole branch.
+            collector.branch( left );
+        }
+    }
+
+    private static Map<String, Tree> buildDeep( Tree tree )
+    {
+        Map<String, Tree> index = new HashMap<String, Tree>();
+        buildDeep( tree, index );
+        return index;
+    }
+
+    private static void buildDeep( Tree tree, Map<String, Tree> index )
+    {
+        index.put( tree.fingerprint(), tree );
+        for ( Tree sub : tree.branches() )
+        {
+            buildDeep( sub, index );
+        }
     }
 }
