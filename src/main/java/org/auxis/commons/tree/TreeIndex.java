@@ -8,12 +8,8 @@
  */
 package org.auxis.commons.tree;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.auxis.commons.tree.annotated.Tag;
 
 /**
  * Index implementation that augments a given tree with some extra index accessors like find by
@@ -35,28 +31,11 @@ public class TreeIndex extends AbstractDelegateTree
 
     private TreeIndex[] createDeepIndex( Tree tree )
     {
-        List<TreeIndex> sub = new ArrayList<TreeIndex>();
-
         for ( Tree h : tree.branches() )
         {
-            TreeIndex idx = new TreeIndex( h );
-            TreeIndex previous = m_selectors.get( h.selector() );
-            if ( previous != null )
-            {
-                if ( !h.fingerprint().equals( previous.fingerprint() ) )
-                {
-                    throw new IllegalArgumentException( "Tree contains selector on same level with identical selector but different hashes: " + idx + " and " + previous );
-                }
-
-            }
-            else
-            {
-                sub.add( idx );
-                m_selectors.put( h.selector(), idx );
-
-            }
+            m_selectors.put( h.selector(), new TreeIndex( h ) );
         }
-        return sub.toArray( new TreeIndex[sub.size()] );
+        return m_selectors.values().toArray( new TreeIndex[m_selectors.values().size()] );
     }
 
     private void guardIlegalWrappedTreeIndex( Tree tree )
