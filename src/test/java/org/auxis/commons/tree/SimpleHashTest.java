@@ -72,4 +72,17 @@ public class SimpleHashTest
         assertNotEquals( "first childs must be different", tree1.branches()[0].fingerprint(), tree2.branches()[0].fingerprint() );
 
     }
+
+    @Test
+    public void testReuseCollectors()
+    {
+        TreeBuilder sn1 = m_tools.createTreeBuilder();
+        sn1.branch( selector( "p1" ) ).add( "one".getBytes() );
+        sn1.branch( selector( "p1" ) ).add( "two".getBytes() );
+
+        TreeBuilder sn2 = m_tools.createTreeBuilder();
+        sn2.branch( selector( "p1" ) ).add( "one".getBytes() ).add( "two".getBytes() );
+
+        assertEquals( "Should no elements", sn1.seal(),sn2.seal() );
+    }
 }
