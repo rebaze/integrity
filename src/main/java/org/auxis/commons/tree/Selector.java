@@ -10,6 +10,7 @@ package org.auxis.commons.tree;
 
 public class Selector
 {
+    public static final Selector DEFAULT = selector( "<DEFAULT>" );
     final private String m_name;
 
     public static Selector selector( String s )

@@ -111,7 +111,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         if ( m_selector == null )
         {
             // use an empty selector:
-            m_selector = Selector.selector( "" );
+            m_selector = Selector.DEFAULT;
         }
     }
 
