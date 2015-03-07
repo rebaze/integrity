@@ -47,7 +47,7 @@ public class TreeConsoleFormatter
         {
             m_out.print( "--" );
         }
-        m_out.println( " " + (dbHash.tags() != null ? dbHash.tags() : "") + " " + dbHash.selector() );
+        m_out.println( " " + (dbHash.tags() != null ? dbHash.tags() : "") + " " + dbHash.selector() + "- "+  dbHash.toString());
         depth++;
         for ( Tree sub : dbHash.branches() )
         {
@@ -55,8 +55,10 @@ public class TreeConsoleFormatter
         }
     }
 
-    public void prettyPrint(  Tree dbHash )
+    public void prettyPrint(  Tree... trees )
     {
-        prettyPrint( 0,dbHash );
+        for (Tree tree : trees) {
+            prettyPrint(0, tree);
+        }
     }
 }

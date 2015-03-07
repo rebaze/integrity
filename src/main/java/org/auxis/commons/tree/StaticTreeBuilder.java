@@ -4,6 +4,7 @@
 package org.auxis.commons.tree;
 
 import org.auxis.commons.tree.annotated.Tag;
+import org.auxis.commons.tree.util.TreeTools;
 
 /**
  * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree
@@ -13,11 +14,13 @@ import org.auxis.commons.tree.annotated.Tag;
  */
 public class StaticTreeBuilder implements TreeBuilder
 {
-    private final Tree m_tree;
+    private Tree m_tree;
+    private final TreeTools m_session;
 
-    public StaticTreeBuilder( Tree encapsulatedTree )
+    public StaticTreeBuilder(Tree encapsulatedTree, TreeTools treeTools)
     {
         m_tree = encapsulatedTree;
+        m_session = treeTools;
     }
 
     @Override
@@ -47,7 +50,9 @@ public class StaticTreeBuilder implements TreeBuilder
     @Override
     public TreeBuilder tag( Tag tag )
     {
-        throw new UnsupportedOperationException( "Static TreeBuilder does not allow modification." );
+        // TODO: Use compound tag!
+        m_tree = m_session.createTree(m_tree.selector(),m_tree.fingerprint(),m_tree.branches(), tag);
+        return this;
     }
 
     @Override

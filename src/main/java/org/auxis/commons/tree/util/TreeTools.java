@@ -31,15 +31,17 @@ public class TreeTools
 
     private static ObjectGraph INSTANCE;
 
-    @Inject @Named("diff") TreeCombiner diffCombiner;
+    @Inject @Named( "diff" ) TreeCombiner diffCombiner;
 
-    @Inject @Named("intersect") TreeCombiner intersectCombiner;
+    @Inject @Named( "intersect" ) TreeCombiner intersectCombiner;
+
+    @Inject @Named( "union" ) TreeCombiner unionCombiner;
+
 
     TreeTools()
     {
 
     }
-
 
     public static TreeTools treeTools()
     {
@@ -103,9 +105,18 @@ public class TreeTools
         return diffCombiner.combine( left, right );
     }
 
+    public Tree union( Tree left, Tree right )
+    {
+        return unionCombiner.combine( left, right );
+    }
+
     public Tree intersection( Tree left, Tree right )
     {
         return intersectCombiner.combine( left, right );
+    }
+
+    public TreeBuilder createStaticTreeBuilder(Tree tree) {
+        return new StaticTreeBuilder(tree,this);
     }
 
     public static TreeIndex wrapAsIndex( Tree tree )

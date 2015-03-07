@@ -11,6 +11,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.auxis.commons.tree.annotated.Tag.tag;
+
 @Singleton
 public class IntersectTreeCombiner implements TreeCombiner
 {
@@ -24,9 +26,28 @@ public class IntersectTreeCombiner implements TreeCombiner
 
     @Override public Tree combine( Tree left, Tree right )
     {
+        Map<String,Tree> rightMap = buildDeep(right);
         TreeBuilder builder = treeBuilderProvider.get();
+        walk(left, rightMap,builder);
+
+        // before sealing we need to escape from all branches that have not been sealed:
+
 
         return builder.seal();
+    }
+
+    private void walk(Tree left, Map<String, Tree> rightMap, TreeBuilder workinBranch) {
+        System.out.println("Testing " + left.fingerprint());
+        if (rightMap.containsKey(left.fingerprint())) {
+            // entire tree exists:
+            System.out.println("Match " + left);
+            workinBranch.branch(left).tag( tag ( "MATCH" ) );
+        }else {
+            for (Tree sub : left.branches()) {
+                walk(sub,rightMap,workinBranch.branch(sub.selector()));
+            }
+        }
+
     }
 
     /**
@@ -81,6 +102,7 @@ public class IntersectTreeCombiner implements TreeCombiner
 
     private static void buildDeep( Tree tree, Map<String, Tree> index )
     {
+        System.out.println("Indexed " + tree.fingerprint());
         index.put( tree.fingerprint(), tree );
         for ( Tree sub : tree.branches() )
         {

@@ -53,7 +53,7 @@ public class InMemoryTreeImpl implements Tree
 
     public String toString()
     {
-        return m_hashValue.substring( 0, 6 ) + " /Selector: " + m_selector + " /Children: " + m_subs.length;
+        return m_hashValue.substring( 0, 6 ) + " " + m_selector + "  #Branches: " + m_subs.length;
     }
 
     public int hashCode()
