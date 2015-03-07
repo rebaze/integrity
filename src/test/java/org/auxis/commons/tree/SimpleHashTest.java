@@ -12,6 +12,7 @@ import static org.auxis.commons.tree.Selector.selector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
 import org.auxis.commons.tree.util.TreeTools;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class SimpleHashTest
     public void emptyCollector() throws Exception
     {
         TreeBuilder root = m_tools.createTreeBuilder().selector( selector( "Root" ) );
-        assertEquals( "da39a3ee5e6b4b0d3255bfef95601890afd80709", root.seal().fingerprint() );
+        assertEquals(InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().fingerprint() );
 
         TreeBuilder root2 = m_tools.createTreeBuilder().selector( selector( "RootOther" ) );
         assertEquals( root.seal().fingerprint(), root2.seal().fingerprint() );

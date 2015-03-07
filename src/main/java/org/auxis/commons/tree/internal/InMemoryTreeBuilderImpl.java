@@ -16,7 +16,6 @@ import org.auxis.commons.tree.StaticTreeBuilder;
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeAlreadySealedException;
 import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.TreeException;
 import org.auxis.commons.tree.annotated.Tag;
 import org.auxis.commons.tree.util.TreeTools;
 
@@ -27,9 +26,13 @@ import org.auxis.commons.tree.util.TreeTools;
  */
 public class InMemoryTreeBuilderImpl implements TreeBuilder
 {
+    public static final String FIXED_EMPTY = "0000000000000000000000000000000000000000";
+
     final private MessageDigest m_digest;
     private Tree m_hash;
+    private boolean noData = true;
     private boolean m_sealed = false;
+
 
     //final private List<TreeBuilder> m_sub;
     final private Map<Selector, TreeBuilder> m_subItems;
@@ -54,8 +57,11 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     @Override
     synchronized public TreeBuilder add( byte[] bytes )
     {
-        verifyTreeNotSealed();
-        m_digest.update( bytes );
+        if (bytes.length > 0) {
+            noData = false;
+            verifyTreeNotSealed();
+            m_digest.update(bytes);
+        }
         return this;
     }
 
@@ -71,23 +77,30 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         {
             defaultSelector();
 
-            List<Tree> subHashes = new ArrayList<Tree>( m_subItems.keySet().size() );
+            // Special cases:
+            if (noData && m_subItems.size() == 0) {
+                // Use fixed value empty tree:
+                m_hash = m_tools.createTree(m_selector,FIXED_EMPTY,new Tree[0],m_tag);
+            }else if (noData && m_subItems.size() == 1) {
+                // reuse sub tree fingerprint.
+                Tree underneath = m_subItems.values().iterator().next().seal();
+                m_hash = m_tools.createTree(m_selector,underneath.fingerprint(),new Tree[]{underneath},m_tag);
+            }else {
+                List<Tree> subHashes = new ArrayList<Tree>(m_subItems.keySet().size());
+                for (Selector c : m_subItems.keySet()) {
+                    // strip duplicate trees. Nope.
+                    Tree sealed = m_subItems.get(c).seal();
+                    // if (!subHashes.contains( sealed ))
+                    subHashes.add(sealed);
+                }
 
-            for ( Selector c : m_subItems.keySet() )
-            {
-                // strip duplicate trees. Nope.
-                Tree sealed = m_subItems.get( c ).seal();
-                // if (!subHashes.contains( sealed ))
-                subHashes.add( sealed );
+                sort(subHashes);
+
+                for (Tree c : subHashes) {
+                    add(c.fingerprint().getBytes());
+                }
+                m_hash = m_tools.createTree(m_selector, convertToHex(m_digest.digest()), subHashes.toArray(new Tree[subHashes.size()]), m_tag);
             }
-
-            sort( subHashes );
-
-            for ( Tree c : subHashes )
-            {
-                add( c.fingerprint().getBytes() );
-            }
-            m_hash = m_tools.createTree( m_selector, convertToHex( m_digest.digest() ), subHashes.toArray( new Tree[subHashes.size()] ), m_tag );
             m_sealed = true;
             resetMembers();
         }
@@ -149,7 +162,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         TreeBuilder c = m_subItems.get( subtree.selector() );
         if ( c == null )
         {
-            c = new StaticTreeBuilder( subtree );
+            c = m_tools.createStaticTreeBuilder( subtree );
             m_subItems.put( subtree.selector(), c );        }
 
         return c;
