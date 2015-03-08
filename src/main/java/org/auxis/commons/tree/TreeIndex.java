@@ -69,7 +69,7 @@ public class TreeIndex extends AbstractDelegateTree
 
     public String toString()
     {
-        return "TreeIndex of [" + super.toString() + "] with selectors: " + m_selectors.size();
+        return super.toString() + " Idx: " + m_selectors.size();
     }
 
 }

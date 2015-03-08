@@ -90,8 +90,9 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                 for (Selector c : m_subItems.keySet()) {
                     // strip duplicate trees. Nope.
                     Tree sealed = m_subItems.get(c).seal();
-                    // if (!subHashes.contains( sealed ))
-                    subHashes.add(sealed);
+                  //  if (!isEmptyTree(sealed)) {
+                        subHashes.add(sealed);
+                  //  }
                 }
 
                 sort(subHashes);
@@ -105,6 +106,10 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
             resetMembers();
         }
         return m_hash;
+    }
+
+    private boolean isEmptyTree(Tree tree) {
+        return tree.fingerprint().equals(FIXED_EMPTY);
     }
 
     private void sort( List<Tree> subHashes )

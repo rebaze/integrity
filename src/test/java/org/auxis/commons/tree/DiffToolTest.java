@@ -84,9 +84,8 @@ public class DiffToolTest
         TreeIndex result = wrapAsIndex( TOOLS.diff( sn1, sn2 ) );
 
         // Display both for visual reference..
-        FORMAT.prettyPrint( sn1 );
-        FORMAT.prettyPrint( sn2 );
-        FORMAT.prettyPrint( result );
+        FORMAT.prettyPrint( sn1,sn2,result );
+
 
         assertEquals( "Detect 3 modifications", 3, result.select( selector( "db1" ) ).branches().length );
         assertEquals( "Modification in db2.table2", DiffTreeCombiner.MODIFIED, result.select( selector( "db1" ) ).select( selector( "table2" ) ).tags() );

@@ -56,6 +56,6 @@ public class Selector
 
     public String toString()
     {
-        return "[Selector name=" + m_name + "]";
+        return ":" + m_name;
     }
 }

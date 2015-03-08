@@ -25,16 +25,15 @@ public class DiffTreeCombiner implements TreeCombiner
         treeBuilderProvider = builder;
     }
 
-    @Override public Tree combine( Tree left, Tree right )
+    @Override
+    public Tree combine( Tree left, Tree right )
     {
         TreeBuilder builder = treeBuilderProvider.get();
-        builder.selector( selector("DIFF") );
+        builder.selector( selector( "DIFF" ) );
 
         compare( builder, wrapAsIndex( left ), wrapAsIndex( right ) );
         return builder.seal();
     }
-
-
 
     /**
      *
@@ -63,55 +62,75 @@ public class DiffTreeCombiner implements TreeCombiner
 
         if ( !left.fingerprint().equals( right.fingerprint() ) )
         {
-            // diff next level:
-            TreeBuilder modification = collector.branch( right.selector() ).tag( MODIFIED );
-            for ( TreeIndex tree : left.branches() )
+            if ( left.branches().length == 0 && right.branches().length == 0 )
             {
-                // first check if tree is a selectable node or not:
-                if ( tree.selectable() )
-                {
-                    TreeIndex origin = right.select( tree.selector() );
-                    if ( origin == null )
-                    {
-                        // Deleted element:
-                        TreeBuilder removed = modification.branch( tree.selector() ).tag( REMOVED );
-                        // Not so sure..
-                        compare( removed, tree, origin );
-                    }
-                    else
-                    {
-                        // diff content:
-                        compare( modification, tree, origin );
-                    }
-
-                }
-                else
-                {
-                    throw new TreeException( "Item " + tree + " is not selectable." );
-                }
+                collector.branch( right ).tag( MODIFIED );
             }
-            // find new ones:
-            for ( TreeIndex tree : right.branches() )
+            else
             {
-                // first check if tree is a selectable node or not:
-                if ( tree.selectable() )
+                TreeBuilder modification = collector.branch( right.selector() ).tag( MODIFIED );
+                for ( TreeIndex tree : left.branches() )
                 {
-                    TreeIndex origin = left.select( tree.selector() );
-                    if ( origin == null )
+                    // first check if tree is a selectable node or not:
+                    if ( tree.selectable() )
                     {
-                        // New element:
-                        TreeBuilder added = modification.branch( tree.selector() ).tag( ADDED );
-                        compare( added, origin, tree );
+                        TreeIndex origin = right.select( tree.selector() );
+                        if ( origin == null )
+                        {
+                            // Deleted element:
+
+                            if ( tree.branches().length == 0 )
+                            {
+                                modification.branch( tree ).tag( REMOVED );
+                            }
+                            else
+                            {
+                                TreeBuilder removed = modification.branch( tree.selector() ).tag( REMOVED );
+                                compare( removed, tree, null );
+                            }
+                        }
+                        else
+                        {
+                            // diff content:
+                            compare( modification, tree, origin );
+                        }
+
                     }
                     else
                     {
-                        // already worked on.
+                        throw new TreeException( "Item " + tree + " is not selectable." );
                     }
-
                 }
-                else
+
+                for ( TreeIndex tree : right.branches() )
                 {
-                    throw new TreeException( "Item " + tree + " is not selectable." );
+                    // first check if tree is a selectable node or not:
+                    if ( tree.selectable() )
+                    {
+                        TreeIndex origin = left.select( tree.selector() );
+                        if ( origin == null )
+                        {
+                            // New element:
+                            if ( tree.branches().length == 0 )
+                            {
+                                modification.branch( tree ).tag( ADDED );
+                            }
+                            else
+                            {
+                                TreeBuilder added = modification.branch( tree.selector() ).tag( ADDED );
+                                compare( added, null, tree );
+                            }
+                        }
+                        else
+                        {
+                            // already worked on.
+                        }
+
+                    }
+                    else
+                    {
+                        throw new TreeException( "Item " + tree + " is not selectable." );
+                    }
                 }
             }
         }

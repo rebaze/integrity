@@ -48,7 +48,7 @@ public abstract class AbstractDelegateTree implements Tree
 
     public String toString()
     {
-        return "TreeIndex of [" + m_tree.toString() + "] ";
+        return m_tree.toString();
     }
 
     @Override
