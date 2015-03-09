@@ -88,11 +88,11 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
             }else {
                 List<Tree> subHashes = new ArrayList<Tree>(m_subItems.keySet().size());
                 for (Selector c : m_subItems.keySet()) {
-                    // strip duplicate trees. Nope.
                     Tree sealed = m_subItems.get(c).seal();
-                  //  if (!isEmptyTree(sealed)) {
+                    // Empty trees are not sealed. This is empty-tree erasure.
+                    if (!isEmptyTree(sealed)) {
                         subHashes.add(sealed);
-                  //  }
+                    }
                 }
 
                 sort(subHashes);
