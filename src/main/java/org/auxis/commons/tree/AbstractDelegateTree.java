@@ -19,7 +19,7 @@ public abstract class AbstractDelegateTree implements Tree
     {
         if ( tree instanceof AbstractDelegateTree )
         {
-            throw new RuntimeException( "Should not already be wrapped.. waaaayyy too expensive.." );
+            throw new IllegalArgumentException( "Should not already be wrapped.. waaaayyy too expensive.." );
         }
     }
 
