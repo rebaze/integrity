@@ -94,7 +94,7 @@ public class TreeSession
         }
     }
 
-    public Tree diff( Tree left, Tree right )
+    public Tree delta( Tree left, Tree right )
     {
         return deltaCombiner.combine( left, right );
     }

@@ -91,7 +91,7 @@ public class DeltaTreeCombiner implements TreeCombiner
                         }
                         else
                         {
-                            // diff content:
+                            // delta content:
                             compare( modification, tree, origin );
                         }
 

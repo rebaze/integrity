@@ -28,7 +28,7 @@ public class FSTreeRunner
         {
             Tree treeLeft = new FSTreeRunner().collect( treetools.createTreeBuilder(), new File( args[0] ) ).seal();
             Tree treeRight = new FSTreeRunner().collect( treetools.createTreeBuilder(), new File( args[1] ) ).seal();
-            Tree diff = treetools.diff( treeLeft, treeRight );
+            Tree diff = treetools.delta( treeLeft, treeRight );
             FORMAT.prettyPrint( 0, diff );
         }
         else

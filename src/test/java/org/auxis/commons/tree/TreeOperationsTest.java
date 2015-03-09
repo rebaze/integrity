@@ -25,13 +25,13 @@ public class TreeOperationsTest {
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
         Tree intersection = session.intersection(sn1.seal(), sn2.seal());
-        Tree difference = session.diff(sn1.seal(), sn2.seal());
+        Tree difference = session.delta( sn1.seal(), sn2.seal() );
         Tree union = session.union(sn1.seal(), sn2.seal());
 
         formatter.prettyPrint( sn1.seal(), sn2.seal(), intersection );
 
         assertEquals( union, session.union( difference, intersection ) );
-        assertEquals( difference, session.diff( union, intersection ) );
-        assertEquals( intersection, session.diff( union, difference ) );
+        assertEquals( difference, session.delta( union, intersection ) );
+        assertEquals( intersection, session.delta( union, difference ) );
     }
 }
