@@ -1,6 +1,7 @@
 package org.auxis.commons.tree.internal;
 
 import static org.auxis.commons.tree.Selector.*;
+import static org.auxis.commons.tree.util.TreeSession.nodes;
 import static org.junit.Assert.*;
 
 import org.auxis.commons.tree.TreeBuilder;
@@ -16,19 +17,19 @@ public class InMemoryTreeImplTest
     @Test
     public void testEmptyTreeSize()
     {
-        assertEquals( "Trunk only", 1, session.nodes( session.createTreeBuilder().selector( selector( "foo" ) ).seal() ) );
+        assertEquals( "Trunk only", 1, nodes( session.createTreeBuilder().selector( selector( "foo" ) ).seal() ) );
     }
 
     @Test
     public void testAddsOnlyOnSingle()
     {
-        assertEquals( "Trunk only", 1, session.nodes( session.createTreeBuilder().selector( selector( "foo" ) ).add( "data".getBytes() ).seal() ) );
+        assertEquals( "Trunk only", 1, nodes( session.createTreeBuilder().selector( selector( "foo" ) ).add( "data".getBytes() ).seal() ) );
     }
 
     @Test
     public void testSingleBranch()
     {
-        assertEquals( 1, session.nodes( session.createTreeBuilder().selector( selector( "foo" ) ).branch( selector( "branch" ) ).seal() ) );
+        assertEquals( 1, nodes( session.createTreeBuilder().selector( selector( "foo" ) ).branch( selector( "branch" ) ).seal() ) );
     }
 
     @Test
@@ -37,7 +38,7 @@ public class InMemoryTreeImplTest
         TreeBuilder tb = session.createTreeBuilder().selector( selector( "trunk" ) );
         tb.branch( selector( "branch2" ) ).add( "data1".getBytes() );
         tb.branch( selector( "branch3" ) ).add( "data1".getBytes() );
-        assertEquals( 3, session.nodes( tb.seal() ) );
+        assertEquals( 3, nodes( tb.seal() ) );
     }
 
     @Test
