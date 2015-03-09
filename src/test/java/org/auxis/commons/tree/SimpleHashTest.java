@@ -13,20 +13,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
 public class SimpleHashTest
 {
-    private TreeTools m_tools = TreeTools.treeTools();
+    private TreeSession session = TreeSession.getSession();
 
     @Test
     public void emptyCollector() throws Exception
     {
-        TreeBuilder root = m_tools.createTreeBuilder().selector( selector( "Root" ) );
-        assertEquals(InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().fingerprint() );
+        TreeBuilder root = session.createTreeBuilder().selector( selector( "Root" ) );
+        assertEquals( InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().fingerprint() );
 
-        TreeBuilder root2 = m_tools.createTreeBuilder().selector( selector( "RootOther" ) );
+        TreeBuilder root2 = session.createTreeBuilder().selector( selector( "RootOther" ) );
         assertEquals( root.seal().fingerprint(), root2.seal().fingerprint() );
     }
 
@@ -34,13 +34,13 @@ public class SimpleHashTest
     public void singleElements() throws Exception
     {
         String[] elements = new String[] { "element1", "element2" };
-        TreeBuilder root = m_tools.createTreeBuilder().selector( selector( "Root" ) );
+        TreeBuilder root = session.createTreeBuilder().selector( selector( "Root" ) );
         root.add( elements[0].getBytes() );
         root.add( elements[1].getBytes() );
         assertEquals( "2a190d88c7a164f242ea707acf5d57bc990f0ce1", root.seal().fingerprint() );
 
         String[] elementsOther = new String[] { "foo", "element2" };
-        TreeBuilder root2 = m_tools.createTreeBuilder().selector( selector( "Root" ) );
+        TreeBuilder root2 = session.createTreeBuilder().selector( selector( "Root" ) );
         root2.add( elementsOther[0].getBytes() );
         root2.add( elementsOther[1].getBytes() );
         assertEquals( "0dc0638a504e1b0415a37340bf57d14b75b14308", root2.seal().fingerprint() );
@@ -49,7 +49,7 @@ public class SimpleHashTest
     @Test
     public void simpleTreeTest() throws Exception
     {
-        TreeBuilder root = m_tools.createTreeBuilder().selector( selector( "Root1" ) );
+        TreeBuilder root = session.createTreeBuilder().selector( selector( "Root1" ) );
         TreeBuilder sub1 = root.branch( selector( "child1" ) );
         sub1.add( "One".getBytes() );
         sub1.add( "Two".getBytes() );
@@ -59,7 +59,7 @@ public class SimpleHashTest
         sub2.add( "Four".getBytes() );
         Tree tree1 = root.seal();
 
-        TreeBuilder root2 = m_tools.createTreeBuilder().selector( selector( "Root2" ) );
+        TreeBuilder root2 = session.createTreeBuilder().selector( selector( "Root2" ) );
         TreeBuilder sub3 = root2.branch( selector( "child3" ) );
         sub3.add( "Different".getBytes() );
         sub3.add( "Two".getBytes() );
@@ -77,11 +77,11 @@ public class SimpleHashTest
     @Test
     public void testReuseCollectors()
     {
-        TreeBuilder sn1 = m_tools.createTreeBuilder();
+        TreeBuilder sn1 = session.createTreeBuilder();
         sn1.branch( selector( "p1" ) ).add( "one".getBytes() );
         sn1.branch( selector( "p1" ) ).add( "two".getBytes() );
 
-        TreeBuilder sn2 = m_tools.createTreeBuilder();
+        TreeBuilder sn2 = session.createTreeBuilder();
         sn2.branch( selector( "p1" ) ).add( "one".getBytes() ).add( "two".getBytes() );
 
         assertEquals( "Should no elements", sn1.seal(),sn2.seal() );

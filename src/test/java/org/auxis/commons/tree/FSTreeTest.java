@@ -6,7 +6,7 @@ import java.io.File;
 
 import org.auxis.commons.tree.util.StreamTreeBuilder;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public class FSTreeTest
 {
     private final static Logger LOG = LoggerFactory.getLogger( FSTreeTest.class );
 
-    private final TreeTools TOOLS = TreeTools.treeTools();
+    private final TreeSession session = TreeSession.getSession();
     private final TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
 
     private void collect( TreeBuilder builder, File base )

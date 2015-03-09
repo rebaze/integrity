@@ -4,7 +4,7 @@
 package org.auxis.commons.tree;
 
 import org.auxis.commons.tree.annotated.Tag;
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 
 /**
  * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree
@@ -15,12 +15,12 @@ import org.auxis.commons.tree.util.TreeTools;
 public class StaticTreeBuilder implements TreeBuilder
 {
     private Tree m_tree;
-    private final TreeTools m_session;
+    private final TreeSession m_session;
 
-    public StaticTreeBuilder(Tree encapsulatedTree, TreeTools treeTools)
+    public StaticTreeBuilder(Tree encapsulatedTree, TreeSession treeSession )
     {
         m_tree = encapsulatedTree;
-        m_session = treeTools;
+        m_session = treeSession;
     }
 
     @Override

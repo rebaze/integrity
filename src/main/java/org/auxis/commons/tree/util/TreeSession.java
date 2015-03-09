@@ -24,32 +24,26 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Toni Menzel <toni.menzel@rebaze.com>
  */
-public class TreeTools
+public class TreeSession
 {
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
 
     private static ObjectGraph INSTANCE;
 
-    @Inject @Named( "diff" ) TreeCombiner diffCombiner;
+    @Inject @Named( "delta" ) TreeCombiner deltaCombiner;
 
     @Inject @Named( "intersect" ) TreeCombiner intersectCombiner;
 
     @Inject @Named( "union" ) TreeCombiner unionCombiner;
 
-
-    TreeTools()
-    {
-
-    }
-
-    public static TreeTools treeTools()
+    public static TreeSession getSession()
     {
         if ( INSTANCE == null )
         {
             INSTANCE = ObjectGraph.create( new DefaultTreeModule() );
         }
-        return INSTANCE.get( TreeTools.class );
+        return INSTANCE.get( TreeSession.class );
     }
 
     public static long nodes( Tree tree )
@@ -82,7 +76,7 @@ public class TreeTools
         return new InMemoryTreeImpl( selector, hashValue, subs, tag );
     }
 
-    public TreeTools setDigestAlgorithm( String algo )
+    public TreeSession setDigestAlgorithm( String algo )
     {
         m_messageDigestAlgorithm = algo;
         return this;
@@ -102,7 +96,7 @@ public class TreeTools
 
     public Tree diff( Tree left, Tree right )
     {
-        return diffCombiner.combine( left, right );
+        return deltaCombiner.combine( left, right );
     }
 
     public Tree union( Tree left, Tree right )
@@ -130,4 +124,6 @@ public class TreeTools
             return new TreeIndex( tree );
         }
     }
+
+    TreeSession() { }
 }

@@ -12,12 +12,11 @@ import java.security.MessageDigest;
 import java.util.*;
 
 import org.auxis.commons.tree.Selector;
-import org.auxis.commons.tree.StaticTreeBuilder;
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeAlreadySealedException;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.annotated.Tag;
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -39,9 +38,9 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
 
     private Selector m_selector;
     private Tag m_tag;
-    private final TreeTools m_tools;
+    private final TreeSession m_tools;
 
-    public InMemoryTreeBuilderImpl( TreeTools tools )
+    public InMemoryTreeBuilderImpl( TreeSession tools )
     {
         m_tools = tools;
         m_digest = m_tools.createMessageDigest();

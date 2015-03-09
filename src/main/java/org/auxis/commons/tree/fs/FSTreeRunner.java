@@ -4,7 +4,7 @@ import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.util.StreamTreeBuilder;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class FSTreeRunner
         args = new String[] { "/Users/tonit/devel/auxis", "/Users/tonit/devel/auxis" };
         FSTreeRunner runner = new FSTreeRunner();
 
-        TreeTools treetools = TreeTools.treeTools();
+        TreeSession treetools = TreeSession.getSession();
 
         if ( args.length >= 2 )
         {

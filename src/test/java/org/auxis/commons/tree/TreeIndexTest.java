@@ -1,19 +1,19 @@
 package org.auxis.commons.tree;
 
-import org.auxis.commons.tree.util.TreeTools;
+import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.auxis.commons.tree.Selector.selector;
 import static org.auxis.commons.tree.annotated.Tag.tag;
-import static org.auxis.commons.tree.util.TreeTools.wrapAsIndex;
+import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class TreeIndexTest
 {
-    private TreeTools TOOLS = TreeTools.treeTools();
+    private TreeSession session = TreeSession.getSession();
 
     @Test
     public void compoundSelectArrayTest() throws IOException
@@ -27,7 +27,7 @@ public class TreeIndexTest
     @Test
     public void testSameSelectorDifferentData() throws IOException
     {
-        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        TreeBuilder c1 = session.createTreeBuilder();
         c1.branch( selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( selector( "db2" ) ).add( "dat2".getBytes() );
         c1.branch( selector( "db1" ) ).add( "data3".getBytes() );
@@ -37,7 +37,7 @@ public class TreeIndexTest
     @Test
     public void testSameDataDifferentSelector() throws IOException
     {
-        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        TreeBuilder c1 = session.createTreeBuilder();
         c1.branch( selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( selector( "db2" ) ).add( "dat2".getBytes() );
         c1.branch( selector( "db3" ) ).add( "data3".getBytes() );
@@ -48,7 +48,7 @@ public class TreeIndexTest
     @Test
     public void testSameDataSameSelector() throws IOException
     {
-        TreeBuilder c1 = TOOLS.createTreeBuilder();
+        TreeBuilder c1 = session.createTreeBuilder();
         c1.branch( selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( selector( "db3" ) ).add( "data".getBytes() );
@@ -57,7 +57,7 @@ public class TreeIndexTest
 
     private TreeIndex sampleTree()
     {
-        TreeBuilder c1 = TOOLS.createTreeBuilder().selector( selector( "db1" ) );
+        TreeBuilder c1 = session.createTreeBuilder().selector( selector( "db1" ) );
         c1.branch( selector( "table1" ) ).branch( selector( "other" ) ).add( "Data1".getBytes() ).tag( tag( "findme" ) );
         TreeIndex sn1 = new TreeIndex( c1.seal() );
         return sn1;

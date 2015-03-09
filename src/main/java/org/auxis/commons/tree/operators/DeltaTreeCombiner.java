@@ -8,10 +8,10 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import static org.auxis.commons.tree.Selector.selector;
-import static org.auxis.commons.tree.util.TreeTools.wrapAsIndex;
+import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
 
 @Singleton
-public class DiffTreeCombiner implements TreeCombiner
+public class DeltaTreeCombiner implements TreeCombiner
 {
     public static final Tag ADDED = new Tag( "ADDED" );
     public static final Tag REMOVED = new Tag( "REMOVED" );
@@ -20,7 +20,7 @@ public class DiffTreeCombiner implements TreeCombiner
     private final Provider<TreeBuilder> treeBuilderProvider;
 
     @Inject
-    public DiffTreeCombiner( Provider<TreeBuilder> builder )
+    public DeltaTreeCombiner( Provider<TreeBuilder> builder )
     {
         treeBuilderProvider = builder;
     }
