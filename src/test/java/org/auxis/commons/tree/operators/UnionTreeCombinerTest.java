@@ -1,5 +1,7 @@
-package org.auxis.commons.tree;
+package org.auxis.commons.tree.operators;
 
+import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.TreeIndex;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
@@ -11,9 +13,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Created by tonit on 05/03/15.
+ * Created by tonit on 10/03/15.
  */
-public class TreeOperationsTest {
+public class UnionTreeCombinerTest
+{
     private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
     private TreeSession session = TreeSession.getSession();
 
@@ -60,27 +63,4 @@ public class TreeOperationsTest {
         assertEquals( "d0941e", union.select( selector( "p3" ) ).fingerprint().substring( 0, 6 ) );
     }
 
-    @Test
-    public void testCombinerIntegrity() {
-        TreeBuilder sn1 = session.createTreeBuilder();
-        sn1.branch(selector("p1")).add("one".getBytes());
-        sn1.branch(selector("p2")).add("two".getBytes());
-
-        TreeBuilder sn2 = session.createTreeBuilder();
-        sn2.branch(selector("p1")).add( "one".getBytes() );
-        sn2.branch(selector("p3")).add( "other".getBytes() );
-
-        formatter.prettyPrint( sn1.seal(), sn2.seal() );
-
-        Tree intersection = session.intersection(sn1.seal(), sn2.seal());
-        Tree difference = session.diff( sn1.seal(), sn2.seal() );
-        Tree union = session.union( sn1.seal(), sn2.seal() );
-
-        Tree combinedDelta = session.diff( union, difference );
-        formatter.prettyPrint( intersection, combinedDelta );
-
-        assertEquals( intersection, combinedDelta );
-        assertEquals( union, session.union( difference, intersection ) );
-        assertEquals( difference, session.diff( union, intersection ) );
-    }
 }

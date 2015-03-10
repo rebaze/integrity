@@ -6,7 +6,7 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.auxis.commons.tree;
+package org.auxis.commons.tree.operators;
 
 import static org.auxis.commons.tree.Selector.selector;
 import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
@@ -14,13 +14,16 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
+import org.auxis.commons.tree.Tree;
+import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.TreeIndex;
 import org.auxis.commons.tree.operators.DeltaTreeCombiner;
 import org.auxis.commons.tree.operators.DiffTreeCombiner;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
-public class DiffToolTest
+public class DiffTreeCombinatorTest
 {
 
     private static TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
