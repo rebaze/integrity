@@ -29,8 +29,6 @@ public class DeltaTreeCombiner implements TreeCombiner
     public Tree combine( Tree left, Tree right )
     {
         TreeBuilder builder = treeBuilderProvider.get();
-        builder.selector( selector( "DIFF" ) );
-
         compare( builder, wrapAsIndex( left ), wrapAsIndex( right ) );
         return builder.seal();
     }

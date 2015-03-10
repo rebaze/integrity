@@ -11,10 +11,7 @@ package org.auxis.commons.tree.internal;
 import java.security.MessageDigest;
 import java.util.*;
 
-import org.auxis.commons.tree.Selector;
-import org.auxis.commons.tree.Tree;
-import org.auxis.commons.tree.TreeAlreadySealedException;
-import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
 import org.auxis.commons.tree.util.TreeSession;
 
@@ -56,12 +53,20 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     @Override
     synchronized public TreeBuilder add( byte[] bytes )
     {
+        if (m_subItems.size() > 0) {
+            throwMixedDataBranchException( );
+        }
+        addUnguarded( bytes );
+        return this;
+    }
+
+    private void addUnguarded( byte[] bytes )
+    {
         if (bytes.length > 0) {
             noData = false;
             verifyTreeNotSealed();
-            m_digest.update(bytes);
+            m_digest.update( bytes );
         }
-        return this;
     }
 
     /*
@@ -97,7 +102,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                 sort(subHashes);
 
                 for (Tree c : subHashes) {
-                    add(c.fingerprint().getBytes());
+                    addUnguarded(c.fingerprint().getBytes());
                 }
                 m_hash = m_tools.createTree(m_selector, convertToHex(m_digest.digest()), subHashes.toArray(new Tree[subHashes.size()]), m_tag);
             }
@@ -148,6 +153,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     @Override
     synchronized public TreeBuilder branch( Selector selector )
     {
+        verifyNoData();
         verifyTreeNotSealed();
         TreeBuilder c = m_subItems.get( selector );
         if ( c == null )
@@ -159,17 +165,65 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         return c;
     }
 
+    private void verifyNoData()
+    {
+        if (!noData) {
+            throwMixedDataBranchException( );
+        }
+    }
+
+    private void throwMixedDataBranchException( )
+    {
+        throw new TreeException( "Mixed nodes of data and branches are discouraged. It makes merges really not easy to judge by."  );
+    }
+
     @Override
     public TreeBuilder branch( Tree subtree )
     {
+        verifyNoData();
         verifyTreeNotSealed();
         TreeBuilder c = m_subItems.get( subtree.selector() );
+
         if ( c == null )
         {
             c = m_tools.createStaticTreeBuilder( subtree );
-            m_subItems.put( subtree.selector(), c );        }
+            m_subItems.put( subtree.selector(), c );
+        }else {
+            if (subtree.branches().length == 0 && c.seal().fingerprint().equals( subtree.fingerprint() )) {
+                // don't merge when fingerprint matches:
+                return c;
+
+            }else
+            {
+                // need to merge c & subtree
+                TreeBuilder unified = m_tools.createTreeBuilder();
+                unified.selector( subtree.selector() );
+                include( unified, c.seal() );
+                include( unified, subtree );
+                m_subItems.put( subtree.selector(), unified );
+            }
+        }
 
         return c;
+    }
+
+    private void include( TreeBuilder collector, Tree left )
+    {
+        // only when one merges in trees with competing data:
+
+        if ( left.branches().length == 0 ) {
+            // Merge competing data to a new anonymous tree.
+            // Note that this produces fingerprint based on another fingerprint:
+            collector.add( left.fingerprint().getBytes() ).tag( Tag.tag( "MERGED" ) );
+        }else
+        {
+            // auto include:
+            TreeBuilder subBuilder = collector.branch( left.selector() );
+            for ( Tree tree : left.branches() )
+            {
+                include( subBuilder, tree );
+            }
+        }
     }
 
     private void verifyTreeNotSealed()

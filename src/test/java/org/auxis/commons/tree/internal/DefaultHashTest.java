@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.TreeException;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
@@ -39,6 +40,22 @@ public class DefaultHashTest
         Tree sn1 = session.createTreeBuilder().selector( selector( "Here" ) ).branch( selector( "whatnow" ) ).add( "Some".getBytes() ).seal();
         Tree sn2 = session.createTreeBuilder().selector( selector( "There" ) ).branch( selector( "d" ) ).add( "Some".getBytes() ).seal();
         assertEquals( "Must be identical", sn1, sn2 );
+    }
+
+    @Test (expected = TreeException.class)
+    public void testDoNotAllowDataWithBranch()
+    {
+        TreeBuilder tb = session.createTreeBuilder();
+        tb.branch( selector ("foo") );
+        tb.add( "Data".getBytes() );
+    }
+
+    @Test (expected = TreeException.class)
+    public void testDoNotAllowBranchesWithData()
+    {
+        TreeBuilder tb = session.createTreeBuilder();
+        tb.add( "Data".getBytes() );
+        tb.branch( selector ("foo") );
     }
 
     @Test

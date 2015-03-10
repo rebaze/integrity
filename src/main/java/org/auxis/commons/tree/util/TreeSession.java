@@ -16,6 +16,7 @@ import org.auxis.commons.tree.internal.InMemoryTreeImpl;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -122,6 +123,17 @@ public class TreeSession
         else
         {
             return new TreeIndex( tree );
+        }
+    }
+
+    public static byte[] asByteArray( String s) {
+        try
+        {
+            return s.getBytes( "UTF-8" );
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            throw new IllegalArgumentException( "Is not UTF-8 ??" );
         }
     }
 

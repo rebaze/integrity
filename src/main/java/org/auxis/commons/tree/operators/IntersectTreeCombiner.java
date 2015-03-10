@@ -37,10 +37,10 @@ public class IntersectTreeCombiner implements TreeCombiner
     }
 
     private void walk(Tree left, Map<String, Tree> rightMap, TreeBuilder workinBranch) {
-        System.out.println("Testing " + left.fingerprint());
+        //System.out.println("Testing " + left.fingerprint());
         if (rightMap.containsKey(left.fingerprint())) {
             // entire tree exists:
-            System.out.println("Match " + left);
+            //System.out.println("Match " + left);
             workinBranch.branch(left).tag( tag ( "MATCH" ) );
         }else {
             for (Tree sub : left.branches()) {
