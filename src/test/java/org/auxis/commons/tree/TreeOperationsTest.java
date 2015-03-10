@@ -73,14 +73,14 @@ public class TreeOperationsTest {
         formatter.prettyPrint( sn1.seal(), sn2.seal() );
 
         Tree intersection = session.intersection(sn1.seal(), sn2.seal());
-        Tree difference = session.delta( sn1.seal(), sn2.seal() );
+        Tree difference = session.diff( sn1.seal(), sn2.seal() );
         Tree union = session.union( sn1.seal(), sn2.seal() );
 
-        Tree combinedDelta = session.delta( union, difference );
+        Tree combinedDelta = session.diff( union, difference );
         formatter.prettyPrint( intersection, combinedDelta );
 
         assertEquals( intersection, combinedDelta );
         assertEquals( union, session.union( difference, intersection ) );
-        assertEquals( difference, session.delta( union, intersection ) );
+        assertEquals( difference, session.diff( union, intersection ) );
     }
 }

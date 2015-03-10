@@ -34,6 +34,8 @@ public class TreeSession
 
     @Inject @Named( "delta" ) TreeCombiner deltaCombiner;
 
+    @Inject @Named( "diff" ) TreeCombiner diffCombiner;
+
     @Inject @Named( "intersect" ) TreeCombiner intersectCombiner;
 
     @Inject @Named( "union" ) TreeCombiner unionCombiner;
@@ -93,6 +95,11 @@ public class TreeSession
         {
             throw new TreeException( "Problem loading digest with algorthm." );
         }
+    }
+
+    public Tree diff( Tree left, Tree right )
+    {
+        return diffCombiner.combine( left, right );
     }
 
     public Tree delta( Tree left, Tree right )

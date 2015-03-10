@@ -5,6 +5,7 @@ import dagger.Provides;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeCombiner;
 import org.auxis.commons.tree.operators.DeltaTreeCombiner;
+import org.auxis.commons.tree.operators.DiffTreeCombiner;
 import org.auxis.commons.tree.operators.IntersectTreeCombiner;
 import org.auxis.commons.tree.operators.UnionTreeCombiner;
 
@@ -17,6 +18,11 @@ import javax.inject.Provider;
 @Module( library = true, injects = { TreeSession.class } )
 public class DefaultTreeModule
 {
+    @Provides @Named("diff") TreeCombiner diffCombiner( Provider<TreeBuilder> builder )
+    {
+        return new DiffTreeCombiner( builder );
+    }
+
     @Provides @Named("delta") TreeCombiner deltaCombiner( Provider<TreeBuilder> builder )
     {
         return new DeltaTreeCombiner( builder );
