@@ -13,6 +13,12 @@ import java.util.Map;
 
 import static org.auxis.commons.tree.annotated.Tag.tag;
 
+/**
+ * This {@link TreeCombiner} creates a intersection tree.
+ *
+ * @author Toni Menzel (rebaze)
+ * @since 0.3
+ */
 @Singleton
 public class IntersectTreeCombiner implements TreeCombiner
 {

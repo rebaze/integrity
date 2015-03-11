@@ -15,6 +15,10 @@ import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
  *
  * It is different to a regular diff where the resulting tree honors
  * combinator rules together with Union and Intersection.
+ *
+ * @author Toni Menzel (rebaze)
+ * @since 0.3
+ *
  */
 @Singleton
 public class DiffTreeCombiner implements TreeCombiner

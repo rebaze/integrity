@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 rebaze GmbH
+ * Copyright (c) 2012-2015 rebaze GmbH
  * All rights reserved. 
  * 
  * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
@@ -81,7 +81,6 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         {
             defaultSelector();
 
-            // Special cases:
             if (noData && m_subItems.size() == 0) {
                 // Use fixed value empty tree:
                 m_hash = m_tools.createTree(m_selector,FIXED_EMPTY,new Tree[0],m_tag);
@@ -98,9 +97,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                         subHashes.add(sealed);
                     }
                 }
-
                 sort(subHashes);
-
                 for (Tree c : subHashes) {
                     addUnguarded(c.fingerprint().getBytes());
                 }
