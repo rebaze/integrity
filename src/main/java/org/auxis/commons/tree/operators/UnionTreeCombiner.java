@@ -1,9 +1,6 @@
 package org.auxis.commons.tree.operators;
 
-import org.auxis.commons.tree.Tree;
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.TreeCombiner;
-import org.auxis.commons.tree.TreeIndex;
+import org.auxis.commons.tree.*;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -14,7 +11,11 @@ import static org.auxis.commons.tree.annotated.Tag.tag;
 import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
 
 /**
- * Created by tonit on 05/03/15.
+ * Covers merges of similar trees so that combiners work as a system. (see test cases about combiner integrity)
+ * In a sense this should be really coverable by native {@link TreeBuilder#branch(tree)} .
+ *
+ * @author Toni Menzel (rebaze)
+ * @since 0.3
  */
 @Singleton
 public class UnionTreeCombiner implements TreeCombiner
@@ -29,7 +30,7 @@ public class UnionTreeCombiner implements TreeCombiner
 
     @Override public Tree combine( Tree left, Tree right )
     {
-        TreeBuilder builder = treeBuilderProvider.get().tag( tag ( "UNION" ));
+        TreeBuilder builder = treeBuilderProvider.get().tag( tag( "UNION" ) );
         include( builder, left );
         include( builder, right );
         return builder.seal();
@@ -38,16 +39,19 @@ public class UnionTreeCombiner implements TreeCombiner
     private void include( TreeBuilder collector, Tree left )
     {
 
-        if ( left.branches().length == 0 ) {
-            collector.branch( left );
-        }else
+        if ( left.branches().length == 0 )
         {
-            //TreeBuilder subBuilder = collector.branch( left.selector() ).tag( tag ("infix" ) );
-
-            for ( Tree tree : left.branches() )
-            {
-                include( collector, tree );
-            }
+            collector.branch( left );
+        }
+        else
+        {
+            TreeBuilder subBuilder = collector.branch( left ).tag( tag( "infix" ) );
+            /**
+             for ( Tree tree : left.branches() )
+             {
+             include( subBuilder, tree );
+             }
+             **/
         }
     }
 }
