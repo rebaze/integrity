@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2015 rebaze GmbH
+ * All rights reserved.
+ *
+ * This library and the accompanying materials are made available under the terms of the Apache License Version 2.0,
+ * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ */
 package org.auxis.commons.tree.fs;
 
 import org.auxis.commons.tree.Tree;
@@ -22,13 +30,13 @@ public class FSTreeRunner
         args = new String[] { "/Users/tonit/devel/auxis", "/Users/tonit/devel/auxis" };
         FSTreeRunner runner = new FSTreeRunner();
 
-        TreeSession treetools = TreeSession.getSession();
+        TreeSession session = TreeSession.getSession();
 
         if ( args.length >= 2 )
         {
-            Tree treeLeft = new FSTreeRunner().collect( treetools.createTreeBuilder(), new File( args[0] ) ).seal();
-            Tree treeRight = new FSTreeRunner().collect( treetools.createTreeBuilder(), new File( args[1] ) ).seal();
-            Tree diff = treetools.diff( treeLeft, treeRight );
+            Tree treeLeft = new FSTreeRunner().collect( session.createTreeBuilder(), new File( args[0] ) ).seal();
+            Tree treeRight = new FSTreeRunner().collect( session.createTreeBuilder(), new File( args[1] ) ).seal();
+            Tree diff = session.diff( treeLeft, treeRight );
             FORMAT.prettyPrint( 0, diff );
         }
         else
