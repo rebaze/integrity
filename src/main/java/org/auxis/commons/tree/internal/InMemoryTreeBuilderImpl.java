@@ -13,7 +13,10 @@ import java.util.*;
 
 import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
+import org.auxis.commons.tree.util.HashUtil;
 import org.auxis.commons.tree.util.TreeSession;
+
+import static org.auxis.commons.tree.util.HashUtil.convertToHex;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -24,13 +27,12 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
 {
     public static final String FIXED_EMPTY = "0000000000000000000000000000000000000000";
 
+    final private static Comparator<Tree> TREE_COMPARATOR = new HashUtil.TreeComparator();
     final private MessageDigest m_digest;
     private Tree m_hash;
     private boolean noData = true;
     private boolean m_sealed = false;
 
-
-    //final private List<TreeBuilder> m_sub;
     final private Map<Selector, TreeBuilder> m_subItems;
 
     private Selector m_selector;
@@ -54,7 +56,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     synchronized public TreeBuilder add( byte[] bytes )
     {
         if (m_subItems.size() > 0) {
-            throwMixedDataBranchException( );
+            throwMixedDataBranchException();
         }
         addUnguarded( bytes );
         return this;
@@ -97,7 +99,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                         subHashes.add(sealed);
                     }
                 }
-                sort(subHashes);
+                Collections.sort( subHashes, TREE_COMPARATOR );
                 for (Tree c : subHashes) {
                     addUnguarded(c.fingerprint().getBytes());
                 }
@@ -111,18 +113,6 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
 
     private boolean isEmptyTree(Tree tree) {
         return tree.fingerprint().equals(FIXED_EMPTY);
-    }
-
-    private void sort( List<Tree> subHashes )
-    {
-
-        Collections.sort( subHashes, new Comparator<Tree>()
-        {
-            @Override public int compare( Tree left, Tree right )
-            {
-                return left.fingerprint().compareTo( right.fingerprint() );
-            }
-        } );
     }
 
     private void defaultSelector()
@@ -229,30 +219,6 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         {
             throw new TreeAlreadySealedException( "No modification on a sealed tree!" );
         }
-    }
-
-    private static String convertToHex( byte[] data )
-    {
-        StringBuilder buf = new StringBuilder();
-        for ( int i = 0; i < data.length; i++ )
-        {
-            int halfbyte = ( data[i] >>> 4 ) & 0x0F;
-            int two_halfs = 0;
-            do
-            {
-                if ( ( 0 <= halfbyte ) && ( halfbyte <= 9 ) )
-                {
-                    buf.append( ( char ) ( '0' + halfbyte ) );
-                }
-                else
-                {
-                    buf.append( ( char ) ( 'a' + ( halfbyte - 10 ) ) );
-                }
-                halfbyte = data[i] & 0x0F;
-            }
-            while ( two_halfs++ < 1 );
-        }
-        return buf.toString();
     }
 
     /*
