@@ -12,10 +12,7 @@ import dagger.Module;
 import dagger.Provides;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeCombiner;
-import org.auxis.commons.tree.operators.DeltaTreeCombiner;
-import org.auxis.commons.tree.operators.DiffTreeCombiner;
-import org.auxis.commons.tree.operators.IntersectTreeCombiner;
-import org.auxis.commons.tree.operators.UnionTreeCombiner;
+import org.auxis.commons.tree.operators.*;
 
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -46,6 +43,11 @@ public class DefaultTreeModule
     @Provides @Named("intersect") TreeCombiner intersectCombiner( Provider<TreeBuilder> builder )
     {
         return new IntersectTreeCombiner( builder );
+    }
+
+    @Provides @Named("substruct") TreeCombiner substruct( Provider<TreeBuilder> builder )
+    {
+        return new SubstructCombiner( builder );
     }
 
     @Provides TreeBuilder treeBuilder( TreeSession tools )

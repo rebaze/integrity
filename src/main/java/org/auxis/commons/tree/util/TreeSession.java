@@ -40,6 +40,8 @@ public class TreeSession
 
     @Inject @Named( "union" ) TreeCombiner unionCombiner;
 
+    @Inject @Named( "substruct" ) TreeCombiner substructCombiner;
+
     public static TreeSession getSession()
     {
         if ( INSTANCE == null )
@@ -57,6 +59,23 @@ public class TreeSession
             total += nodes( sub );
         }
         return total;
+    }
+
+    public static boolean isRaw( Tree tree )
+    {
+        if (tree.branches().length == 0) return true;
+
+        if (tree.branches().length == 1 && tree.fingerprint().equals(tree.branches()[0].fingerprint() ))
+        {
+            return isRaw( tree.branches()[0] );
+        }else
+        {
+            return false;
+        }
+    }
+
+    public static boolean isWrapper(Tree tree) {
+        return (tree.branches().length == 1 && tree.fingerprint().equals(tree.branches()[0].fingerprint() ));
     }
 
     public TreeBuilder createTreeBuilder()
@@ -112,6 +131,11 @@ public class TreeSession
         return unionCombiner.combine( left, right );
     }
 
+    public Tree substract( Tree left, Tree right )
+    {
+        return substructCombiner.combine( left, right );
+    }
+
     public Tree intersection( Tree left, Tree right )
     {
         return intersectCombiner.combine( left, right );
@@ -145,4 +169,14 @@ public class TreeSession
     }
 
     TreeSession() { }
+
+    public Tree find( Tree base, Tree subtree )
+    {
+        TreeBuilder builder = createTreeBuilder();
+        // basically copy the whole input tree but erase all leafs
+        // that do not mach the subtree.
+
+        return intersection( base, subtree );
+
+    }
 }
