@@ -2,6 +2,7 @@ package org.auxis.commons.tree.operators;
 
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertNotEquals;
 public class CombinatorIntegrityTest
 {
     private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
-    private TreeSession session = TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void testCombinerIntegrity() {
@@ -32,15 +33,15 @@ public class CombinatorIntegrityTest
 
         formatter.prettyPrint( sn1.seal(), sn2.seal() );
 
-        Tree intersection = session.intersection(sn1.seal(), sn2.seal());
-        Tree delta = session.delta( sn1.seal(), sn2.seal() );
-        Tree union = session.union( sn1.seal(), sn2.seal() );
+        Tree intersection = new IntersectTreeCombiner(session).combine( sn1.seal(), sn2.seal() );
+        Tree delta = new DeltaTreeCombiner(session).combine( sn1.seal(), sn2.seal() );
+        Tree union = new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() );
 
-        Tree combinedDelta = session.diff( union, delta );
+        Tree combinedDelta = new DiffTreeCombiner(session).combine( union, delta );
         formatter.prettyPrint( intersection, combinedDelta );
 
         assertEquals( intersection, combinedDelta );
-        assertEquals( union, session.union( delta, intersection ) );
-        assertEquals( delta, session.diff( union, intersection ) );
+        assertEquals( union, new UnionTreeCombiner(session).combine( delta, intersection ) );
+        assertEquals( delta, new DiffTreeCombiner(session).combine( union, intersection ) );
     }
 }

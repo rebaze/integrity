@@ -5,6 +5,7 @@ import static org.auxis.commons.tree.util.TreeSession.nodes;
 import static org.junit.Assert.*;
 
 import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public class InMemoryTreeImplTest
 {
-    private TreeSession session = TreeSession.getSession();
+    final private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void testEmptyTreeSize()

@@ -8,15 +8,15 @@
  */
 package org.auxis.commons.tree.operators;
 
-import org.auxis.commons.tree.*;
+import org.auxis.commons.tree.Tree;
+import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.TreeCombiner;
+import org.auxis.commons.tree.util.TreeSession;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import static org.auxis.commons.tree.Selector.selector;
 import static org.auxis.commons.tree.annotated.Tag.tag;
-import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
 
 /**
  * Covers merges of similar trees so that combiners work as a system. (see test cases about combiner integrity)
@@ -28,17 +28,17 @@ import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
 @Singleton
 public class UnionTreeCombiner implements TreeCombiner
 {
-    private final Provider<TreeBuilder> treeBuilderProvider;
+    private final TreeSession session;
 
     @Inject
-    public UnionTreeCombiner( Provider<TreeBuilder> builder )
+    public UnionTreeCombiner( TreeSession session )
     {
-        treeBuilderProvider = builder;
+        this.session = session;
     }
 
     @Override public Tree combine( Tree left, Tree right )
     {
-        TreeBuilder builder = treeBuilderProvider.get().tag( tag( "UNION" ) );
+        TreeBuilder builder = session.createTreeBuilder().tag( tag( "UNION" ) );
         include( builder, left );
         include( builder, right );
         return builder.seal();

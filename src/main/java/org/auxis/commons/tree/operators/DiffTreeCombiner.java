@@ -10,9 +10,9 @@ package org.auxis.commons.tree.operators;
 
 import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
+import org.auxis.commons.tree.util.TreeSession;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
@@ -35,18 +35,18 @@ public class DiffTreeCombiner implements TreeCombiner
     public static final Tag REMOVED = new Tag( "REMOVED" );
     public static final Tag MODIFIED = new Tag( "MODIFIED" );
 
-    private final Provider<TreeBuilder> treeBuilderProvider;
+    private final TreeSession session;
 
     @Inject
-    public DiffTreeCombiner( Provider<TreeBuilder> builder )
+    public DiffTreeCombiner( TreeSession session )
     {
-        treeBuilderProvider = builder;
+        this.session = session;
     }
 
     @Override
     public Tree combine( Tree left, Tree right )
     {
-        TreeBuilder builder = treeBuilderProvider.get();
+        TreeBuilder builder = session.createTreeBuilder();
         compare( builder, wrapAsIndex( left ), wrapAsIndex( right ) );
         return builder.seal();
     }

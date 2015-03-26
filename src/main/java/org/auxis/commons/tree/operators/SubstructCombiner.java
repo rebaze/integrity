@@ -3,9 +3,9 @@ package org.auxis.commons.tree.operators;
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeCombiner;
+import org.auxis.commons.tree.util.TreeSession;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 import javax.inject.Singleton;
 
 /**
@@ -17,17 +17,17 @@ import javax.inject.Singleton;
 @Singleton
 public class SubstructCombiner implements TreeCombiner
 {
-    private final Provider<TreeBuilder> treeBuilderProvider;
+    private final TreeSession session;
 
     @Inject
-    public SubstructCombiner( Provider<TreeBuilder> builder )
+    public SubstructCombiner( TreeSession session )
     {
-        treeBuilderProvider = builder;
+        this.session = session;
     }
 
     @Override public Tree combine( Tree left, Tree right )
     {
-        TreeBuilder tb = treeBuilderProvider.get();
+        TreeBuilder tb = session.createTreeBuilder();
         walk(tb,left,right);
         return tb.seal();
     }

@@ -10,11 +10,14 @@ package org.auxis.commons.tree.fs;
 
 import org.auxis.commons.tree.Tree;
 import org.auxis.commons.tree.TreeBuilder;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.StreamTreeBuilder;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.auxis.commons.tree.Selector.selector;
 
@@ -27,21 +30,61 @@ public class FSTreeRunner
 
     public static void main( String[] args )
     {
-        args = new String[] { "/Users/tonit/devel/auxis", "/Users/tonit/devel/auxis" };
+        args = new String[] { "/Users/tonit/devel/auxis" };
         FSTreeRunner runner = new FSTreeRunner();
 
-        TreeSession session = TreeSession.getSession();
+        TreeSession session = new DefaultTreeSessionFactory().create();
 
-        if ( args.length >= 2 )
+        if ( args.length >= 1 )
         {
-            Tree treeLeft = new FSTreeRunner().collect( session.createTreeBuilder(), new File( args[0] ) ).seal();
-            Tree treeRight = new FSTreeRunner().collect( session.createTreeBuilder(), new File( args[1] ) ).seal();
-            Tree diff = session.diff( treeLeft, treeRight );
-            FORMAT.prettyPrint( 0, diff );
+            System.out.println("Building tree..");
+
+            Tree base = new FSTreeRunner().collect( session.createTreeBuilder(), new File( args[0] ) ).seal();
+            System.out.println("Indexed with " + TreeSession.nodes( base ) + " nodes.");
+
+            // build deep index:
+            //FORMAT.prettyPrint( base );
+            Map<Tree, Integer> map = new HashMap<Tree, Integer>();
+            walk( map, base );
+            for ( Tree s : map.keySet() )
+            {
+                int count = map.get( s );
+                if ( count > 1 && TreeSession.nodes(s) > 2)
+                {
+                    // find that tree within base.
+                    Tree result = session.find( base, s);
+
+                    System.out.println( "# Found" + s + " : " + map.get( s ) );
+                    FORMAT.prettyPrint( result );
+                }
+            }
+
         }
         else
         {
-            System.err.println( "Specify <Folder1> <Folder2>" );
+            System.err.println( "Specify <Folder1>" );
+        }
+    }
+
+    private static void walk( Map<Tree, Integer> map, Tree input )
+    {
+        if (TreeSession.isWrapper( input )) {
+            // go deeper without counting:
+            walk(map,input.branches()[0]);
+            return;
+        }
+
+        if ( map.containsKey( input ) )
+        {
+            map.put( input, map.get( input) + 1 );
+        }
+        else
+        {
+            map.put( input, 1 );
+        }
+        for ( Tree tree : input.branches() )
+        {
+            walk( map, tree );
         }
     }
 
@@ -50,7 +93,7 @@ public class FSTreeRunner
         builder.selector( selector( base.getName() ) );
         for ( File f : base.listFiles() )
         {
-            if ( f.isHidden() )
+            if ( f.isHidden() || !f.canRead() )
                 continue;
             TreeBuilder sub = builder.branch( selector( f.getName() ) );
             if ( f.isDirectory() )

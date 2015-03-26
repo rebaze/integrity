@@ -19,6 +19,7 @@ import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeIndex;
 import org.auxis.commons.tree.operators.DeltaTreeCombiner;
 import org.auxis.commons.tree.operators.DiffTreeCombiner;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
@@ -27,14 +28,14 @@ public class DiffTreeCombinatorTest
 {
 
     private static TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
-    private TreeSession session =  TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void diffIdenticalEmpty()
     {
         Tree sn1 = session.createTreeBuilder().selector( selector( "c1" ) ).seal();
         Tree sn2 = session.createTreeBuilder().selector( selector( "c2" ) ).seal();
-        Tree result = session.diff( sn1, sn2 );
+        Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
         assertEquals( "Should no elements", 0, result.branches().length );
     }
 
@@ -47,7 +48,7 @@ public class DiffTreeCombinatorTest
         TreeBuilder b2 = session.createTreeBuilder().selector( selector( "c2" ) );
         b2.add( "Some".getBytes() );
         Tree sn2 = b2.seal();
-        Tree result = session.diff( sn1, sn2 );
+        Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
         assertEquals( "Should no elements", 0, result.branches().length );
     }
 
@@ -59,7 +60,7 @@ public class DiffTreeCombinatorTest
         Tree sn1 = b1.seal();
         TreeBuilder b2 = session.createTreeBuilder().selector( selector( "c2" ) );
         Tree sn2 = b2.seal();
-        Tree result = session.diff( sn1, sn2 );
+        Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
         assertEquals( "Should no elements", 1, result.branches().length );
         assertEquals( "Select what is different", selector( "c2" ), result.branches()[0].selector() );
         assertEquals( "Select what is different", DiffTreeCombiner.MODIFIED, result.branches()[0].tags() );
@@ -85,7 +86,7 @@ public class DiffTreeCombinatorTest
         Tree sn2 = c2.seal();
 
         // Actually diff
-        TreeIndex result = wrapAsIndex( session.diff( sn1, sn2 ) );
+        TreeIndex result = wrapAsIndex( new DiffTreeCombiner(session).combine( sn1, sn2 ) );
 
         // Display both for visual reference..
         FORMAT.prettyPrint( sn1,sn2,result );

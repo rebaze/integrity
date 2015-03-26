@@ -1,5 +1,6 @@
 package org.auxis.commons.tree;
 
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertNull;
 
 public class TreeIndexTest
 {
-    private TreeSession session = TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void compoundSelectArrayTest() throws IOException

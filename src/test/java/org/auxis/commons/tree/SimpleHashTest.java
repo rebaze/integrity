@@ -13,12 +13,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
 public class SimpleHashTest
 {
-    private TreeSession session = TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void emptyCollector() throws Exception

@@ -8,11 +8,11 @@
  */
 package org.auxis.commons.tree.util;
 
-import dagger.ObjectGraph;
 import org.auxis.commons.tree.*;
 import org.auxis.commons.tree.annotated.Tag;
 import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
 import org.auxis.commons.tree.internal.InMemoryTreeImpl;
+import org.auxis.commons.tree.operators.IntersectTreeCombiner;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,26 +30,7 @@ public class TreeSession
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
 
-    private static ObjectGraph INSTANCE;
-
-    @Inject @Named( "delta" ) TreeCombiner deltaCombiner;
-
-    @Inject @Named( "diff" ) TreeCombiner diffCombiner;
-
-    @Inject @Named( "intersect" ) TreeCombiner intersectCombiner;
-
-    @Inject @Named( "union" ) TreeCombiner unionCombiner;
-
-    @Inject @Named( "substruct" ) TreeCombiner substructCombiner;
-
-    public static TreeSession getSession()
-    {
-        if ( INSTANCE == null )
-        {
-            INSTANCE = ObjectGraph.create( new DefaultTreeModule() );
-        }
-        return INSTANCE.get( TreeSession.class );
-    }
+    TreeSession() { }
 
     public static long nodes( Tree tree )
     {
@@ -116,31 +97,6 @@ public class TreeSession
         }
     }
 
-    public Tree diff( Tree left, Tree right )
-    {
-        return diffCombiner.combine( left, right );
-    }
-
-    public Tree delta( Tree left, Tree right )
-    {
-        return deltaCombiner.combine( left, right );
-    }
-
-    public Tree union( Tree left, Tree right )
-    {
-        return unionCombiner.combine( left, right );
-    }
-
-    public Tree substract( Tree left, Tree right )
-    {
-        return substructCombiner.combine( left, right );
-    }
-
-    public Tree intersection( Tree left, Tree right )
-    {
-        return intersectCombiner.combine( left, right );
-    }
-
     public TreeBuilder createStaticTreeBuilder(Tree tree) {
         return new StaticTreeBuilder(tree,this);
     }
@@ -168,15 +124,13 @@ public class TreeSession
         }
     }
 
-    TreeSession() { }
-
     public Tree find( Tree base, Tree subtree )
     {
         TreeBuilder builder = createTreeBuilder();
         // basically copy the whole input tree but erase all leafs
         // that do not mach the subtree.
 
-        return intersection( base, subtree );
+        return new IntersectTreeCombiner( this ).combine( base, subtree );
 
     }
 }

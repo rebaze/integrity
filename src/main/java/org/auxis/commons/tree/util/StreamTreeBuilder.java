@@ -58,16 +58,13 @@ public class StreamTreeBuilder implements TreeBuilder
             }
             finally
             {
-                if ( is != null )
+                try
                 {
-                    try
-                    {
-                        is.close();
-                    }
-                    catch ( IOException e )
-                    {
-                        LOG.warn( "Problem closing file " + f.getAbsolutePath(), e );
-                    }
+                    is.close();
+                }
+                catch ( IOException e )
+                {
+                    LOG.warn( "Problem closing file " + f.getAbsolutePath(), e );
                 }
             }
         }

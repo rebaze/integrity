@@ -4,6 +4,7 @@ import static org.auxis.commons.tree.Selector.selector;
 
 import java.io.File;
 
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.StreamTreeBuilder;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
@@ -14,7 +15,7 @@ public class FSTreeTest
 {
     private final static Logger LOG = LoggerFactory.getLogger( FSTreeTest.class );
 
-    private final TreeSession session = TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
     private final TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
 
     private void collect( TreeBuilder builder, File base )

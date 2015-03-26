@@ -3,6 +3,7 @@ package org.auxis.commons.tree.operators;
 import org.auxis.commons.tree.TreeBuilder;
 import org.auxis.commons.tree.TreeException;
 import org.auxis.commons.tree.TreeIndex;
+import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
 import org.auxis.commons.tree.util.TreeConsoleFormatter;
 import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 public class UnionTreeCombinerTest
 {
     private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
-    private TreeSession session = TreeSession.getSession();
+    private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
     public void testUnionWIthMerge() {
@@ -31,7 +32,7 @@ public class UnionTreeCombinerTest
         sn2.branch(selector("p1")).add( "one".getBytes() );
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
-        TreeIndex union = wrapAsIndex( session.union( sn1.seal(), sn2.seal() ) );
+        TreeIndex union = wrapAsIndex( new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() ) );
         formatter.prettyPrint( sn1.seal(), sn2.seal(), union );
 
         assertEquals( 3, union.branches().length );
@@ -55,7 +56,7 @@ public class UnionTreeCombinerTest
         sn2.branch(selector("p1")).add( "one".getBytes() );
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
-        TreeIndex union = wrapAsIndex( session.union( sn1.seal(), sn2.seal() ) );
+        TreeIndex union = wrapAsIndex( new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() ) );
         formatter.prettyPrint( sn1.seal(), sn2.seal(), union );
 
         assertEquals( 3, union.branches().length );
@@ -74,7 +75,7 @@ public class UnionTreeCombinerTest
         sn2.branch(selector("p1")).add( "one".getBytes() );
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
-        TreeIndex union = wrapAsIndex( session.union( sn1.seal(), sn2.seal() ) );
+        TreeIndex union = wrapAsIndex( new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() ) );
         formatter.prettyPrint( sn1.seal(), sn2.seal(), union );
 
         assertEquals( 3, union.branches().length );
@@ -93,7 +94,7 @@ public class UnionTreeCombinerTest
         sn2.branch(selector("p1")).branch( selector( "deep" ) ).add( "other".getBytes() );
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
-        TreeIndex union = wrapAsIndex( session.union( sn1.seal(), sn2.seal() ) );
+        TreeIndex union = wrapAsIndex( new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() ) );
         formatter.prettyPrint( sn1.seal(), sn2.seal(), union );
 
         assertEquals( 3, union.branches().length );
