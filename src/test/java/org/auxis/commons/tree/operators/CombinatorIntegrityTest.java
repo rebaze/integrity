@@ -1,15 +1,20 @@
 package org.auxis.commons.tree.operators;
 
-import org.auxis.commons.tree.Tree;
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
-import org.auxis.commons.tree.util.TreeConsoleFormatter;
-import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
 
-import static org.auxis.commons.tree.Selector.selector;
-import static org.auxis.commons.tree.annotated.Tag.tag;
-import static org.auxis.commons.tree.util.TreeSession.wrapAsIndex;
+import com.rebaze.commons.tree.Tree;
+import com.rebaze.commons.tree.TreeBuilder;
+import com.rebaze.commons.tree.operators.DeltaTreeCombiner;
+import com.rebaze.commons.tree.operators.DiffTreeCombiner;
+import com.rebaze.commons.tree.operators.IntersectTreeCombiner;
+import com.rebaze.commons.tree.operators.UnionTreeCombiner;
+import com.rebaze.commons.tree.util.DefaultTreeSessionFactory;
+import com.rebaze.commons.tree.util.TreeConsoleFormatter;
+import com.rebaze.commons.tree.util.TreeSession;
+
+import static com.rebaze.commons.tree.Selector.selector;
+import static com.rebaze.commons.tree.annotated.Tag.tag;
+import static com.rebaze.commons.tree.util.TreeSession.wrapAsIndex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

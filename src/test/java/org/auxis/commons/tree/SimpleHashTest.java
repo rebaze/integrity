@@ -8,14 +8,17 @@
  */
 package org.auxis.commons.tree;
 
-import static org.auxis.commons.tree.Selector.selector;
+import static com.rebaze.commons.tree.Selector.selector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import org.auxis.commons.tree.internal.InMemoryTreeBuilderImpl;
-import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
-import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
+
+import com.rebaze.commons.tree.Tree;
+import com.rebaze.commons.tree.TreeBuilder;
+import com.rebaze.commons.tree.internal.InMemoryTreeBuilderImpl;
+import com.rebaze.commons.tree.util.DefaultTreeSessionFactory;
+import com.rebaze.commons.tree.util.TreeSession;
 
 public class SimpleHashTest
 {

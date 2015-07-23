@@ -1,13 +1,14 @@
 package org.auxis.commons.tree.internal;
 
-import static org.auxis.commons.tree.Selector.*;
-import static org.auxis.commons.tree.util.TreeSession.nodes;
+import static com.rebaze.commons.tree.Selector.*;
+import static com.rebaze.commons.tree.util.TreeSession.nodes;
 import static org.junit.Assert.*;
 
-import org.auxis.commons.tree.TreeBuilder;
-import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
-import org.auxis.commons.tree.util.TreeSession;
 import org.junit.Test;
+
+import com.rebaze.commons.tree.TreeBuilder;
+import com.rebaze.commons.tree.util.DefaultTreeSessionFactory;
+import com.rebaze.commons.tree.util.TreeSession;
 
 import java.io.IOException;
 

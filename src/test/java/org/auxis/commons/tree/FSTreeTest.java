@@ -1,15 +1,17 @@
 package org.auxis.commons.tree;
 
-import static org.auxis.commons.tree.Selector.selector;
+import static com.rebaze.commons.tree.Selector.selector;
 
 import java.io.File;
 
-import org.auxis.commons.tree.util.DefaultTreeSessionFactory;
-import org.auxis.commons.tree.util.StreamTreeBuilder;
-import org.auxis.commons.tree.util.TreeConsoleFormatter;
-import org.auxis.commons.tree.util.TreeSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.rebaze.commons.tree.TreeBuilder;
+import com.rebaze.commons.tree.util.DefaultTreeSessionFactory;
+import com.rebaze.commons.tree.util.StreamTreeBuilder;
+import com.rebaze.commons.tree.util.TreeConsoleFormatter;
+import com.rebaze.commons.tree.util.TreeSession;
 
 public class FSTreeTest
 {
