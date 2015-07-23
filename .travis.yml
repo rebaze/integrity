@@ -1,0 +1,9 @@
+sudo: false
+language: java
+install: mvn --quiet install
+script: mvn --quiet verify
+jdk:
+  - oraclejdk7
+notifications:
+  email:
+      - toni.menzel@rebaze.com
