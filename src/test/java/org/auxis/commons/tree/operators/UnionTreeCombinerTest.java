@@ -1,5 +1,6 @@
 package org.auxis.commons.tree.operators;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.rebaze.commons.tree.TreeBuilder;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Created by tonit on 10/03/15.
  */
+@Ignore
 public class UnionTreeCombinerTest
 {
     private TreeConsoleFormatter formatter = new TreeConsoleFormatter();

@@ -1,5 +1,6 @@
 package org.auxis.commons.tree.operators;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.rebaze.commons.tree.Tree;
@@ -26,6 +27,7 @@ public class CombinatorIntegrityTest
     private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
+    @Ignore
     @Test
     public void testCombinerIntegrity() {
         TreeBuilder sn1 = session.createTreeBuilder();
