@@ -62,8 +62,10 @@ public class TreeSession
         {
             if (sub.branches().length == 0) {
                 total++;
+            }else
+            {
+                total += leafs( sub );
             }
-            nodes( sub );
         }
         return total;
     }

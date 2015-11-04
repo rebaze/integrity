@@ -4,6 +4,7 @@ import static com.rebaze.commons.tree.Selector.*;
 import static com.rebaze.commons.tree.util.TreeSession.nodes;
 import static org.junit.Assert.*;
 
+import com.rebaze.commons.tree.Tree;
 import org.junit.Test;
 
 import com.rebaze.commons.tree.TreeBuilder;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class InMemoryTreeImplTest
 {
-    final private TreeSession session =  new DefaultTreeSessionFactory().create();
+    final private TreeSession session = new DefaultTreeSessionFactory().create();
 
     @Test
     public void testEmptyTreeSize()
@@ -51,5 +52,18 @@ public class InMemoryTreeImplTest
         c1.branch( selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( selector( "db3" ) ).add( "data".getBytes() );
         assertEquals( 2, c1.seal().branches().length );
+    }
+
+    @Test
+    public void testCountLeadsAndBranches() throws IOException
+    {
+        TreeBuilder c1 = session.createTreeBuilder();
+        c1.branch( selector( "db1" ) ).branch( selector( "a" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db2" ) ).add( "data".getBytes() );
+        c1.branch( selector( "db3" ) ).add( "data".getBytes() );
+        Tree result = c1.seal();
+        assertEquals( 3, TreeSession.leafs( result ) );
+        assertEquals( 5, TreeSession.nodes( result ) );
+
     }
 }
