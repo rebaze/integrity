@@ -33,12 +33,37 @@ public class TreeSession
 
     TreeSession() { }
 
+    /**
+     * counts the total number of nodes of this tree.
+     *
+     * @param tree input
+     * @return number of sub trees.
+     */
     public static long nodes( Tree tree )
     {
         int total = 1;
         for ( Tree sub : tree.branches() )
         {
             total += nodes( sub );
+        }
+        return total;
+    }
+
+    /**
+     * counts the total number of leafs of this tree.
+     *
+     * @param tree input
+     * @return number of leafs.
+     */
+    public static long leafs( Tree tree )
+    {
+        int total = 0;
+        for ( Tree sub : tree.branches() )
+        {
+            if (sub.branches().length == 0) {
+                total++;
+            }
+            nodes( sub );
         }
         return total;
     }
