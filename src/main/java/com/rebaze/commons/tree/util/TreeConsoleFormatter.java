@@ -27,7 +27,7 @@ public class TreeConsoleFormatter
         m_out = ps;
     }
 
-    public void displayTree( int depth, Tree dbHash )
+    public void displayTree( int depth, Tree tree )
     {
         if ( depth == 0 )
             m_out.println( " ---- TREE ----------" );
@@ -36,9 +36,9 @@ public class TreeConsoleFormatter
         {
             m_out.print( "--" );
         }
-        m_out.println( " " + dbHash.toString() );
+        m_out.println( " " + tree.toString() );
         depth++;
-        Tree[] elements = dbHash.branches();
+        Tree[] elements = tree.branches();
         int count = ( elements.length < 10 ) ? elements.length : 10;
         for ( int i = 0; i < count; i++ )
         {
@@ -46,7 +46,7 @@ public class TreeConsoleFormatter
         }
     }
 
-    public void prettyPrint( int depth, Tree dbHash )
+    public void prettyPrint( int depth, Tree tree )
     {
         if ( depth == 0 )
             m_out.println( " ---- TREE: " );
@@ -55,9 +55,9 @@ public class TreeConsoleFormatter
         {
             m_out.print( "--" );
         }
-        m_out.println( " " + dbHash);
+        m_out.println( " " + tree);
         depth++;
-        for ( Tree sub : dbHash.branches() )
+        for ( Tree sub : tree.branches() )
         {
             prettyPrint( depth, sub );
         }
