@@ -159,6 +159,14 @@ public class TreeSession
         // that do not mach the subtree.
 
         return new IntersectTreeCombiner( this ).combine( base, subtree );
-
     }
+
+    public Tree tree( Selector selector, String hashValue, Tree[] subs, Tag tag ) {
+        return new InMemoryTreeImpl( selector, hashValue, subs, tag );
+    }
+
+    public Tree tree( Selector selector, String hashValue ) {
+        return new InMemoryTreeImpl( selector, hashValue, new Tree[0],Tag.tag(  ) );
+    }
+
 }

@@ -7,5 +7,5 @@ import com.rebaze.commons.tree.util.TreeSession;
  */
 public interface TreeSessionFactory
 {
-    public TreeSession create();
+    TreeSession create();
 }
