@@ -6,7 +6,7 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package com.rebaze.trees.core.util;
+package com.rebaze.trees.core.internal;
 
 import java.io.File;
 import java.io.FileInputStream;

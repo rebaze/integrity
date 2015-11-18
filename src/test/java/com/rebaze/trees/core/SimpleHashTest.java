@@ -12,13 +12,10 @@ import static com.rebaze.trees.core.Selector.selector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import com.rebaze.trees.core.Tree;
-import com.rebaze.trees.core.TreeBuilder;
 import org.junit.Test;
 
 import com.rebaze.trees.core.internal.InMemoryTreeBuilderImpl;
-import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.internal.DefaultTreeSessionFactory;
 
 public class SimpleHashTest
 {

@@ -1,4 +1,4 @@
-package com.rebaze.trees.core.util;
+package com.rebaze.trees.core.internal;
 
 import java.util.Comparator;
 

@@ -6,13 +6,12 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package com.rebaze.trees.core.util;
+package com.rebaze.trees.core;
 
-import com.rebaze.trees.core.Tag;
-import com.rebaze.trees.core.*;
 import com.rebaze.trees.core.internal.InMemoryTreeBuilderImpl;
 import com.rebaze.trees.core.internal.InMemoryTreeImpl;
 import com.rebaze.trees.core.internal.StaticTreeBuilder;
+import com.rebaze.trees.core.internal.StreamTreeBuilder;
 import com.rebaze.trees.ext.operators.IntersectTreeCombiner;
 
 import java.io.UnsupportedEncodingException;
@@ -29,7 +28,7 @@ public class TreeSession
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
 
-    TreeSession() { }
+    public TreeSession() { }
 
     /**
      * counts the total number of nodes of this tree.

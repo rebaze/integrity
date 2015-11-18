@@ -1,7 +1,5 @@
 package com.rebaze.trees.core;
 
-import com.rebaze.trees.core.util.TreeSession;
-
 /**
  *
  */

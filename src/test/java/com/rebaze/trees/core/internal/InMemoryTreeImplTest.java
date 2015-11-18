@@ -1,15 +1,14 @@
 package com.rebaze.trees.core.internal;
 
 import static com.rebaze.trees.core.Selector.*;
-import static com.rebaze.trees.core.util.TreeSession.nodes;
+import static com.rebaze.trees.core.TreeSession.nodes;
 import static org.junit.Assert.*;
 
 import com.rebaze.trees.core.Tree;
 import org.junit.Test;
 
 import com.rebaze.trees.core.TreeBuilder;
-import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 import java.io.IOException;
 

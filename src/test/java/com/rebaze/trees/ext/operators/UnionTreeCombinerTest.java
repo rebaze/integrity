@@ -6,13 +6,13 @@ import org.junit.Test;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeException;
 import com.rebaze.trees.core.TreeIndex;
-import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
+import com.rebaze.trees.core.internal.DefaultTreeSessionFactory;
 import com.rebaze.trees.core.util.TreeConsoleFormatter;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 import static com.rebaze.trees.core.Selector.selector;
 import static com.rebaze.trees.core.Tag.tag;
-import static com.rebaze.trees.core.util.TreeSession.wrapAsIndex;
+import static com.rebaze.trees.core.TreeSession.wrapAsIndex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

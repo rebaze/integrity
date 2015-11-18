@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
-import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
+import com.rebaze.trees.core.internal.DefaultTreeSessionFactory;
 import com.rebaze.trees.core.util.TreeConsoleFormatter;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 import static com.rebaze.trees.core.Selector.selector;
 import static org.junit.Assert.assertEquals;

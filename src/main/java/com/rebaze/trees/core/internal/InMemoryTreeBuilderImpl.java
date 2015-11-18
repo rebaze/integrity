@@ -13,8 +13,7 @@ import java.util.*;
 
 import com.rebaze.trees.core.Tag;
 import com.rebaze.trees.core.*;
-import com.rebaze.trees.core.util.HashUtil;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.

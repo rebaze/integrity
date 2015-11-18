@@ -7,7 +7,7 @@ import com.rebaze.trees.core.Selector;
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.Tag;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 /**
  * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree

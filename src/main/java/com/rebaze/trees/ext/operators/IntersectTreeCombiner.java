@@ -15,7 +15,7 @@ import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeCombiner;
 import com.rebaze.trees.core.TreeIndex;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 import static com.rebaze.trees.core.Tag.tag;
 

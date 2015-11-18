@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeCombiner;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 /**
  * Rebuilds left with paths only where right is a leaf.

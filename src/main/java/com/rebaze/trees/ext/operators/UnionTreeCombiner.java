@@ -16,7 +16,7 @@ import javax.inject.Singleton;
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeCombiner;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 /**
  * Covers merges of similar trees so that combiners work as a system. (see test cases about combiner integrity)

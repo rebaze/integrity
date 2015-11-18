@@ -8,14 +8,14 @@
  */
 package com.rebaze.trees.ext.operators;
 
-import static com.rebaze.trees.core.util.TreeSession.wrapAsIndex;
+import static com.rebaze.trees.core.TreeSession.wrapAsIndex;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.rebaze.trees.core.Tag;
 import com.rebaze.trees.core.*;
-import com.rebaze.trees.core.util.TreeSession;
+import com.rebaze.trees.core.TreeSession;
 
 /**
  * This {@link TreeCombiner} creates a special diff tree containing
