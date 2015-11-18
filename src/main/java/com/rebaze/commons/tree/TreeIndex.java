@@ -38,14 +38,6 @@ public class TreeIndex extends AbstractDelegateTree
         return m_selectors.values().toArray( new TreeIndex[m_selectors.values().size()] );
     }
 
-    private void guardIlegalWrappedTreeIndex( Tree tree )
-    {
-        if ( tree instanceof TreeIndex )
-        {
-            throw new RuntimeException( "You should not wrap a TreeIndex.. waaaayyy too expensive.." );
-        }
-    }
-
     public TreeIndex select( Selector selector )
     {
         return m_selectors.get( selector );

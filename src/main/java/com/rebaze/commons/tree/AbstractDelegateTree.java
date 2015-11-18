@@ -23,7 +23,7 @@ public abstract class AbstractDelegateTree implements Tree
         m_tree = tree;
     }
 
-    private void guardIlegalWrappedTreeIndex( Tree tree )
+    protected void guardIlegalWrappedTreeIndex( Tree tree )
     {
         if ( tree instanceof AbstractDelegateTree )
         {
