@@ -1,11 +1,8 @@
 package com.rebaze.trees.core;
 
-import com.rebaze.trees.core.TreeBuilder;
-import com.rebaze.trees.core.TreeIndex;
-import org.junit.Test;
-
 import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
 import com.rebaze.trees.core.util.TreeSession;
+import org.junit.Test;
 
 import java.io.IOException;
 
