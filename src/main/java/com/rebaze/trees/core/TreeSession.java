@@ -151,19 +151,15 @@ public class TreeSession
 
     public Tree find( Tree base, Tree subtree )
     {
-        TreeBuilder builder = createTreeBuilder();
+        //TreeBuilder builder = createTreeBuilder();
         // basically copy the whole input tree but erase all leafs
         // that do not mach the subtree.
 
         return new IntersectTreeCombiner( this ).combine( base, subtree );
     }
 
-    public Tree tree( Selector selector, String hashValue, Tree[] subs, Tag tag ) {
-        return new InMemoryTreeImpl( selector, hashValue, subs, tag );
-    }
-
-    public Tree tree( Selector selector, String hashValue ) {
-        return new InMemoryTreeImpl( selector, hashValue, new Tree[0],Tag.tag(  ) );
+    public Tree createTree( Selector selector, String hashValue ) {
+        return createTree( selector, hashValue, new Tree[0],Tag.tag(  ) );
     }
 
 }
