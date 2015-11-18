@@ -20,7 +20,7 @@ import com.rebaze.commons.tree.annotated.Tag;
  * A tree then has a fingerprint (also call it "hash" which stands for the data of all its sub
  * branches.
  * 
- * Subbranches are accessable from here to. They may get initialized lazily.
+ * Subbranches are accessible from here to. They may get initialized lazily.
  * 
  * 
  * @author Toni Menzel <toni.menzel@rebaze.com>
