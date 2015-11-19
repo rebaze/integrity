@@ -8,16 +8,9 @@
  */
 package com.rebaze.trees.ext.operators;
 
+import com.rebaze.trees.core.*;
+
 import static com.rebaze.trees.core.TreeSession.wrapAsIndex;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.rebaze.trees.core.Tree;
-import com.rebaze.trees.core.TreeBuilder;
-import com.rebaze.trees.core.TreeCombiner;
-import com.rebaze.trees.core.TreeIndex;
-import com.rebaze.trees.core.TreeSession;
 
 /**
  * This {@link TreeCombiner} creates a special diff tree containing
@@ -29,12 +22,10 @@ import com.rebaze.trees.core.TreeSession;
  * @author Toni Menzel (rebaze)
  * @since 0.3
  */
-@Singleton
 public class DeltaTreeCombiner implements TreeCombiner
 {
     private final TreeSession session;
 
-    @Inject
     public DeltaTreeCombiner( TreeSession session )
     {
         this.session = session;

@@ -8,15 +8,12 @@
  */
 package com.rebaze.trees.ext.operators;
 
-import static com.rebaze.trees.core.Tag.tag;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeCombiner;
 import com.rebaze.trees.core.TreeSession;
+
+import static com.rebaze.trees.core.Tag.tag;
 
 /**
  * Covers merges of similar trees so that combiners work as a system. (see test cases about combiner integrity)
@@ -25,12 +22,10 @@ import com.rebaze.trees.core.TreeSession;
  * @author Toni Menzel (rebaze)
  * @since 0.3
  */
-@Singleton
 public class UnionTreeCombiner implements TreeCombiner
 {
     private final TreeSession session;
 
-    @Inject
     public UnionTreeCombiner( TreeSession session )
     {
         this.session = session;

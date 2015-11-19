@@ -8,19 +8,12 @@
  */
 package com.rebaze.trees.ext.operators;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.rebaze.trees.core.Tree;
-import com.rebaze.trees.core.TreeBuilder;
-import com.rebaze.trees.core.TreeCombiner;
-import com.rebaze.trees.core.TreeIndex;
-import com.rebaze.trees.core.TreeSession;
-
-import static com.rebaze.trees.core.Tag.tag;
+import com.rebaze.trees.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.rebaze.trees.core.Tag.tag;
 
 /**
  * This {@link TreeCombiner} creates a intersection tree.
@@ -28,12 +21,10 @@ import java.util.Map;
  * @author Toni Menzel (rebaze)
  * @since 0.3
  */
-@Singleton
 public class IntersectTreeCombiner implements TreeCombiner
 {
     private final TreeSession session;
 
-    @Inject
     public IntersectTreeCombiner( TreeSession session )
     {
         this.session = session;

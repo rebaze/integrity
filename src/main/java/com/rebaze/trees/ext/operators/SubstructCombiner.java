@@ -1,8 +1,5 @@
 package com.rebaze.trees.ext.operators;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeCombiner;
@@ -14,12 +11,10 @@ import com.rebaze.trees.core.TreeSession;
  * Helpful for relocating subtrees within larger trees.
  *
  */
-@Singleton
 public class SubstructCombiner implements TreeCombiner
 {
     private final TreeSession session;
 
-    @Inject
     public SubstructCombiner( TreeSession session )
     {
         this.session = session;

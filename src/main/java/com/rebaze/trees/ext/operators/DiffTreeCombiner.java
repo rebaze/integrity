@@ -8,14 +8,9 @@
  */
 package com.rebaze.trees.ext.operators;
 
-import static com.rebaze.trees.core.TreeSession.wrapAsIndex;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import com.rebaze.trees.core.Tag;
 import com.rebaze.trees.core.*;
-import com.rebaze.trees.core.TreeSession;
+
+import static com.rebaze.trees.core.TreeSession.wrapAsIndex;
 
 /**
  * This {@link TreeCombiner} creates a special diff tree containing
@@ -28,7 +23,6 @@ import com.rebaze.trees.core.TreeSession;
  * @since 0.3
  *
  */
-@Singleton
 public class DiffTreeCombiner implements TreeCombiner
 {
     public static final Tag ADDED = new Tag( "ADDED" );
@@ -37,7 +31,6 @@ public class DiffTreeCombiner implements TreeCombiner
 
     private final TreeSession session;
 
-    @Inject
     public DiffTreeCombiner( TreeSession session )
     {
         this.session = session;
