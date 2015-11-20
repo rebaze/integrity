@@ -26,9 +26,12 @@ import java.security.NoSuchAlgorithmException;
 public class TreeSession
 {
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
+    public static final String CHARSET_NAME = "UTF-8";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
 
-    public TreeSession() { }
+    public TreeSession()
+    {
+    }
 
     /**
      * counts the total number of nodes of this tree.
@@ -57,9 +60,11 @@ public class TreeSession
         int total = 0;
         for ( Tree sub : tree.branches() )
         {
-            if (sub.branches().length == 0) {
+            if ( sub.branches().length == 0 )
+            {
                 total++;
-            }else
+            }
+            else
             {
                 total += leafs( sub );
             }
@@ -69,19 +74,22 @@ public class TreeSession
 
     public static boolean isRaw( Tree tree )
     {
-        if (tree.branches().length == 0) return true;
+        if ( tree.branches().length == 0 )
+            return true;
 
-        if (tree.branches().length == 1 && tree.fingerprint().equals(tree.branches()[0].fingerprint() ))
+        if ( tree.branches().length == 1 && tree.fingerprint().equals( tree.branches()[0].fingerprint() ) )
         {
             return isRaw( tree.branches()[0] );
-        }else
+        }
+        else
         {
             return false;
         }
     }
 
-    public static boolean isWrapper(Tree tree) {
-        return (tree.branches().length == 1 && tree.fingerprint().equals(tree.branches()[0].fingerprint() ));
+    public static boolean isWrapper( Tree tree )
+    {
+        return ( tree.branches().length == 1 && tree.fingerprint().equals( tree.branches()[0].fingerprint() ) );
     }
 
     public TreeBuilder createTreeBuilder()
@@ -122,8 +130,9 @@ public class TreeSession
         }
     }
 
-    public TreeBuilder createStaticTreeBuilder(Tree tree) {
-        return new StaticTreeBuilder(tree,this);
+    public TreeBuilder createStaticTreeBuilder( Tree tree )
+    {
+        return new StaticTreeBuilder( tree, this );
     }
 
     public static TreeIndex wrapAsIndex( Tree tree )
@@ -138,14 +147,15 @@ public class TreeSession
         }
     }
 
-    public static byte[] asByteArray( String s) {
+    public static byte[] asByteArray( String s )
+    {
         try
         {
-            return s.getBytes( "UTF-8" );
+            return s.getBytes( CHARSET_NAME );
         }
         catch ( UnsupportedEncodingException e )
         {
-            throw new IllegalArgumentException( "Is not UTF-8 ??" );
+            throw new IllegalArgumentException( "Is not " + CHARSET_NAME + " ??" );
         }
     }
 
@@ -158,8 +168,9 @@ public class TreeSession
         return new IntersectTreeCombiner( this ).combine( base, subtree );
     }
 
-    public Tree createTree( Selector selector, String hashValue ) {
-        return createTree( selector, hashValue, new Tree[0],Tag.tag(  ) );
+    public Tree createTree( Selector selector, String hashValue )
+    {
+        return createTree( selector, hashValue, new Tree[0], Tag.tag() );
     }
 
 }
