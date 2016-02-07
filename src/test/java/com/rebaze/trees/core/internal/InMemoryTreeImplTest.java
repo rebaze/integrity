@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeSession;
+import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
 
 import java.io.IOException;
 

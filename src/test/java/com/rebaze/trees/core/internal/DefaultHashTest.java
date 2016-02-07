@@ -17,6 +17,7 @@ import com.rebaze.trees.core.Tree;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeException;
 import com.rebaze.trees.core.TreeSession;
+import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
 
 public class DefaultHashTest
 {

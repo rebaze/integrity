@@ -1,0 +1,14 @@
+Bundle-Version>:\
+  ${pom.version}
+
+Bundle-SymbolicName:\
+  ${bundle.symbolicName}
+  
+Import-Package:\
+  *
+  
+Private-Package:\
+	com.rebaze.trees.internal.*,\
+	com.rebaze.trees.internal
+	
+  

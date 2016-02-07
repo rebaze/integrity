@@ -6,7 +6,7 @@ import org.junit.Test;
 import com.rebaze.trees.core.TreeBuilder;
 import com.rebaze.trees.core.TreeException;
 import com.rebaze.trees.core.TreeIndex;
-import com.rebaze.trees.core.internal.DefaultTreeSessionFactory;
+import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
 import com.rebaze.trees.core.util.TreeConsoleFormatter;
 import com.rebaze.trees.core.TreeSession;
 

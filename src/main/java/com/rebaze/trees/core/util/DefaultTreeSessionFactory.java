@@ -1,4 +1,4 @@
-package com.rebaze.trees.core.internal;
+package com.rebaze.trees.core.util;
 
 import com.rebaze.trees.core.TreeSessionFactory;
 import com.rebaze.trees.core.TreeSession;

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 
 import com.rebaze.trees.core.internal.InMemoryTreeBuilderImpl;
-import com.rebaze.trees.core.internal.DefaultTreeSessionFactory;
+import com.rebaze.trees.core.util.DefaultTreeSessionFactory;
 
 public class SimpleHashTest
 {

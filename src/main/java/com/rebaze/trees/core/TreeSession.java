@@ -11,7 +11,7 @@ package com.rebaze.trees.core;
 import com.rebaze.trees.core.internal.InMemoryTreeBuilderImpl;
 import com.rebaze.trees.core.internal.InMemoryTreeImpl;
 import com.rebaze.trees.core.internal.StaticTreeBuilder;
-import com.rebaze.trees.core.internal.StreamTreeBuilder;
+import com.rebaze.trees.core.util.StreamTreeBuilder;
 import com.rebaze.trees.ext.operators.IntersectTreeCombiner;
 
 import java.io.UnsupportedEncodingException;
