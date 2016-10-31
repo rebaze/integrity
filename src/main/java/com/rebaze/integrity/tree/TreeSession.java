@@ -126,7 +126,7 @@ public class TreeSession
         }
         catch ( NoSuchAlgorithmException e )
         {
-            throw new TreeException( "Problem loading digest with algorthm." );
+            throw new TreeException( "Problem loading digest with algorthm " + m_messageDigestAlgorithm,e );
         }
     }
 
