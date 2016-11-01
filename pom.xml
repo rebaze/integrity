@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>org.rebaze.integrity</groupId>
-	<artifactId>rebaze-integrity-tree</artifactId>
+	<artifactId>org.rebaze.integrity.tree</artifactId>
 	<version>0.3.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
-	<name>rebaze integrity - core</name>
+	<name>rebaze integrity - tree library</name>
 
 	<scm>
 		<connection>scm:git:git@github.com:rebaze/integrity.git</connection>
@@ -79,6 +79,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.2.0</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
