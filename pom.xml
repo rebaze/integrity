@@ -28,7 +28,7 @@
 		<java.version>1.6</java.version>
 		<junit.version>4.11</junit.version>
 		<slf4j.version>1.6.1</slf4j.version>
-		<bundle.symbolicName>com.rebaze.integrity.tree</bundle.symbolicName>
+		<bundle.symbolicName>org.rebaze.integrity.tree</bundle.symbolicName>
 
 	</properties>
 
