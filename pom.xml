@@ -11,7 +11,7 @@
 
 	<groupId>org.rebaze.integrity</groupId>
 	<artifactId>org.rebaze.integrity.tree</artifactId>
-	<version>0.3.0</version>
+	<version>0.3.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 	<name>rebaze integrity - tree library</name>
 
@@ -19,7 +19,7 @@
 		<connection>scm:git:git@github.com:rebaze/integrity.git</connection>
 		<developerConnection>scm:git:git@github.com:rebaze/integrity.git</developerConnection>
 		<url>git@github.com:rebaze/integrity.git</url>
-		<tag>org.rebaze.integrity.tree-0.3.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
