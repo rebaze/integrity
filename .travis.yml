@@ -7,3 +7,4 @@ jdk:
 notifications:
   email:
       - toni.menzel@rebaze.com
+  slack: rebaze:W2NAFBrzwufg7HptbqgE3hgB
