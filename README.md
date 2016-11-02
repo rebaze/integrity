@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rebaze/integrity.svg?branch=master)](https://travis-ci.org/rebaze/integrity)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree)
+[![Apache 2.0](https://img.shields.io/github/license/nebula-plugins/nebula-publishing-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 # Rebaze Integrity
 
