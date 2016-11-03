@@ -6,9 +6,9 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.rebaze.integrity.tree.ext.operators;
+package org.rebaze.integrity.tree.internal.operators;
 
-import org.rebaze.integrity.tree.*;
+import org.rebaze.integrity.tree.api.*;
 
 /**
  * This {@link TreeCombiner} creates a special diff tree containing

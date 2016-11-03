@@ -10,7 +10,7 @@ package org.rebaze.integrity.tree.util;
 
 import java.io.PrintStream;
 
-import org.rebaze.integrity.tree.Tree;
+import org.rebaze.integrity.tree.api.Tree;
 
 public class TreeConsoleFormatter
 {

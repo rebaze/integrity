@@ -6,13 +6,13 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.rebaze.integrity.tree;
+package org.rebaze.integrity.tree.api;
 
 import org.rebaze.integrity.tree.internal.StaticTreeBuilder;
 import org.rebaze.integrity.tree.util.StreamTreeBuilder;
 import org.rebaze.integrity.tree.internal.InMemoryTreeBuilderImpl;
 import org.rebaze.integrity.tree.internal.InMemoryTreeImpl;
-import org.rebaze.integrity.tree.ext.operators.IntersectTreeCombiner;
+import org.rebaze.integrity.tree.internal.operators.IntersectTreeCombiner;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

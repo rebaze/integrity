@@ -3,11 +3,11 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.Selector;
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.TreeBuilder;
-import org.rebaze.integrity.tree.Tag;
-import org.rebaze.integrity.tree.TreeSession;
+import org.rebaze.integrity.tree.api.Selector;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.TreeBuilder;
+import org.rebaze.integrity.tree.api.Tag;
+import org.rebaze.integrity.tree.api.TreeSession;
 
 /**
  * Augments a given tree as {@link TreeBuilder}. Used to incorporate existing {@link Tree}s in Tree

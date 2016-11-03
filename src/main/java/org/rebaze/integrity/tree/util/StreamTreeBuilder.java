@@ -17,11 +17,11 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.rebaze.integrity.tree.Selector;
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.TreeBuilder;
-import org.rebaze.integrity.tree.TreeException;
-import org.rebaze.integrity.tree.Tag;
+import org.rebaze.integrity.tree.api.Selector;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.TreeBuilder;
+import org.rebaze.integrity.tree.api.TreeException;
+import org.rebaze.integrity.tree.api.Tag;
 
 public class StreamTreeBuilder implements TreeBuilder
 {

@@ -8,9 +8,9 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.Selector;
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.Tag;
+import org.rebaze.integrity.tree.api.Selector;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.Tag;
 
 /**
  * Created by tonit on 05/03/15.

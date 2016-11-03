@@ -6,7 +6,7 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.rebaze.integrity.tree;
+package org.rebaze.integrity.tree.api;
 
 import org.rebaze.integrity.tree.internal.StaticTreeBuilder;
 

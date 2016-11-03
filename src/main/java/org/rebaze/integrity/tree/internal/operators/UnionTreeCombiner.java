@@ -6,14 +6,14 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.rebaze.integrity.tree.ext.operators;
+package org.rebaze.integrity.tree.internal.operators;
 
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.TreeBuilder;
-import org.rebaze.integrity.tree.TreeCombiner;
-import org.rebaze.integrity.tree.TreeSession;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.TreeBuilder;
+import org.rebaze.integrity.tree.api.TreeCombiner;
+import org.rebaze.integrity.tree.api.TreeSession;
 
-import static org.rebaze.integrity.tree.Tag.tag;
+import static org.rebaze.integrity.tree.api.Tag.tag;
 
 /**
  * Covers merges of similar trees so that combiners work as a system. (see test cases about combiner integrity)

@@ -11,7 +11,7 @@ package org.rebaze.integrity.tree.internal;
 import java.security.MessageDigest;
 import java.util.*;
 
-import org.rebaze.integrity.tree.*;
+import org.rebaze.integrity.tree.api.*;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.

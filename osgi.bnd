@@ -8,9 +8,9 @@ Import-Package:\
   *
 
 Export-Package:\
-	org.rebaze.integrity.tree,\
-	org.rebaze.integrity.tree.util,\
-	org.rebaze.integrity.tree.ext.operators
+	org.rebaze.integrity.tree.api,\
+	org.rebaze.integrity.tree.util
 
 Private-Package:\
-	org.rebaze.integrity.tree.internal
+	org.rebaze.integrity.tree.internal,\
+	org.rebaze.integrity.tree.internal.operators

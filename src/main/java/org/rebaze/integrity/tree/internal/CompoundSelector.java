@@ -8,7 +8,7 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.Selector;
+import org.rebaze.integrity.tree.api.Selector;
 
 public class CompoundSelector extends Selector
 {

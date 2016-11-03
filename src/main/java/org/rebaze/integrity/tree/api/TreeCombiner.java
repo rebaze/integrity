@@ -1,4 +1,4 @@
-package org.rebaze.integrity.tree;
+package org.rebaze.integrity.tree.api;
 
 /**
  *

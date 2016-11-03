@@ -6,28 +6,25 @@
  * which accompanies this distribution and is available at http://www.apache.org/licenses/LICENSE-2.0.
  *
  */
-package org.rebaze.integrity.tree;
+package org.rebaze.integrity.tree.api;
 
 /**
- * Thrown when {@link TreeBuilder} has been modified (attempted) when seal() has already been
- * called.
+ * General Unchecked exception for the Tree API.
  * 
  * @author Toni Menzel <toni.menzel@rebaze.com>
  *
  */
-public class TreeAlreadySealedException extends TreeException
+public class TreeException extends RuntimeException
 {
-    /**
-	 * 
-	 */
+
     private static final long serialVersionUID = 1L;
 
-    public TreeAlreadySealedException( String msg, Exception e )
+    public TreeException( String msg, Exception e )
     {
         super( msg, e );
     }
 
-    public TreeAlreadySealedException( String msg )
+    public TreeException( String msg )
     {
         super( msg );
     }

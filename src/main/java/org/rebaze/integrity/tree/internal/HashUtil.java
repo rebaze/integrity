@@ -2,7 +2,7 @@ package org.rebaze.integrity.tree.internal;
 
 import java.util.Comparator;
 
-import org.rebaze.integrity.tree.Tree;
+import org.rebaze.integrity.tree.api.Tree;
 
 /**
  * Created by tonit on 19/03/15.

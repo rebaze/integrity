@@ -8,14 +8,14 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.TreeBuilder;
-import org.rebaze.integrity.tree.TreeException;
-import org.rebaze.integrity.tree.TreeSession;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.TreeBuilder;
+import org.rebaze.integrity.tree.api.TreeException;
+import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
 import org.junit.Test;
 
-import static org.rebaze.integrity.tree.Selector.selector;
+import static org.rebaze.integrity.tree.api.Selector.selector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

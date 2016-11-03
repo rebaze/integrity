@@ -1,9 +1,9 @@
-package org.rebaze.integrity.tree.ext.operators;
+package org.rebaze.integrity.tree.internal.operators;
 
-import org.rebaze.integrity.tree.Tree;
-import org.rebaze.integrity.tree.TreeCombiner;
-import org.rebaze.integrity.tree.TreeSession;
-import org.rebaze.integrity.tree.TreeBuilder;
+import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.tree.api.TreeCombiner;
+import org.rebaze.integrity.tree.api.TreeSession;
+import org.rebaze.integrity.tree.api.TreeBuilder;
 
 /**
  * Rebuilds left with paths only where right is a leaf.

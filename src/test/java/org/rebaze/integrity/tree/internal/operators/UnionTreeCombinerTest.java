@@ -1,17 +1,17 @@
-package org.rebaze.integrity.tree.ext.operators;
+package org.rebaze.integrity.tree.internal.operators;
 
-import org.rebaze.integrity.tree.TreeException;
-import org.rebaze.integrity.tree.TreeIndex;
-import org.rebaze.integrity.tree.TreeSession;
+import org.rebaze.integrity.tree.api.TreeException;
+import org.rebaze.integrity.tree.api.TreeIndex;
+import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import org.rebaze.integrity.tree.TreeBuilder;
+import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 
-import static org.rebaze.integrity.tree.Selector.selector;
-import static org.rebaze.integrity.tree.Tag.tag;
+import static org.rebaze.integrity.tree.api.Selector.selector;
+import static org.rebaze.integrity.tree.api.Tag.tag;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
