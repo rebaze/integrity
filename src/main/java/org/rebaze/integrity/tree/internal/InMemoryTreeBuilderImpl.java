@@ -22,7 +22,6 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
 {
     public static final String FIXED_EMPTY = "0000000000000000000000000000000000000000";
 
-    final private static Comparator<Tree> TREE_COMPARATOR = new HashUtil.TreeComparator();
     final private MessageDigest m_digest;
     private Tree m_hash;
     private boolean noData = true;
@@ -94,7 +93,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                         subHashes.add(sealed);
                     }
                 }
-                Collections.sort( subHashes, TREE_COMPARATOR );
+                Collections.sort( subHashes, this.m_tools.getComparator() );
                 for (Tree c : subHashes) {
                     addUnguarded(c.fingerprint().getBytes());
                 }

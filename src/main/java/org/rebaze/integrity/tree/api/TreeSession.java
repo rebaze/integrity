@@ -8,6 +8,7 @@
  */
 package org.rebaze.integrity.tree.api;
 
+import org.rebaze.integrity.tree.internal.HashUtil;
 import org.rebaze.integrity.tree.internal.StaticTreeBuilder;
 import org.rebaze.integrity.tree.util.StreamTreeBuilder;
 import org.rebaze.integrity.tree.internal.InMemoryTreeBuilderImpl;
@@ -17,6 +18,7 @@ import org.rebaze.integrity.tree.internal.operators.IntersectTreeCombiner;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Comparator;
 
 /**
  * Set of tools for this API.
@@ -28,6 +30,8 @@ public class TreeSession
     private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     public static final String CHARSET_NAME = "UTF-8";
     private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
+
+    private Comparator<Tree> comparator = new HashUtil.FingerprintTreeComparator();
 
     public TreeSession()
     {
@@ -173,4 +177,8 @@ public class TreeSession
         return createTree( selector, hashValue, new Tree[0], Tag.tag() );
     }
 
+    public Comparator<? super Tree> getComparator()
+    {
+        return comparator;
+    }
 }

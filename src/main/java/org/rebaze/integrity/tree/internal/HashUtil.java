@@ -33,7 +33,15 @@ public class HashUtil
         return buf.toString();
     }
 
-    public static class TreeComparator implements Comparator<Tree>
+    public static class SelectorTreeComparator implements Comparator<Tree>
+    {
+        @Override public int compare( Tree left, Tree right )
+        {
+            return left.selector().name().compareTo( right.selector().name() );
+        }
+    }
+
+    public static class FingerprintTreeComparator implements Comparator<Tree>
     {
         @Override public int compare( Tree left, Tree right )
         {
