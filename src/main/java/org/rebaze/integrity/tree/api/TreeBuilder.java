@@ -26,7 +26,7 @@ public interface TreeBuilder
      *
      * @return this
      */
-    public TreeBuilder add( byte[] bytes );
+    TreeBuilder add( byte[] bytes );
 
     /**
      * Change selector. Useful when selector is computed while adding data to the tree. Only
@@ -37,7 +37,7 @@ public interface TreeBuilder
      *
      * @return this
      */
-    public TreeBuilder selector( Selector selector );
+    TreeBuilder selector( Selector selector );
 
     /**
      * Create a new branch (Tree) with given selector. Only possible before {@link TreeBuilder}
@@ -48,7 +48,7 @@ public interface TreeBuilder
      *
      * @return A new sub tree.
      */
-    public TreeBuilder branch( Selector selector );
+    TreeBuilder branch( Selector selector );
 
     /**
      * Create a new branch (Tree) with given selector. Only possible before {@link TreeBuilder}
@@ -59,7 +59,7 @@ public interface TreeBuilder
      *
      * @return An instance of {@link StaticTreeBuilder}
      */
-    public TreeBuilder branch( Tree subtree );
+    TreeBuilder branch( Tree subtree );
 
     /**
      * Tag this tree. Will overwrite previous tags.
@@ -76,6 +76,29 @@ public interface TreeBuilder
      *
      * @return A new instance representing the tree you've built.
      */
-    public Tree seal();
+    Tree seal();
 
+    default TreeBuilder add ( String data) {
+        return add(data.getBytes());
+    }
+
+    default TreeBuilder add (Long l) {
+        return add(l.toString().getBytes());
+    }
+
+    default TreeBuilder add (Integer i) {
+        return add(i.toString().getBytes());
+    }
+
+    default TreeBuilder add (boolean b) {
+        return add( (b) ? 1 : 0 );
+    }
+
+    default TreeBuilder selector( String s ) {
+        return selector (Selector.selector (s));
+    }
+
+    default TreeBuilder branch( String s ) {
+        return branch (Selector.selector (s));
+    }
 }
