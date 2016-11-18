@@ -53,11 +53,11 @@ public class InMemoryTreeImpl implements Tree
 
     public String toString()
     {
-        return pretty(m_hashValue.substring( 0, 6 )) +  pretty(m_selector) + "  #" + m_subs.length + pretty( m_tag);
+        return pretty(m_hashValue.substring( 0, 6 )) +  pretty(m_selector) + ((m_subs.length > 0 ) ? "  #" + m_subs.length : "") + pretty( m_tag);
     }
 
     private String pretty(Object thing) {
-        return (thing != null ? " [" + thing.toString() + "] " : " [] ");
+        return (thing != null ? " [" + thing.toString() + "] " : "");
     }
 
     public int hashCode()

@@ -48,8 +48,6 @@ public class TreeConsoleFormatter
 
     public void prettyPrint( int depth, Tree tree )
     {
-        if ( depth == 0 )
-            m_out.println( " ---- TREE: " );
         m_out.print( "+" );
         for ( int i = 0; i < depth; i++ )
         {
