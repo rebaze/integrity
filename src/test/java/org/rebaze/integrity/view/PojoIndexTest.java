@@ -30,7 +30,6 @@ public class PojoIndexTest
 
     class ItemTreeMapper implements TreeMapper<Item>
     {
-
         public  Tree mask(  Item p1 )
         {
             TreeBuilder tb = session.createTreeBuilder();
@@ -65,8 +64,6 @@ public class PojoIndexTest
     public class Group
     {
         private final Item[] items;
-
-
     }
 
     @Test public void testDumbDispatcher()
