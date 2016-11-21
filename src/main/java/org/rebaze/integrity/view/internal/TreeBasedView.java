@@ -1,8 +1,10 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.internal;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.rebaze.integrity.tree.api.Tree;
+import org.rebaze.integrity.view.api.View;
+import org.rebaze.integrity.view.api.ViewDefinition;
 
 import java.util.Map;
 import java.util.WeakHashMap;

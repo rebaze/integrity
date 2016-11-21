@@ -1,10 +1,22 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.api;
+
+import org.rebaze.integrity.view.internal.ViewUpdate;
 
 /**
  *
  */
 public interface View<T>
 {
+    ViewDefinition getDefinition();
+
+    /**
+     * Creates a view update template.
+     * Used to feed update into view  using {@link #applyUpdate(ViewUpdate)}.
+     *
+     * @return a fesh update builder.
+     */
+    ViewUpdate createUpdate();
+
     /**
      * Actually update this view.
      *
@@ -25,18 +37,8 @@ public interface View<T>
     T[] getState( T[] feed );
 
     /**
-     * Creates a view update template.
-     * Used to feed update into view  using {@link #applyUpdate(ViewUpdate)}.
-     *
-     * @return a fesh update builder.
-     */
-    ViewUpdate createUpdate();
-
-    /**
      * The amount of updates done with this used (metrics only).
      * @return
      */
     long getUpdates();
-
-    ViewDefinition getDefinition();
 }

@@ -1,4 +1,4 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.api;
 
 import org.rebaze.integrity.tree.api.Tree;
 

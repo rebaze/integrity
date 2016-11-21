@@ -1,7 +1,10 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.rebaze.integrity.view.api.Dispatcher;
+import org.rebaze.integrity.view.api.TreeMapper;
+import org.rebaze.integrity.view.api.View;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;

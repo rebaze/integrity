@@ -1,4 +1,4 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.api;
 
 public interface Dispatcher<T> {
     void register(View v);

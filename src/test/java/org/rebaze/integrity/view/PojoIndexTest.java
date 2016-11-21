@@ -7,6 +7,12 @@ import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
+import org.rebaze.integrity.view.api.Dispatcher;
+import org.rebaze.integrity.view.api.TreeMapper;
+import org.rebaze.integrity.view.api.View;
+import org.rebaze.integrity.view.internal.SimpleDispatcher;
+import org.rebaze.integrity.view.internal.TreeBasedView;
+import org.rebaze.integrity.view.internal.TreeViewDefinition;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +28,8 @@ public class PojoIndexTest
 
     public static final TreeSession session = new DefaultTreeSessionFactory().create();
 
-    class ItemTreeMapper implements TreeMapper<Item> {
+    class ItemTreeMapper implements TreeMapper<Item>
+    {
 
         public  Tree mask(  Item p1 )
         {

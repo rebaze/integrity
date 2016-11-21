@@ -1,10 +1,11 @@
-package org.rebaze.integrity.view;
+package org.rebaze.integrity.view.internal;
 
 import lombok.EqualsAndHashCode;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeIndex;
 import org.rebaze.integrity.tree.api.TreeSession;
-
+import org.rebaze.integrity.view.api.TreeMapper;
+import org.rebaze.integrity.view.api.ViewDefinition;
 
 @EqualsAndHashCode
 public class TreeViewDefinition<T> implements ViewDefinition
