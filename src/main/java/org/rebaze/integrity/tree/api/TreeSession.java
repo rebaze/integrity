@@ -113,6 +113,9 @@ public class TreeSession
 
     public Tree createTree( Selector selector, String hashValue, Tree[] subs, Tag tag )
     {
+        if (selector == null) {
+            selector = Selector.selector( hashValue );
+        }
         return new InMemoryTreeImpl( selector, hashValue, subs, tag );
     }
 

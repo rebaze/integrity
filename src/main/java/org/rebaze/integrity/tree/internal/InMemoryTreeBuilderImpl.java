@@ -38,7 +38,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         m_tools = tools;
         m_digest = m_tools.createMessageDigest();
         //m_sub = new ArrayList<TreeBuilder>();
-        m_subItems = new HashMap<Selector, TreeBuilder>();
+        m_subItems = new HashMap<>();
     }
 
     /*
@@ -75,7 +75,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     {
         if ( !m_sealed )
         {
-            defaultSelector();
+            //defaultSelector();
 
             if (noData && m_subItems.size() == 0) {
                 // Use fixed value empty tree:

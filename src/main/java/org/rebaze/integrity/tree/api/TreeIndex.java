@@ -21,7 +21,8 @@ import java.util.Map;
  */
 public class TreeIndex extends AbstractDelegateTree
 {
-    final private Map<Selector, TreeIndex> m_selectors = new HashMap<Selector, TreeIndex>();
+    final private Map<Selector, TreeIndex> m_selectors = new HashMap<>();
+    final private Map<String, TreeIndex> m_firstResponderTree = new HashMap<>();
     final private TreeIndex[] m_sub;
 
     public TreeIndex( Tree tree )
@@ -29,6 +30,18 @@ public class TreeIndex extends AbstractDelegateTree
         super( tree );
         guardIlegalWrappedTreeIndex( tree );
         m_sub = createDeepIndex( tree );
+        indexResponder(this);
+    }
+
+    private void indexResponder( TreeIndex tree )
+    {
+        Tree indexed = m_firstResponderTree.get(tree.fingerprint());
+        if (indexed == null) {
+            m_firstResponderTree.put( tree.fingerprint(),tree );
+        }
+        for (TreeIndex t : tree.branches()) {
+            indexResponder( t );
+        }
     }
 
     private TreeIndex[] createDeepIndex( Tree tree )
@@ -59,6 +72,21 @@ public class TreeIndex extends AbstractDelegateTree
     public TreeIndex[] branches()
     {
         return m_sub;
+    }
+
+    public boolean contains( Tree tree) {
+        for (String finger : m_firstResponderTree.keySet()) {
+            //System.out.println("index content " + finger);
+        }
+        if (tree != null)
+        {
+            boolean b =  m_firstResponderTree.containsKey( tree.fingerprint() );
+            //System.out.println("Ask " + tree.fingerprint() + " -> " + b);
+
+            return b;
+        }else {
+            return false;
+        }
     }
 
     public String toString()
