@@ -10,9 +10,9 @@ import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 import org.rebaze.integrity.view.api.Dispatcher;
 import org.rebaze.integrity.view.api.TreeMapper;
 import org.rebaze.integrity.view.api.View;
-import org.rebaze.integrity.view.internal.SimpleDispatcher;
-import org.rebaze.integrity.view.internal.TreeBasedView;
-import org.rebaze.integrity.view.internal.TreeViewDefinition;
+import org.rebaze.integrity.view.util.SimpleDispatcher;
+import org.rebaze.integrity.view.util.TreeBasedView;
+import org.rebaze.integrity.view.util.TreeViewDefinition;
 
 import java.util.concurrent.ThreadLocalRandom;
 

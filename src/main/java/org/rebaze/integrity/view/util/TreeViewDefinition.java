@@ -1,4 +1,4 @@
-package org.rebaze.integrity.view.internal;
+package org.rebaze.integrity.view.util;
 
 import lombok.EqualsAndHashCode;
 import org.rebaze.integrity.tree.api.Tree;

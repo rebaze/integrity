@@ -1,6 +1,6 @@
 package org.rebaze.integrity.view.api;
 
-import org.rebaze.integrity.view.internal.ViewUpdate;
+import org.rebaze.integrity.view.util.ViewUpdate;
 
 /**
  *

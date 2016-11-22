@@ -1,4 +1,4 @@
-package org.rebaze.integrity.view.internal;
+package org.rebaze.integrity.view.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
