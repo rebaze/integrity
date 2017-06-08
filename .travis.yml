@@ -1,6 +1,6 @@
 sudo: false
 language: java
-install: mvn --quiet install
+install: ./gradlew --quiet install
 script: mvn --quiet verify
 jdk:
   - oraclejdk8
