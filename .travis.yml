@@ -1,7 +1,7 @@
 sudo: false
 language: java
 install: ./gradlew --quiet install
-script: mvn --quiet verify
+script: ./gradlew --quiet build
 jdk:
   - oraclejdk8
 notifications:
