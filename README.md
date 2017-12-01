@@ -16,10 +16,8 @@ Small Java library implementing Merkle Trees (https://en.m.wikipedia.org/wiki/Me
 
 ## What is this good for
 
-Well we use it to create content based indexes organized in directed graph like structure.
-
-### Usecase: Find changes
-Once you have obtained a Tree instance derived from your (potentially large) content tree you can use it to quickly find the needle in the haystack when compared to an older snapshot Tree.
+- Blockchain Technologies
+- Indexing
 
 # LICENSE
 Copyright 2014-2016 rebaze GmbH.
