@@ -12,7 +12,7 @@
 - Embeddable
 - Low footprint 
 
-Small Java library implementing Merkle Trees (https://en.m.wikipedia.org/wiki/Merkle_tree).
+Small Java library for creating Merkle Trees (https://en.m.wikipedia.org/wiki/Merkle_tree) to be used in blockchain-like technologies.
 
 ## What is this good for
 
@@ -20,7 +20,7 @@ Small Java library implementing Merkle Trees (https://en.m.wikipedia.org/wiki/Me
 - Indexing
 
 # LICENSE
-Copyright 2014-2016 rebaze GmbH.
+Copyright 2014-2018 rebaze GmbH.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
