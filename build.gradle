@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 apply plugin: 'maven'
 
 group = 'org.rebaze.integrity'
-version = '0.3.1-SNAPSHOT'
+version = '0.4.0-SNAPSHOT'
 
 description = """rebaze integrity - tree library"""
 
