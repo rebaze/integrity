@@ -15,14 +15,23 @@ import org.rebaze.integrity.tree.api.Tree;
 public class TreeConsoleFormatter
 {
 
-    public TreeConsoleFormatter()
+    public static TreeConsoleFormatter formatter() {
+        return new TreeConsoleFormatter();
+    }
+
+    public static TreeConsoleFormatter formatter(PrintStream ps) {
+        return new TreeConsoleFormatter(ps);
+    }
+
+
+    final private PrintStream m_out;
+
+    TreeConsoleFormatter()
     {
         this( System.out );
     }
 
-    final private PrintStream m_out;
-
-    public TreeConsoleFormatter( PrintStream ps )
+    TreeConsoleFormatter( PrintStream ps )
     {
         m_out = ps;
     }
