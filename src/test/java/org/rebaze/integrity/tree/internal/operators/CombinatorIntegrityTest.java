@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class CombinatorIntegrityTest
 {
-    private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
+    private TreeConsoleFormatter formatter = TreeConsoleFormatter.formatter();
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Ignore

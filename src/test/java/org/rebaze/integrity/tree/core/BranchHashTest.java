@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class BranchHashTest
 {
-    public static final TreeConsoleFormatter PRINT = new TreeConsoleFormatter();
+    public static final TreeConsoleFormatter PRINT = TreeConsoleFormatter.formatter();
 
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 

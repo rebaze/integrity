@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 @Ignore
 public class UnionTreeCombinerTest
 {
-    private TreeConsoleFormatter formatter = new TreeConsoleFormatter();
+    private TreeConsoleFormatter formatter = TreeConsoleFormatter.formatter();
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test

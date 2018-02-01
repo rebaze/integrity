@@ -27,7 +27,7 @@ import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 public class DiffTreeCombinatorTest
 {
 
-    private static TreeConsoleFormatter FORMAT = new TreeConsoleFormatter();
+    private static TreeConsoleFormatter FORMAT = TreeConsoleFormatter.formatter();
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
