@@ -73,7 +73,7 @@ public class InMemoryTreeImpl implements Tree
         }
         else
         {
-            throw new RuntimeException( "Should not come here.." );
+            return false;
         }
     }
 
