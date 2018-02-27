@@ -26,11 +26,18 @@ package org.rebaze.integrity.tree.api;
  */
 public interface Tree
 {
+    /**
+     * The algorithm used to create the fingerprint of this tree.
+     *
+     * @return the hash value of this tree plus algo used.
+     */
+    TreeValue value();
 
     /**
      * Hash value of all its sub branches. Can also be called a hash. Default implementations may
      * use a SHA-1.
-     * 
+     *
+     * @deprecated
      * @return the hash value of this tree.
      */
     String fingerprint();
@@ -56,5 +63,7 @@ public interface Tree
      * @return Tags for this tree.
      */
     Tag tags();
+
+
 
 }

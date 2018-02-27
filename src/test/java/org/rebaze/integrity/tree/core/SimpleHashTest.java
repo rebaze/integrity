@@ -29,10 +29,10 @@ public class SimpleHashTest
     public void emptyCollector() throws Exception
     {
         TreeBuilder root = session.createTreeBuilder().selector( Selector.selector( "Root" ) );
-        assertEquals( InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().fingerprint() );
+        assertEquals( InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().value() );
 
         TreeBuilder root2 = session.createTreeBuilder().selector( Selector.selector( "RootOther" ) );
-        assertEquals( root.seal().fingerprint(), root2.seal().fingerprint() );
+        assertEquals( root.seal().value(), root2.seal().value() );
     }
 
     @Test

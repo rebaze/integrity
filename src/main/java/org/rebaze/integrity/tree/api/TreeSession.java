@@ -111,12 +111,12 @@ public class TreeSession
         return new StreamTreeBuilder( delegate );
     }
 
-    public Tree createTree( Selector selector, String hashValue, Tree[] subs, Tag tag )
+    public Tree createTree( Selector selector, TreeValue value, Tree[] subs, Tag tag )
     {
         if (selector == null) {
-            selector = Selector.selector( hashValue );
+            selector = Selector.selector( value.hash() );
         }
-        return new InMemoryTreeImpl( selector, hashValue, subs, tag );
+        return new InMemoryTreeImpl( selector, value, subs, tag );
     }
 
     public TreeSession setDigestAlgorithm( String algo )
@@ -175,9 +175,9 @@ public class TreeSession
         return new IntersectTreeCombiner( this ).combine( base, subtree );
     }
 
-    public Tree createTree( Selector selector, String hashValue )
+    public Tree createTree( Selector selector, TreeValue value )
     {
-        return createTree( selector, hashValue, new Tree[0], Tag.tag() );
+        return createTree( selector, value, new Tree[0], Tag.tag() );
     }
 
     public Comparator<? super Tree> getComparator()

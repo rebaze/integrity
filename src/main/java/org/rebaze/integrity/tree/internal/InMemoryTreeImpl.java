@@ -8,9 +8,7 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.api.Selector;
-import org.rebaze.integrity.tree.api.Tree;
-import org.rebaze.integrity.tree.api.Tag;
+import org.rebaze.integrity.tree.api.*;
 
 /**
  * Default implementation not really suitable for very large trees but fast and simple.
@@ -20,23 +18,28 @@ import org.rebaze.integrity.tree.api.Tag;
  */
 public class InMemoryTreeImpl implements Tree
 {
-    final private String m_hashValue;
+    final private TreeValue m_hashValue;
     final private Tree[] m_subs;
     final private Selector m_selector;
     final private Tag m_tag;
 
-    public InMemoryTreeImpl( Selector selector, String hashValue, Tree[] subs, Tag tag )
+    public InMemoryTreeImpl( Selector selector, TreeValue value, Tree[] subs, Tag tag )
     {
         m_selector = selector;
-        m_hashValue = hashValue;
+        m_hashValue = value;
         m_subs = subs;
         m_tag = tag;
+    }
+
+    @Override public TreeValue value()
+    {
+        return m_hashValue;
     }
 
     @Override
     public String fingerprint()
     {
-        return m_hashValue;
+        return m_hashValue.hash();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class InMemoryTreeImpl implements Tree
 
     public String toString()
     {
-        return pretty(m_hashValue.substring( 0, 6 )) +  pretty(m_selector) + ((m_subs.length > 0 ) ? "  #" + m_subs.length : "") + pretty( m_tag);
+        return pretty(m_hashValue.hash().substring( 0, 6 )) +  pretty(m_selector) + ((m_subs.length > 0 ) ? "  #" + m_subs.length : "") + pretty( m_tag);
     }
 
     private String pretty(Object thing) {
@@ -69,7 +72,7 @@ public class InMemoryTreeImpl implements Tree
     {
         if ( other instanceof Tree )
         {
-            return m_hashValue.equals( ( ( Tree ) other ).fingerprint() );
+            return m_hashValue.equals( ( ( Tree ) other ).value() );
         }
         else
         {

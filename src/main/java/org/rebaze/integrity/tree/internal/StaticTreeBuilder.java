@@ -54,7 +54,7 @@ public class StaticTreeBuilder implements TreeBuilder
     public TreeBuilder tag( Tag tag )
     {
         // TODO: Use compound tag!
-        m_tree = m_session.createTree(m_tree.selector(),m_tree.fingerprint(),m_tree.branches(), tag);
+        m_tree = m_session.createTree(m_tree.selector(),m_tree.value(),m_tree.branches(), tag);
         return this;
     }
 

@@ -20,7 +20,7 @@ import org.rebaze.integrity.tree.api.*;
  */
 public class InMemoryTreeBuilderImpl implements TreeBuilder
 {
-    public static final String FIXED_EMPTY = "0000000000000000000000000000000000000000";
+    public static final TreeValue FIXED_EMPTY = new TreeValue(HashAlgorithm.SHA1,"0");
 
     final private MessageDigest m_digest;
     private Tree m_hash;
@@ -83,7 +83,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
             }else if (noData && m_subItems.size() == 1) {
                 // reuse sub tree fingerprint.
                 Tree underneath = m_subItems.values().iterator().next().seal();
-                m_hash = m_tools.createTree(m_selector,underneath.fingerprint(),new Tree[]{underneath},m_tag);
+                m_hash = m_tools.createTree(m_selector,underneath.value(),new Tree[]{underneath},m_tag);
             }else {
                 List<Tree> subHashes = new ArrayList<Tree>(m_subItems.keySet().size());
                 for (Selector c : m_subItems.keySet()) {
@@ -97,7 +97,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                 for (Tree c : subHashes) {
                     addUnguarded(c.fingerprint().getBytes());
                 }
-                m_hash = m_tools.createTree(m_selector, HashUtil.convertToHex(m_digest.digest()), subHashes.toArray(new Tree[subHashes.size()]), m_tag);
+                m_hash = m_tools.createTree(m_selector, new TreeValue(  HashAlgorithm.fromString( m_digest.getAlgorithm()),HashUtil.convertToHex(m_digest.digest())), subHashes.toArray(new Tree[subHashes.size()]), m_tag);
             }
             m_sealed = true;
             resetMembers();
@@ -106,7 +106,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
     }
 
     private boolean isEmptyTree(Tree tree) {
-        return tree.fingerprint().equals(FIXED_EMPTY);
+        return tree.value().equals(FIXED_EMPTY);
     }
 
     private void defaultSelector()

@@ -8,9 +8,7 @@
  */
 package org.rebaze.integrity.tree.internal;
 
-import org.rebaze.integrity.tree.api.Selector;
-import org.rebaze.integrity.tree.api.Tree;
-import org.rebaze.integrity.tree.api.Tag;
+import org.rebaze.integrity.tree.api.*;
 
 /**
  * Created by tonit on 05/03/15.
@@ -67,4 +65,9 @@ public abstract class AbstractDelegateTree implements Tree
         return m_tree.tags();
     }
 
+    @Override
+    public TreeValue value()
+    {
+        return m_tree.value();
+    }
 }
