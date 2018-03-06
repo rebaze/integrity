@@ -99,8 +99,8 @@ Tree tree = treeBuilder.seal();
 
 TreeIndex treeIndex = new TreeIndex( tree );
 System.out.println(treeIndex);
-System.out.println(treeIndex.select(  selector("datapointA" )));
-System.out.println(treeIndex.select(  selector("datapointB" )));
+System.out.println(treeIndex.select( selector("datapointA" )));
+System.out.println(treeIndex.select( selector("datapointB" )));
 
 ````
 
@@ -115,10 +115,10 @@ Tree tree = treeBuilder.seal();
 
 TreeIndex treeIndex = new TreeIndex( tree );
 System.out.println(treeIndex);
-System.out.println(treeIndex.select(  selector("index" ),selector("A" )));
+System.out.println(treeIndex.select( selector("index" ),selector("A" )));
 
 // Composite Selector is supported too:
-System.out.println(treeIndex.select(  selector("index","B" )));
+System.out.println(treeIndex.select( selector("index","B" )));
 
 ````
 
