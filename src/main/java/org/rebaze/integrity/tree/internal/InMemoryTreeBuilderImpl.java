@@ -93,11 +93,12 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
                         subHashes.add(sealed);
                     }
                 }
-                Collections.sort( subHashes, this.m_tools.getComparator() );
+                subHashes.sort( this.m_tools.getComparator() );
                 for (Tree c : subHashes) {
-                    addUnguarded(c.fingerprint().getBytes());
+                    addUnguarded(c.value().hash().getBytes());
                 }
-                m_hash = m_tools.createTree(m_selector, new TreeValue(  HashAlgorithm.fromString( m_digest.getAlgorithm()),HashUtil.convertToHex(m_digest.digest())), subHashes.toArray(new Tree[subHashes.size()]), m_tag);
+                m_hash = m_tools.createTree(m_selector, new TreeValue(  HashAlgorithm.fromString( m_digest.getAlgorithm()),HashUtil.convertToHex(m_digest.digest())), subHashes.toArray(
+                    new Tree[0] ), m_tag);
             }
             m_sealed = true;
             resetMembers();
@@ -170,7 +171,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
             c = m_tools.createStaticTreeBuilder( subtree );
             m_subItems.put( subtree.selector(), c );
         }else {
-            if (subtree.branches().length == 0 && c.seal().fingerprint().equals( subtree.fingerprint() )) {
+            if (subtree.branches().length == 0 && c.seal().value().equals( subtree.value() )) {
                 // don't merge when fingerprint matches:
                 return c;
 
@@ -195,7 +196,7 @@ public class InMemoryTreeBuilderImpl implements TreeBuilder
         if ( left.branches().length == 0 ) {
             // Merge competing data to a new anonymous tree.
             // Note that this produces fingerprint based on another fingerprint:
-            collector.add( left.fingerprint().getBytes() ).tag( Tag.tag( "MERGED" ) );
+            collector.add( left.value().hash().getBytes() ).tag( Tag.tag( "MERGED" ) );
         }else
         {
             // auto include:

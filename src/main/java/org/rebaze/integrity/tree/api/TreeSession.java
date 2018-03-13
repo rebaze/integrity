@@ -81,7 +81,7 @@ public class TreeSession
         if ( tree.branches().length == 0 )
             return true;
 
-        if ( tree.branches().length == 1 && tree.fingerprint().equals( tree.branches()[0].fingerprint() ) )
+        if ( tree.branches().length == 1 && tree.value().equals( tree.branches()[0].value() ) )
         {
             return isRaw( tree.branches()[0] );
         }
@@ -93,7 +93,7 @@ public class TreeSession
 
     public static boolean isWrapper( Tree tree )
     {
-        return ( tree.branches().length == 1 && tree.fingerprint().equals( tree.branches()[0].fingerprint() ) );
+        return ( tree.branches().length == 1 && tree.value().equals( tree.branches()[0].value() ) );
     }
 
     public TreeBuilder createTreeBuilder()

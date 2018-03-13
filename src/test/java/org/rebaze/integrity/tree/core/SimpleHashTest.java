@@ -42,13 +42,13 @@ public class SimpleHashTest
         TreeBuilder root = session.createTreeBuilder().selector( Selector.selector( "Root" ) );
         root.add( elements[0].getBytes() );
         root.add( elements[1].getBytes() );
-        assertEquals( "2a190d88c7a164f242ea707acf5d57bc990f0ce1", root.seal().fingerprint() );
+        assertEquals( "2a190d88c7a164f242ea707acf5d57bc990f0ce1", root.seal().value().hash() );
 
         String[] elementsOther = new String[] { "foo", "element2" };
         TreeBuilder root2 = session.createTreeBuilder().selector( Selector.selector( "Root" ) );
         root2.add( elementsOther[0].getBytes() );
         root2.add( elementsOther[1].getBytes() );
-        assertEquals( "0dc0638a504e1b0415a37340bf57d14b75b14308", root2.seal().fingerprint() );
+        assertEquals( "0dc0638a504e1b0415a37340bf57d14b75b14308", root2.seal().value().hash() );
     }
 
     @Test
@@ -74,8 +74,8 @@ public class SimpleHashTest
         sub4.add( "Four".getBytes() );
         Tree tree2 = root2.seal();
 
-        assertNotEquals( "roots must be different", tree1.fingerprint(), tree2.fingerprint() );
-        assertNotEquals( "first childs must be different", tree1.branches()[0].fingerprint(), tree2.branches()[0].fingerprint() );
+        assertNotEquals( "roots must be different", tree1.value(), tree2.value() );
+        assertNotEquals( "first childs must be different", tree1.branches()[0].value(), tree2.branches()[0].value() );
 
     }
 

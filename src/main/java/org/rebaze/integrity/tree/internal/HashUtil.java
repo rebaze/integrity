@@ -45,7 +45,7 @@ public class HashUtil
     {
         @Override public int compare( Tree left, Tree right )
         {
-            return left.fingerprint().compareTo( right.fingerprint() );
+            return left.value().hash().compareTo( right.value().hash() );
         }
     }
 }

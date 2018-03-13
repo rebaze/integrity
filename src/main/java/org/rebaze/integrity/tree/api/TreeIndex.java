@@ -35,10 +35,7 @@ public class TreeIndex extends AbstractDelegateTree
 
     private void indexResponder( TreeIndex tree )
     {
-        Tree indexed = m_firstResponderTree.get(tree.fingerprint());
-        if (indexed == null) {
-            m_firstResponderTree.put( tree.fingerprint(),tree );
-        }
+        m_firstResponderTree.putIfAbsent( tree.value().hash(), tree );
         for (TreeIndex t : tree.branches()) {
             indexResponder( t );
         }
@@ -50,7 +47,7 @@ public class TreeIndex extends AbstractDelegateTree
         {
             m_selectors.put( h.selector(), new TreeIndex( h ) );
         }
-        return m_selectors.values().toArray( new TreeIndex[m_selectors.values().size()] );
+        return m_selectors.values().toArray( new TreeIndex[0] );
     }
 
     public TreeIndex select( Selector selector )
@@ -75,15 +72,9 @@ public class TreeIndex extends AbstractDelegateTree
     }
 
     public boolean contains( Tree tree) {
-        for (String finger : m_firstResponderTree.keySet()) {
-            //System.out.println("index content " + finger);
-        }
         if (tree != null)
         {
-            boolean b =  m_firstResponderTree.containsKey( tree.fingerprint() );
-            //System.out.println("Ask " + tree.fingerprint() + " -> " + b);
-
-            return b;
+            return m_firstResponderTree.containsKey( tree.value().hash() );
         }else {
             return false;
         }

@@ -39,7 +39,7 @@ public abstract class AbstractDelegateTree implements Tree
     @Override
     public String fingerprint()
     {
-        return m_tree.fingerprint();
+        return m_tree.value().hash();
     }
 
     @Override
