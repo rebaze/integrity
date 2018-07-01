@@ -34,7 +34,7 @@ such as MessageDigest.
 
 An instance can be stored (when using the DefaultTreeSessionFactory) as private final static field in a class).
 
-### Lets create a (hash-) tree
+### Lets create a hash tree
 
 ````
 TreeSession session =  new DefaultTreeSessionFactory().create();
