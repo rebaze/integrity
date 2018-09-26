@@ -1,4 +1,10 @@
-Bundle-Version>:\
+Bundle-Vendor: rebaze
+
+Bundle-License: Apache Software License 2.0
+
+Bundle-Copyright: rebaze GmbH
+
+Bundle-Version:\
   ${project.version}
 
 Bundle-SymbolicName:\
