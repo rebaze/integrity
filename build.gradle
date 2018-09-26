@@ -6,10 +6,16 @@ buildscript {
         classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:4.0.0"
     }
 }
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
 
-apply plugin: 'java-library'
+//apply plugin: 'java-library'
+//apply plugin: "maven-publish"
 apply plugin: 'biz.aQute.bnd.builder'
-apply plugin: "maven-publish"
+
 task install() {}
 install.dependsOn(publishToMavenLocal)
 
@@ -53,7 +59,35 @@ publishing {
                         url = 'https://www.rebaze.com'
                     }
                 }
+                developers {
+                    developer {
+                        id = 'tonit'
+                        name = 'Toni Menzel'
+                        email = 'toni.menzel@rebaze.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/rebaze/integrity.git'
+                    developerConnection = 'scm:git:ssh://github.com/rebaze/integrity.git'
+                    url = 'https://github.com/rebaze/integrity/'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username "$ossNexusUsername"
+                password "$ossNexusPassword"
             }
         }
     }
 }
+/**
+signing {
+    sign publishing.publications.maven
+}
+ **/
