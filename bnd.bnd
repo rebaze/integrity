@@ -1,8 +1,8 @@
 Bundle-Version>:\
-  ${pom.version}
+  ${project.version}
 
 Bundle-SymbolicName:\
-  ${bundle.symbolicName}
+  ${project.name}
 
 Import-Package:\
   *
@@ -10,7 +10,3 @@ Import-Package:\
 Export-Package:\
 	org.rebaze.integrity.tree.api,\
 	org.rebaze.integrity.tree.util
-
-Private-Package:\
-	org.rebaze.integrity.tree.internal,\
-	org.rebaze.integrity.tree.internal.operators
