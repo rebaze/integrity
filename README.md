@@ -9,7 +9,7 @@
 
 ## 2019-01-04 Release is coming
 
-It has been a while since the library got a release to Maven Central. Now, it will be time again. Expect a new release this January.
+It has been a while since the library got a release to Maven Central. Now, it will be time again. 
 
 # What is this?
 
