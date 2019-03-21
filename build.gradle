@@ -1,10 +1,10 @@
 buildscript {
-    repositories {
-        gradlePluginPortal()
-    }
-    dependencies {
-        classpath "biz.aQute.bnd:biz.aQute.bnd.gradle:4.0.0"
-    }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.2.0'
+  }
 }
 plugins {
     id 'java-library'
