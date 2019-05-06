@@ -1,0 +1,18 @@
+Bundle-Vendor: rebaze.io
+
+Bundle-License: Apache Software License 2.0
+
+Bundle-Copyright: rebaze GmbH
+
+Bundle-Version:\
+  ${project.version}
+
+Bundle-SymbolicName:\
+  ${project.name}
+
+Import-Package:\
+  *
+
+Export-Package:\
+	org.rebaze.integrity.tree.api,\
+	org.rebaze.integrity.tree.util

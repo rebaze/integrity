@@ -1,1 +1,3 @@
 rootProject.name = 'org.rebaze.integrity.tree'
+
+enableFeaturePreview('STABLE_PUBLISHING')

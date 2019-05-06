@@ -5,14 +5,20 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree)
 [![Apache 2.0](https://img.shields.io/github/license/nebula-plugins/nebula-publishing-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# Integrity Library
+# News
+
+## 2019-01-04 Release is coming
+
+It has been a while since the library got a release to Maven Central. Now, it will be time again. 
+
+# What is this?
+
+A small Java library for creating Merkle Trees (https://en.m.wikipedia.org/wiki/Merkle_tree) to be used in blockchain-like technologies.
 
 - Composite hash- tree based java library (DAG)
 - OSGi compatible
 - Embeddable
 - Low footprint 
-
-Small Java library for creating Merkle Trees (https://en.m.wikipedia.org/wiki/Merkle_tree) to be used in blockchain-like technologies.
 
 ## What is this good for
 
@@ -132,10 +138,11 @@ Tags do not need to be unique.
 IndexTree currently does not build indexes for tags, so that is a thing to do..;)
 
 # LICENSE
-Copyright 2014-2018 rebaze GmbH.
+Copyright 2014-2019 rebaze GmbH.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Change

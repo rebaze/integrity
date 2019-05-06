@@ -1,5 +1,23 @@
-apply plugin: 'java-library'
-apply plugin: 'maven'
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'biz.aQute.bnd:biz.aQute.bnd.gradle:4.2.0'
+  }
+}
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+//apply plugin: 'java-library'
+//apply plugin: "maven-publish"
+apply plugin: 'biz.aQute.bnd.builder'
+
+task install() {}
+install.dependsOn(publishToMavenLocal)
 
 group = 'org.rebaze.integrity'
 version = '0.4.0-SNAPSHOT'
@@ -10,16 +28,66 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'
 }
 
 repositories {
-
-     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-     maven { url "http://repo.maven.apache.org/maven2" }
+    mavenCentral()
 }
+
 dependencies {
     api group: 'org.slf4j', name: 'slf4j-api', version:'1.6.1'
     testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version:'1.6.1'
     testCompile group: 'junit', name: 'junit', version:'4.12'
 }
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            pom {
+                url = 'https://www.rebaze.com'
+                licenses {
+                    license {
+                        name = '(c) Rebaze Developers'
+                        url = 'https://www.rebaze.com'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'tonit'
+                        name = 'Toni Menzel'
+                        email = 'toni.menzel@rebaze.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/rebaze/integrity.git'
+                    developerConnection = 'scm:git:ssh://github.com/rebaze/integrity.git'
+                    url = 'https://github.com/rebaze/integrity/'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username "$ossNexusUsername"
+                password "$ossNexusPassword"
+            }
+        }
+    }
+}
+/**
+signing {
+    sign publishing.publications.maven
+}
+ **/
