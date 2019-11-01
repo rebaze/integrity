@@ -8,7 +8,6 @@
  */
 package org.rebaze.integrity.tree.core;
 
-import static org.rebaze.integrity.tree.api.Selector.selector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -26,7 +25,7 @@ public class SimpleHashTest
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
     @Test
-    public void emptyCollector() throws Exception
+    public void emptyCollector()
     {
         TreeBuilder root = session.createTreeBuilder().selector( Selector.selector( "Root" ) );
         assertEquals( InMemoryTreeBuilderImpl.FIXED_EMPTY, root.seal().value() );
@@ -36,7 +35,7 @@ public class SimpleHashTest
     }
 
     @Test
-    public void singleElements() throws Exception
+    public void singleElements()
     {
         String[] elements = new String[] { "element1", "element2" };
         TreeBuilder root = session.createTreeBuilder().selector( Selector.selector( "Root" ) );
@@ -52,7 +51,7 @@ public class SimpleHashTest
     }
 
     @Test
-    public void simpleTreeTest() throws Exception
+    public void simpleTreeTest()
     {
         TreeBuilder root = session.createTreeBuilder().selector( Selector.selector( "Root1" ) );
         TreeBuilder sub1 = root.branch( Selector.selector( "child1" ) );
