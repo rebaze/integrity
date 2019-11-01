@@ -1,7 +1,10 @@
 [<img src="http://www.rebaze.com/assets/Rebaze_icon_colors_tbg.png" align="right" width="100">](http://rebaze.com)
 
 [![OSGi compatible](https://img.shields.io/badge/OSGi-compatible-green.svg)](http://www.osgi.org)
-[![Build Status](https://travis-ci.org/rebaze/integrity.svg?branch=master)](https://travis-ci.org/rebaze/integrity)
+[![Build Status](https://github.com/rebaze/integrity/workflows/cibuild/badge.svg)](https://github.com/rebaze/integrity/workflows/build/)
+
+![](https://github.com/rebaze/integrity/workflows/cibuild/badge.svg)
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree)
 [![Apache 2.0](https://img.shields.io/github/license/nebula-plugins/nebula-publishing-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
