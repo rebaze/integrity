@@ -2,6 +2,9 @@
 
 [![OSGi compatible](https://img.shields.io/badge/OSGi-compatible-green.svg)](http://www.osgi.org)
 [![Build Status](https://github.com/rebaze/integrity/workflows/build/badge.svg)](https://github.com/rebaze/integrity/workflows/build/)
+
+![](https://github.com/rebaze/integrity/workflows/build/badge.svg)
+
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree)
 [![Apache 2.0](https://img.shields.io/github/license/nebula-plugins/nebula-publishing-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
