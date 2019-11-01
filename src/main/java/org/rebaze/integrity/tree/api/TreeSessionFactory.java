@@ -16,4 +16,6 @@ package org.rebaze.integrity.tree.api;
 public interface TreeSessionFactory
 {
     TreeSession create();
+
+    TreeSession create(String messageDigestAlgorithm);
 }

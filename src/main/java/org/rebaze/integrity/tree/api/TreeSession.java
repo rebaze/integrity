@@ -27,14 +27,14 @@ import java.util.Comparator;
  */
 public class TreeSession
 {
-    private static final String DEFAULT_HASH_ALOGO = "SHA-1";
     public static final String CHARSET_NAME = "UTF-8";
-    private String m_messageDigestAlgorithm = DEFAULT_HASH_ALOGO;
+    private final String m_messageDigestAlgorithm;
 
     private Comparator<Tree> comparator = new HashUtil.FingerprintTreeComparator();
 
-    public TreeSession()
+    public TreeSession(String messageDigestAlgorithm)
     {
+        m_messageDigestAlgorithm = messageDigestAlgorithm;
     }
 
     /**
@@ -117,12 +117,6 @@ public class TreeSession
             selector = Selector.selector( value.hash() );
         }
         return new InMemoryTreeImpl( selector, value, subs, tag );
-    }
-
-    public TreeSession setDigestAlgorithm( String algo )
-    {
-        m_messageDigestAlgorithm = algo;
-        return this;
     }
 
     public MessageDigest createMessageDigest()

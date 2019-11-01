@@ -10,9 +10,16 @@ import org.rebaze.integrity.tree.internal.operators.*;
  */
 public class DefaultTreeSessionFactory implements TreeSessionFactory
 {
+    private static final String DEFAULT_HASH_ALOGO = "SHA-1";
+
     public TreeSession create()
     {
-        return new TreeSession();
+        return new TreeSession(DEFAULT_HASH_ALOGO);
+    }
+
+    public TreeSession create(String messageDigestAlgorithm)
+    {
+        return new TreeSession(messageDigestAlgorithm);
     }
 
     public TreeCombiner createDeltaTreeCombiner( TreeSession session ) {
