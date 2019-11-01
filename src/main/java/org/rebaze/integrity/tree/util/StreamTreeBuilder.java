@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.rebaze.integrity.tree.api.Selector;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeBuilder;
@@ -25,8 +22,6 @@ import org.rebaze.integrity.tree.api.Tag;
 
 public class StreamTreeBuilder implements TreeBuilder
 {
-
-    private static final Logger LOG = LoggerFactory.getLogger( StreamTreeBuilder.class );
     private long m_dataAmountRead = 0L;
     final private TreeBuilder m_delegate;
 
@@ -50,26 +45,10 @@ public class StreamTreeBuilder implements TreeBuilder
 
     public StreamTreeBuilder add( final File f )
     {
-        try
+        try( InputStream is = new FileInputStream( f ))
         {
-            InputStream is = new FileInputStream( f );
-            try
-            {
-                add( is );
-            }
-            finally
-            {
-                try
-                {
-                    is.close();
-                }
-                catch ( IOException e )
-                {
-                    LOG.warn( "Problem closing file " + f.getAbsolutePath(), e );
-                }
-            }
-        }
-        catch ( IOException ioE )
+            add( is );
+        } catch ( IOException ioE )
         {
             throw new TreeException( "Problem reading file " + f.getAbsolutePath() + " contents.", ioE );
         }
@@ -103,14 +82,14 @@ public class StreamTreeBuilder implements TreeBuilder
     @Override
     public StreamTreeBuilder branch( Selector selector )
     {
-        LOG.warn( "Branching from StreamTreeBuilder is pretty unusually as it means you add raw data to an intermediate tree. " );
+        // TODO: Maybe disable this by throwing an exception? Branching from StreamTreeBuilder is pretty unusually as it means you add raw data to an intermediate tree. " );
         return new StreamTreeBuilder( m_delegate.branch( selector ) );
     }
 
     @Override
     public StreamTreeBuilder branch( Tree subtree )
     {
-        LOG.warn( "Branching from StreamTreeBuilder is pretty unusually as it means you add raw data to an intermediate tree. " );
+        // TODO: Maybe disable this by throwing an exception? Branching from StreamTreeBuilder is pretty unusually as it means you add raw data to an intermediate tree. " );
         return new StreamTreeBuilder( m_delegate.branch( subtree ) );
     }
 
