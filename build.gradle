@@ -9,7 +9,7 @@ buildscript {
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'signing'
+    // id 'signing'
 }
 
 //apply plugin: 'java-library'
@@ -42,7 +42,7 @@ dependencies {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
-    archiveClassifier.set('sources')
+    archiveClassifier = 'sources'
 }
 
 publishing {
@@ -50,6 +50,7 @@ publishing {
         maven(MavenPublication) {
             from components.java
             artifact sourcesJar
+            // artifact javadocJar
             pom {
                 url = 'https://www.rebaze.com'
                 licenses {
@@ -85,8 +86,3 @@ publishing {
         }
     }
 }
-/**
-signing {
-    sign publishing.publications.maven
-}
- **/
