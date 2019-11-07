@@ -9,18 +9,30 @@ buildscript {
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.4"
     // id 'signing'
 }
 
-//apply plugin: 'java-library'
-//apply plugin: "maven-publish"
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'rebaze-oss'
+        name = 'integrity'
+        userOrg = 'rebaze'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/rebaze/integrity.git'
+        publications = ['maven']
+    }
+}
+
 apply plugin: 'biz.aQute.bnd.builder'
 
 task install() {}
-install.dependsOn(publishToMavenLocal)
+// install.dependsOn(publishToMavenLocal)
 
 group = 'org.rebaze.integrity'
-version = '0.4.0-SNAPSHOT'
+version = '0.3.1'
 
 description = """rebaze integrity - tree library"""
 
