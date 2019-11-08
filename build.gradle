@@ -32,8 +32,6 @@ task install() {}
 // install.dependsOn(publishToMavenLocal)
 
 group = 'org.rebaze.integrity'
-version = '0.3.1'
-
 description = """rebaze integrity - tree library"""
 
 sourceCompatibility = 1.8
