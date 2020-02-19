@@ -38,7 +38,7 @@ An instance can be stored (when using the DefaultTreeSessionFactory) as private 
 
 ### Lets create a hash tree
 
-````
+````java
 TreeSession session =  new DefaultTreeSessionFactory().create();
 ````
 
@@ -47,7 +47,7 @@ The final "seal()" method on TreeBuilder actually creates hashes of all sub-elem
 and returns the composite Tree (value object, immutable).
 This Tree can be shared, stored and searched (using IndexTree, see below, for example).
 
-````
+````java
 Tree myFirstTree = session.createTreeBuilder()
             .add("anydata")
             .seal();
@@ -56,7 +56,7 @@ Tree myFirstTree = session.createTreeBuilder()
 That first tree basically only gives you the (by default SHA-1) hash of "anydata". Not a big leap by itself.
 
 What happens when we add more "data"?
-````
+````java
 Tree treeWithoutBranches = session.createTreeBuilder()
             .add("anydata".getBytes())
             .add("moredata".getBytes())
@@ -73,7 +73,7 @@ Note that the tree above won't have any branches when you call
 ```treeWithoutBranches.branches()```.
 
 How do you create branches?
-````
+````java
 TreeBuilder treeBuilder = session.createTreeBuilder();
 treeBuilder.branch( selector("datapointA") ).add("anydata".getBytes());
 treeBuilder.branch( selector("datapointB") ).add("otherdata".getBytes());
@@ -83,7 +83,7 @@ Now your resulting tree will have the same SHA-1 hash as before but it will have
 contained. 
 So you now can also ask for the sub-hashes:
 
-````
+````java
 Tree subTreeOfDatapoinA = treeWithBranches.branches()[0];
 Tree subTreeOfDatapoinB = treeWithBranches.branches()[1];
 
@@ -92,7 +92,7 @@ Now you might wonder if you can also use the selectors to "query" the right sub 
 Yes you can. That's what the "TreeIndex" helper is about.
 It (upon creation) traverses the given tree and creates appropriate indexes to lookup by Selectors:
 
-````
+````java
 TreeBuilder treeBuilder = session.createTreeBuilder();
 
 treeBuilder.branch( selector("datapointA") ).add("anydata".getBytes());
@@ -108,7 +108,7 @@ System.out.println(treeIndex.select( selector("datapointB" )));
 
 Selectors are "per branch" and can be nested and reused.
 Note how the parent selector "index" is reused to "group" data into a common ancestor.
-````
+````java
 TreeBuilder treeBuilder = session.createTreeBuilder();
 
 treeBuilder.branch( selector("index") ).branch( selector("A") ).add("anydata".getBytes());
@@ -134,7 +134,7 @@ Tags do not need to be unique.
 IndexTree currently does not build indexes for tags, so that is a thing to do..;)
 
 # LICENSE
-Copyright 2014-2019 rebaze GmbH.
+Copyright 2014-2020 rebaze GmbH.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
