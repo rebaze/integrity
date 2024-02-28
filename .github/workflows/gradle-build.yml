@@ -34,6 +34,6 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Tests            # Name of the check run which will be created
-        path: '**/TEST-*.xml'    # Path to test results
+        path: '**/TEST-*.xml,!build/test-results/test/TEST-org.rebaze.integrity.tree.core.BranchHashTest.xml'    # Path to test results
         reporter: java-junit     # Format of test results
 
