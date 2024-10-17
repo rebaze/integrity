@@ -22,6 +22,7 @@ A small Java library for creating Merkle Trees (https://en.m.wikipedia.org/wiki/
 
 - Blockchain and Hyperledger Technologies
 - Indexing arbitrary (nested) data based on hashes and metadata (called selectors and tags here)
+- tbd
 
 ## How do i use it?
 
