@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI with Maven
 
 on:
   workflow_dispatch:
@@ -23,17 +23,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-
-    - name: Build with Gradle Wrapper
-      run: ./gradlew test
+    - name: Build with Maven
+      run: mvn clean install
 
     - name: Test Report
       uses: dorny/test-reporter@v1
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: Tests            # Name of the check run which will be created
-        path: '**/TEST-*.xml,!build/test-results/test/TEST-org.rebaze.integrity.tree.core.BranchHashTest.xml'    # Path to test results
+        path: '**/target/surefire-reports/TEST-*.xml'    # Path to test results
         reporter: java-junit     # Format of test results
-

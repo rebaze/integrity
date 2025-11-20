@@ -1,4 +1,4 @@
 tasks:
-  - init: ./gradlew build
+  - init: mvn clean install
 image:
   file: .gitpod.Dockerfile
