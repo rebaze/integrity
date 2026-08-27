@@ -1,11 +1,7 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rebaze/integrity) 
-
 [<img src="http://www.rebaze.com/assets/Rebaze_icon_colors_tbg.png" align="right" width="100">](http://rebaze.com)
 
-[![OSGi compatible](https://img.shields.io/badge/OSGi-compatible-green.svg)](http://www.osgi.org)
-[![Build Status](https://github.com/rebaze/integrity/workflows/cibuild/badge.svg)](https://github.com/rebaze/integrity/workflows/cibuild/)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.rebaze.integrity/org.rebaze.integrity.tree)
-[![Apache 2.0](https://img.shields.io/github/license/nebula-plugins/nebula-publishing-plugin.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Build](https://github.com/rebaze/integrity/actions/workflows/build.yml/badge.svg)](https://github.com/rebaze/integrity/actions/workflows/build.yml)
+[![Apache 2.0](https://img.shields.io/github/license/rebaze/integrity.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 # News
 
@@ -14,7 +10,6 @@
 A small Java library for creating Merkle Trees (https://en.m.wikipedia.org/wiki/Merkle_tree) to be used in blockchain-like technologies.
 
 - Composite hash- tree based java library (DAG)
-- OSGi compatible
 - Embeddable
 - Low footprint 
 
@@ -134,6 +129,33 @@ Selectors are unique per "parent-branch" level, which allows the grouping featur
 Tags do not need to be unique.
 
 IndexTree currently does not build indexes for tags, so that is a thing to do..;)
+
+# Building
+
+Requires JDK 17 or newer and Maven 3.9+. The library itself has **no runtime
+dependencies** - it is pure JDK.
+
+````
+mvn verify
+````
+
+## Software Bill of Materials
+
+Every build emits a [CycloneDX](https://cyclonedx.org/) 1.6 SBOM to
+`target/bom.json` and `target/bom.xml`. Because this project's only
+dependencies are test-scope, the BOM is generated with `includeTestScope`
+enabled - otherwise it would come out empty.
+
+CI publishes the SBOM as a workflow artifact, and pushes it to
+[DependencyTrack](https://dependencytrack.org/) when these repository secrets
+are set:
+
+| Secret | Purpose |
+| --- | --- |
+| `DEPENDENCYTRACK_URL` | Base URL of the DependencyTrack API server |
+| `DEPENDENCYTRACK_API_KEY` | API key with `BOM_UPLOAD` permission |
+
+Without them the upload step is skipped and the build still passes.
 
 # LICENSE
 Copyright 2014-2020 rebaze GmbH.

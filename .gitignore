@@ -1,7 +1,5 @@
-/build
 .project
 .classpath
-.gradle
 .settings
 .DS_Store
 .svn

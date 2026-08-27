@@ -1,14 +1,14 @@
 package org.rebaze.integrity.tree.internal;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.rebaze.integrity.tree.api.Selector;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -19,19 +19,19 @@ public class InMemoryTreeImplTest
     @Test
     public void testEmptyTreeSize()
     {
-        Assert.assertEquals( "Trunk only", 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).seal() ) );
+        Assertions.assertEquals( 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).seal() ), "Trunk only" );
     }
 
     @Test
     public void testAddsOnlyOnSingle()
     {
-        Assert.assertEquals( "Trunk only", 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).add( "data".getBytes() ).seal() ) );
+        Assertions.assertEquals( 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).add( "data".getBytes() ).seal() ), "Trunk only" );
     }
 
     @Test
     public void testSingleBranch()
     {
-        Assert.assertEquals( 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).branch( Selector.selector( "branch" ) ).seal() ) );
+        Assertions.assertEquals( 1, TreeSession.nodes( session.createTreeBuilder().selector( Selector.selector( "foo" ) ).branch( Selector.selector( "branch" ) ).seal() ) );
     }
 
     @Test
@@ -40,7 +40,7 @@ public class InMemoryTreeImplTest
         TreeBuilder tb = session.createTreeBuilder().selector( Selector.selector( "trunk" ) );
         tb.branch( Selector.selector( "branch2" ) ).add( "data1".getBytes() );
         tb.branch( Selector.selector( "branch3" ) ).add( "data1".getBytes() );
-        Assert.assertEquals( 3, TreeSession.nodes( tb.seal() ) );
+        Assertions.assertEquals( 3, TreeSession.nodes( tb.seal() ) );
     }
 
     @Test

@@ -4,16 +4,16 @@ import org.rebaze.integrity.tree.api.Selector;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 
 import static org.rebaze.integrity.tree.api.Selector.selector;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * This is the ultimate combiner test as we combine computed parts from other combiners,
@@ -26,7 +26,7 @@ public class CombinatorIntegrityTest
     private TreeConsoleFormatter formatter = TreeConsoleFormatter.formatter();
     private TreeSession session =  new DefaultTreeSessionFactory().create();
 
-    @Ignore
+    @Disabled
     @Test
     public void testCombinerIntegrity() {
         TreeBuilder sn1 = session.createTreeBuilder();
@@ -47,7 +47,7 @@ public class CombinatorIntegrityTest
         formatter.prettyPrint( intersection, combinedDelta );
 
         assertEquals( intersection, combinedDelta );
-        Assert.assertEquals( union, new UnionTreeCombiner(session).combine( delta, intersection ) );
+        Assertions.assertEquals( union, new UnionTreeCombiner(session).combine( delta, intersection ) );
         assertEquals( delta, new DiffTreeCombiner(session).combine( union, intersection ) );
     }
 }

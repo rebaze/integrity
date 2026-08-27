@@ -1,7 +1,7 @@
 package org.rebaze.integrity.tree.core;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.rebaze.integrity.tree.api.Selector;
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.api.TreeIndex;
@@ -10,8 +10,7 @@ import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
 
 import java.io.IOException;
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.rebaze.integrity.tree.api.Tag.tag;
 
 public class TreeIndexTest
@@ -34,7 +33,7 @@ public class TreeIndexTest
         c1.branch( Selector.selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( Selector.selector( "db2" ) ).add( "dat2".getBytes() );
         c1.branch( Selector.selector( "db1" ) ).add( "data3".getBytes() );
-        Assert.assertEquals( 2, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
+        Assertions.assertEquals( 2, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
     }
 
     @Test
@@ -44,7 +43,7 @@ public class TreeIndexTest
         c1.branch( Selector.selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( Selector.selector( "db2" ) ).add( "dat2".getBytes() );
         c1.branch( Selector.selector( "db3" ) ).add( "data3".getBytes() );
-        Assert.assertEquals( 3, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
+        Assertions.assertEquals( 3, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
     }
 
 
@@ -55,7 +54,7 @@ public class TreeIndexTest
         c1.branch( Selector.selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( Selector.selector( "db1" ) ).add( "data".getBytes() );
         c1.branch( Selector.selector( "db3" ) ).add( "data".getBytes() );
-        Assert.assertEquals( 2, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
+        Assertions.assertEquals( 2, TreeSession.wrapAsIndex( c1.seal() ).branches().length );
     }
 
     @Test
@@ -68,14 +67,14 @@ public class TreeIndexTest
         c1.branch( "db4" ).branch("deep").add( "foo" );
 
         TreeIndex idx = TreeSession.wrapAsIndex( c1.seal());
-        assertTrue("tree contains branch part",idx.contains(idx.branches()[0]));
-        assertTrue("tree contains branch part",idx.contains(idx.branches()[1]));
-        assertTrue("tree contains branch part",idx.contains(idx.branches()[2]));
-        assertTrue("tree contains itself",idx.contains(idx));
-        assertFalse("tree does not contain null",idx.contains(null));
-        assertFalse("tree does not contain other tree",idx.contains(session.createTreeBuilder().add("data4").seal()));
+        assertTrue(idx.contains(idx.branches()[0]), "tree contains branch part");
+        assertTrue(idx.contains(idx.branches()[1]), "tree contains branch part");
+        assertTrue(idx.contains(idx.branches()[2]), "tree contains branch part");
+        assertTrue(idx.contains(idx), "tree contains itself");
+        assertFalse(idx.contains(null), "tree does not contain null");
+        assertFalse(idx.contains(session.createTreeBuilder().add("data4").seal()), "tree does not contain other tree");
 
-        assertTrue("tree contained",idx.contains(session.createTreeBuilder().add("foo").seal()));
+        assertTrue(idx.contains(session.createTreeBuilder().add("foo").seal()), "tree contained");
 
     }
 

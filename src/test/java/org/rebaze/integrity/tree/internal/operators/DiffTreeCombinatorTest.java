@@ -9,7 +9,7 @@
 package org.rebaze.integrity.tree.internal.operators;
 
 import static org.rebaze.integrity.tree.api.Selector.selector;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
@@ -18,8 +18,8 @@ import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeIndex;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
@@ -36,7 +36,7 @@ public class DiffTreeCombinatorTest
         Tree sn1 = session.createTreeBuilder().selector( Selector.selector( "c1" ) ).seal();
         Tree sn2 = session.createTreeBuilder().selector( Selector.selector( "c2" ) ).seal();
         Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
-        assertEquals( "Should no elements", 0, result.branches().length );
+        assertEquals( 0, result.branches().length, "Should no elements" );
     }
 
     @Test
@@ -49,7 +49,7 @@ public class DiffTreeCombinatorTest
         b2.add( "Some".getBytes() );
         Tree sn2 = b2.seal();
         Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
-        assertEquals( "Should no elements", 0, result.branches().length );
+        assertEquals( 0, result.branches().length, "Should no elements" );
     }
 
     @Test
@@ -61,9 +61,9 @@ public class DiffTreeCombinatorTest
         TreeBuilder b2 = session.createTreeBuilder().selector( Selector.selector( "c2" ) );
         Tree sn2 = b2.seal();
         Tree result = new DiffTreeCombiner(session).combine( sn1, sn2 );
-        assertEquals( "Should no elements", 1, result.branches().length );
-        Assert.assertEquals( "Select what is different", Selector.selector( "c2" ), result.branches()[0].selector() );
-        assertEquals( "Select what is different", DiffTreeCombiner.MODIFIED, result.branches()[0].tags() );
+        assertEquals( 1, result.branches().length, "Should no elements" );
+        Assertions.assertEquals( Selector.selector( "c2" ), result.branches()[0].selector(), "Select what is different" );
+        assertEquals( DiffTreeCombiner.MODIFIED, result.branches()[0].tags(), "Select what is different" );
 
     }
 
@@ -91,9 +91,9 @@ public class DiffTreeCombinatorTest
         // Display both for visual reference..
         FORMAT.prettyPrint( sn1,sn2,result );
 
-        assertEquals( "Detect 3 modifications", 3, result.select( Selector.selector( "db1" ) ).branches().length );
-        assertEquals( "Modification in db2.table2", DiffTreeCombiner.MODIFIED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table2" ) ).tags() );
-        assertEquals( "Modification in db2.table2", DiffTreeCombiner.REMOVED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table3" ) ).tags() );
-        assertEquals( "Modification in db2.table2", DiffTreeCombiner.ADDED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table4" ) ).tags() );
+        assertEquals( 3, result.select( Selector.selector( "db1" ) ).branches().length, "Detect 3 modifications" );
+        assertEquals( DiffTreeCombiner.MODIFIED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table2" ) ).tags(), "Modification in db2.table2" );
+        assertEquals( DiffTreeCombiner.REMOVED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table3" ) ).tags(), "Modification in db2.table2" );
+        assertEquals( DiffTreeCombiner.ADDED, result.select( Selector.selector( "db1" ) ).select( Selector.selector( "table4" ) ).tags(), "Modification in db2.table2" );
     }
 }
