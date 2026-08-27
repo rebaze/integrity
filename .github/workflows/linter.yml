@@ -1,23 +1,36 @@
-name: Lint Code Base
+name: Lint
 
-on: 
+on:
   workflow_dispatch:
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-    name: Lint Code Base
+  lint:
+    name: Lint code base
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
+          # super-linter needs full history to diff against the base branch.
           fetch-depth: 0
 
-      - name: Lint Code Base
-        uses: github/super-linter@v6
+      - name: Lint
+        uses: github/super-linter@b807e99ddd37e444d189cfd2c2ca1274d8ae8ef1 # v7
         env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: master
+          VALIDATE_ALL_CODEBASE: false
+          # Scoped deliberately: enabling any VALIDATE_* switch turns the rest off.
+          # The Java sources predate any shared format config, so linting them here
+          # would fail every PR for reasons unrelated to the change under review.
+          VALIDATE_YAML: true
+          VALIDATE_GITHUB_ACTIONS: true

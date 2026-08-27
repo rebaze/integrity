@@ -1,6 +1,6 @@
 package org.rebaze.integrity.tree.core;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.api.TreeIndex;
@@ -8,7 +8,7 @@ import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by tonit on 18/11/2016.

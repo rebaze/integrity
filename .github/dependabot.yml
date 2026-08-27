@@ -1,0 +1,26 @@
+version: 2
+
+updates:
+  # Keeps the SHA pins in .github/workflows/ current - pinning without this
+  # just means the actions silently rot instead of silently changing.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps"
+    groups:
+      junit:
+        patterns:
+          - "org.junit*"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins:*"

@@ -8,15 +8,15 @@
  */
 package org.rebaze.integrity.tree.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.rebaze.integrity.tree.api.Selector;
 import org.rebaze.integrity.tree.api.Tree;
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.rebaze.integrity.tree.internal.InMemoryTreeBuilderImpl;
 
@@ -73,8 +73,8 @@ public class SimpleHashTest
         sub4.add( "Four".getBytes() );
         Tree tree2 = root2.seal();
 
-        assertNotEquals( "roots must be different", tree1.value(), tree2.value() );
-        assertNotEquals( "first childs must be different", tree1.branches()[0].value(), tree2.branches()[0].value() );
+        assertNotEquals( tree1.value(), tree2.value(), "roots must be different" );
+        assertNotEquals( tree1.branches()[0].value(), tree2.branches()[0].value(), "first childs must be different" );
 
     }
 
@@ -88,6 +88,6 @@ public class SimpleHashTest
         TreeBuilder sn2 = session.createTreeBuilder();
         sn2.branch( Selector.selector( "p1" ) ).add( "one".getBytes() ).add( "two".getBytes() );
 
-        assertEquals( "Should no elements", sn1.seal(),sn2.seal() );
+        assertEquals( sn1.seal(), sn2.seal(), "Should no elements" );
     }
 }

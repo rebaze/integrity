@@ -4,21 +4,22 @@ import org.rebaze.integrity.tree.api.TreeException;
 import org.rebaze.integrity.tree.api.TreeIndex;
 import org.rebaze.integrity.tree.api.TreeSession;
 import org.rebaze.integrity.tree.util.DefaultTreeSessionFactory;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import org.rebaze.integrity.tree.api.TreeBuilder;
 import org.rebaze.integrity.tree.util.TreeConsoleFormatter;
 
 import static org.rebaze.integrity.tree.api.Selector.selector;
 import static org.rebaze.integrity.tree.api.Tag.tag;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by tonit on 10/03/15.
  */
-@Ignore
+@Disabled
 public class UnionTreeCombinerTest
 {
     private TreeConsoleFormatter formatter = TreeConsoleFormatter.formatter();
@@ -67,7 +68,7 @@ public class UnionTreeCombinerTest
         assertEquals( "d0941e", union.select( selector( "p3" ) ).fingerprint().substring( 0, 6 ) );
     }
 
-    @Test (expected = TreeException.class )
+    @Test
     public void testDeepUnionWithIncompatibleBranchData() {
         TreeBuilder sn1 = session.createTreeBuilder();
         sn1.branch(selector("p1")).branch( selector( "deep" ) ).add( "one".getBytes() );
@@ -77,13 +78,8 @@ public class UnionTreeCombinerTest
         sn2.branch(selector("p1")).add( "one".getBytes() );
         sn2.branch(selector("p3")).add( "other".getBytes() );
 
-        TreeIndex union = TreeSession.wrapAsIndex( new UnionTreeCombiner(session).combine( sn1.seal(), sn2.seal() ) );
-        formatter.prettyPrint( sn1.seal(), sn2.seal(), union );
-
-        assertEquals( 3, union.branches().length );
-        assertEquals( "fe05bc", union.select( selector( "p1" ) ).fingerprint().substring( 0, 6 ) ) ;
-        assertEquals( "ad782e", union.select( selector( "p2" ) ).fingerprint().substring( 0, 6 ) );
-        assertEquals( "d0941e", union.select( selector( "p3" ) ).fingerprint().substring( 0, 6 ) );
+        assertThrows( TreeException.class,
+            () -> new UnionTreeCombiner( session ).combine( sn1.seal(), sn2.seal() ) );
     }
 
     @Test

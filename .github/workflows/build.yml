@@ -1,0 +1,95 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# Least privilege by default; jobs opt into more where they need it.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (JDK ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ '17', '21' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build, test and generate SBOM
+        run: mvn -B --no-transfer-progress verify
+
+      # Forked PRs get a read-only token, so the check-run API is unavailable there.
+      - name: Test report
+        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
+        if: ${{ (success() || failure()) && github.event.pull_request.head.repo.fork != true }}
+        with:
+          name: Tests (JDK ${{ matrix.java }})
+          path: '**/target/surefire-reports/TEST-*.xml'
+          reporter: java-junit
+
+      - name: Upload SBOM
+        if: matrix.java == '17'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sbom
+          path: |
+            target/bom.json
+            target/bom.xml
+          if-no-files-found: error
+
+  dependency-track:
+    name: Publish SBOM to DependencyTrack
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      DTRACK_URL: ${{ secrets.DEPENDENCYTRACK_URL }}
+      DTRACK_API_KEY: ${{ secrets.DEPENDENCYTRACK_API_KEY }}
+
+    steps:
+      - name: Download SBOM
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: sbom
+          path: sbom
+
+      - name: Not configured
+        if: env.DTRACK_URL == ''
+        run: |
+          echo "::notice::DEPENDENCYTRACK_URL is not set - skipping upload." \
+               "Add the DEPENDENCYTRACK_URL and DEPENDENCYTRACK_API_KEY repository secrets to enable it."
+
+      - name: Upload BOM
+        if: env.DTRACK_URL != ''
+        run: |
+          curl --fail-with-body -sS -X POST "${DTRACK_URL%/}/api/v1/bom" \
+            -H "X-Api-Key: ${DTRACK_API_KEY}" \
+            -F "autoCreate=true" \
+            -F "projectName=${{ github.event.repository.name }}" \
+            -F "projectVersion=${{ github.ref_name }}" \
+            -F "bom=@sbom/bom.json"
